@@ -1,20 +1,20 @@
 import React from 'react';
 import './App.css';
-import Header from './components/header/Header';
+import Header from './components/Header/Header';  // Ensure the path is correct and matches the file structure
 import Home from './pages/Home';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <Router>
       <Header />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/cart" component={CartPage} />
-        <Route path="/login" component={LoginPage} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
     </Router>
   );
 }
