@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header/Header';
+import Header from './components/header/Header';
 import Home from './pages/Home';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
@@ -16,7 +16,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </Router>
-  );
+  );  
 }
 
 export default App;
