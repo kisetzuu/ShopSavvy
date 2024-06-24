@@ -4,12 +4,7 @@ import './Home.css';
 const Home = () => {
   return (
     <div className="home">
-      <section
-        className="hero"
-        style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL + '/home_bg.png'})`,
-        }}
-      >
+      <section className="hero">
         <div className="hero-content">
           <img src={process.env.PUBLIC_URL + '/NxQLogo_tp2.png'} alt="NxQ Logo" className="hero-logo" />
           <h1>Welcome to ShopSavvy</h1>
@@ -20,9 +15,18 @@ const Home = () => {
       <section className="featured-products">
         <h2>Featured Products</h2>
         <div className="product-list">
-          <div className="product-item">Product 1</div>
-          <div className="product-item">Product 2</div>
-          <div className="product-item">Product 3</div>
+          <div className="product-item">
+            <img src={process.env.PUBLIC_URL + '/product1.jpg'} alt="Product 1" className="product-image" />
+            <p>Product 1</p>
+          </div>
+          <div className="product-item">
+            <img src={process.env.PUBLIC_URL + '/product2.jpg'} alt="Product 2" className="product-image" />
+            <p>Product 2</p>
+          </div>
+          <div className="product-item">
+            <img src={process.env.PUBLIC_URL + '/product3.jpg'} alt="Product 3" className="product-image" />
+            <p>Product 3</p>
+          </div>
         </div>
       </section>
     </div>
