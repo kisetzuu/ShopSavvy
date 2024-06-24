@@ -8,14 +8,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #333; /* Changed to a dark color for contrast against white background */
   text-align: center;
   position: relative;
-  background-color: #007bff; /* Optional: Add a background color */
+  background-color: #fff; /* Set background color to white */
 }
 
 .hero-content {
-  background: rgba(255, 255, 255, 0.6); /* Darker white background with opacity */
+  background: rgba(255, 255, 255, 0.8); /* Slightly darker white background with opacity */
   padding: 20px;
   border-radius: 10px;
   color: #333; /* Dark text color for contrast */
@@ -47,17 +47,21 @@
   font-size: 1rem;
   cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, opacity 0.3s ease; /* Add transition for opacity */
+  opacity: 0.9; /* Add initial opacity */
 }
 
 .shop-now:hover {
   background-color: #0056b3;
   animation: buttonHover 0.3s forwards;
+  opacity: 1; /* Change opacity on hover */
 }
 
 .featured-products {
   padding: 40px 20px;
   text-align: center;
+  margin-top: -70px;
+  animation: fadeIn 1.5s ease-in;
 }
 
 .featured-products h2 {
@@ -77,8 +81,22 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   flex: 1;
-  max-width: 200px;
+  max-width: 250px; /* Adjust the width to be larger */
   text-align: center;
+  opacity: 0;
+  animation: slideIn 1s forwards;
+}
+
+.product-item:nth-child(1) {
+  animation-delay: 0.5s;
+}
+
+.product-item:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.product-item:nth-child(3) {
+  animation-delay: 1.5s;
 }
 
 .product-item:hover {
@@ -88,9 +106,14 @@
 
 .product-image {
   width: 100%;
-  height: 150px; /* Set a fixed height */
+  height: 250px; /* Set a larger fixed height */
   object-fit: cover; /* Ensures the image covers the area, cropping if necessary */
   margin-bottom: 10px;
+  transition: transform 0.3s ease; /* Add transition for hover animation */
+}
+
+.product-image:hover {
+  transform: scale(1.1); /* Add scale effect on hover */
 }
 
 @keyframes fadeIn {
@@ -120,5 +143,16 @@
   }
   to {
     transform: scale(1.1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

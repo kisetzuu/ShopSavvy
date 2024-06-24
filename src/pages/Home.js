@@ -17,15 +17,15 @@ const Home = () => {
         <div className="product-list">
           <div className="product-item">
             <img src={process.env.PUBLIC_URL + '/product1.jpg'} alt="Product 1" className="product-image" />
-            <p>Product 1</p>
+            <p>Razer Basilisk V3</p>
           </div>
           <div className="product-item">
             <img src={process.env.PUBLIC_URL + '/product2.jpg'} alt="Product 2" className="product-image" />
-            <p>Product 2</p>
+            <p>GeForce RTX 4090</p>
           </div>
           <div className="product-item">
             <img src={process.env.PUBLIC_URL + '/product3.jpg'} alt="Product 3" className="product-image" />
-            <p>Product 3</p>
+            <p>ROG Pugio</p>
           </div>
         </div>
       </section>
