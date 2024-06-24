@@ -4,9 +4,14 @@ import './Home.css';
 const Home = () => {
   return (
     <div className="home">
-      <section className="hero">
+      <section
+        className="hero"
+        style={{
+          backgroundImage: `url(${process.env.PUBLIC_URL + '/home_bg.png'})`,
+        }}
+      >
         <div className="hero-content">
-          <img src="/NxQ_Logo.png" alt="NxQ Logo" className="hero-logo" />
+          <img src={process.env.PUBLIC_URL + '/NxQLogo_tp2.png'} alt="NxQ Logo" className="hero-logo" />
           <h1>Welcome to ShopSavvy</h1>
           <p>Your one-stop shop for the latest products</p>
           <button className="shop-now">Shop Now</button>
