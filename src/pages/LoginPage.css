@@ -1,12 +1,32 @@
 /* LoginPage.css */
-.login-container {
+  .login-div{
+    margin-top: 20px;
+  }
+
+
+  .login-container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 20px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .logo-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-bottom: 20px; /* Optional: Adjust margin as needed */
+  }
+  
+  .logo {
+    max-width: 150px; /* Maximum width */
+    margin-bottom: 20px; /* Space below the logo */
   }
   
   .login-container h2 {
@@ -33,32 +53,35 @@
   
   .login-button {
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #1DB954;
+    color: white;
     border: none;
-    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 1rem;
     cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
     margin-bottom: 10px;
   }
   
   .login-button:hover {
-    background-color: #0056b3;
+    background-color: #148F42;
   }
 
   .register-button{
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #1DB954;
+    color: white;
     border: none;
-    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 1rem;
     cursor: pointer;
-    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
   }
 
-  .register-button:hover {
-    background-color: #0056b3;
+  .reg-button:hover {
+    background-color: #148F42;
   }
 
   

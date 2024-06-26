@@ -40,36 +40,41 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {error && <p className="error">{error}</p>}
-      {message && <p className="success">{message}</p>}
-      <form>
-        <div className="form-group">
-          <label htmlFor="emailOrUsername">Email/Username:</label>
-          <input
-            type="text"
-            id="emailOrUsername"
-            value={emailOrUsername}
-            onChange={(e) => setEmailOrUsername(e.target.value)}
-          />
+    <div className='login-div'>
+      <div className="login-container">
+        <div className='logo-container'>
+          <img src={process.env.PUBLIC_URL + '/nxQ_LogoN.png'} alt="NxQ Logo" className='logo'/>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div>
-          <button type="submit" className="login-button" onClick={handleLogin}>Login</button>
-        </div>
-        <div>
-          <button type="submit" className="register-button" onClick={handleRegister}>Register</button>
-        </div>
-      </form>
+        <h2>Log-in to ShopSavvy</h2>
+        {error && <p className="error">{error}</p>}
+        {message && <p className="success">{message}</p>}
+        <form>
+          <div className="form-group">
+            <label htmlFor="emailOrUsername">Email/Username:</label>
+            <input
+              type="text"
+              id="emailOrUsername"
+              value={emailOrUsername}
+              onChange={(e) => setEmailOrUsername(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <button type="submit" className="login-button" onClick={handleLogin}>Login</button>
+          </div>
+          <div>
+            <button type="submit" className="register-button" onClick={handleRegister}>Register</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
