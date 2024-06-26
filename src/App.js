@@ -4,6 +4,7 @@ import Header from './components/Header/Header';
 import Home from './pages/Home';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
+import ShopPage from './pages/ShopPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/shop" element={<ShopPage />} />
       </Routes>
     </Router>
   );  
