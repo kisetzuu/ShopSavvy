@@ -1,5 +1,8 @@
 body {
-  background-color: #191414; /* Set background color of the entire webpage */
+  background: linear-gradient(to bottom, #292929, #000000);
+  background-repeat: no-repeat; /* Ensure the background does not repeat */
+  background-attachment: fixed; /* Make the background fixed so it stays in place */
+  background-size: cover; /* Ensure the background covers the entire page */
   margin: 0;
   padding: 0;
 }

@@ -8,7 +8,7 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!emailOrUsername || !password) {
       setError('Please fill in both fields.');
@@ -32,12 +32,19 @@ const LoginPage = () => {
     }
   };
 
+  const handleRegister = (e) => {
+    e.preventDefault();
+    setMessage('Register button clicked');
+    // Handle register logic here
+    console.log('Register button clicked');
+  };
+
   return (
     <div className="login-container">
       <h2>Login</h2>
       {error && <p className="error">{error}</p>}
       {message && <p className="success">{message}</p>}
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="form-group">
           <label htmlFor="emailOrUsername">Email/Username:</label>
           <input
@@ -56,7 +63,12 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <div>
+          <button type="submit" className="login-button" onClick={handleLogin}>Login</button>
+        </div>
+        <div>
+          <button type="submit" className="register-button" onClick={handleRegister}>Register</button>
+        </div>
       </form>
     </div>
   );
