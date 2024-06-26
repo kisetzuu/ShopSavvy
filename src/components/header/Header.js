@@ -10,9 +10,6 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="logo">
-        <img src="/NxQ_Header.png" alt="NxQ Logo" />
-      </div>
       <nav className={`nav ${menuActive ? 'active' : ''}`}>
         <ul className={`nav-links ${menuActive ? 'active' : ''}`}>
           <li><a href="/">Home</a></li>
