@@ -11,11 +11,18 @@ const ShopPage = () => {
 
   return (
     <div className="shop-page">
-      <div className="hero-content">
-        <img src={process.env.PUBLIC_URL + '/nxQ_LogoN.png'} alt="NxQ Logo" className="hero-logo" />
-        <h1>Welcome to ShopSavvy</h1>
-        <p>Your one-stop shop for the latest products</p>
-        <button className="shop-now" onClick={onShopClicked}>Shop Now</button>
+      <div
+        className="hero"
+        style={{
+          backgroundImage: `url(${process.env.PUBLIC_URL + '/NxQ_Shop_Banner3.jpg'})`,
+        }}
+      >
+        <div className="hero-content">
+          <img src={process.env.PUBLIC_URL + '/nxQ_LogoN.png'} alt="NxQ Logo" className="hero-logo" />
+          <h1>Welcome to ShopSavvy</h1>
+          <p>Your one-stop shop for the latest products</p>
+          <button className="shop-now" onClick={onShopClicked}>Shop Now</button>
+        </div>
       </div>
       <section className="featured-products">
         <h2>Featured Products</h2>

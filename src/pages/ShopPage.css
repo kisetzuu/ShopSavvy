@@ -42,6 +42,8 @@ body {
   text-align: center; /* Center align text */
   padding: 20px; /* Padding around content */
   box-sizing: border-box; /* Include padding in height/width */
+  background-size: cover; /* Make the background cover the entire area */
+  background-repeat: no-repeat; /* Prevent background from repeating */
 }
 
 /* Styles for the content inside the hero section */
@@ -51,7 +53,7 @@ body {
   border-radius: 20px; /* Rounded corners */
   color: white; /* White text color for contrast */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
-  margin-top: 20px; /* Move the element down by 20px */
+  transform: translateY(70px);
 }
 
 /* Styles for the logo inside the hero section */
@@ -104,6 +106,7 @@ body {
   width: 100%; /* Full width within max-width */
   text-align: center; /* Center align text */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow */
+  transform: translateY(80px);
 }
 
 /* Styles for the heading inside the featured products section */
