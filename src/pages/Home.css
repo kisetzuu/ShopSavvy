@@ -64,7 +64,7 @@ body {
   color: white;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   animation: zoomIn 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  transform: translateY(-320px); /* Move the content upwards */
+  transform: translateY(-200px); /* Move the content upwards */
   text-align: center;
   max-width: 80%;
   position: relative; /* Ensure it stays on top of the background */
@@ -158,4 +158,55 @@ body {
 .social-icon:hover {
   color: #1DB954;
   transform: scale(1.2);
+}
+
+.featured-products {
+  margin-top: -30px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transform: translateY(-140px); /* Adjust this value to move it upwards */
+}
+
+.featured-products h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  color: #1DB954;
+}
+
+.product-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.product-item {
+  background: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.product-item p {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
 }
