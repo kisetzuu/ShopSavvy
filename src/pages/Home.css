@@ -170,6 +170,7 @@ body {
   transform: translateY(-200px); /* Adjust this value to move it upwards */
   position: relative; /* Add this line */
   top: -300px; /* Adjust this value to move it upwards */
+  animation: fadeIn 2s ease-in-out;
 }
 
 .featured-products h2 {
@@ -184,6 +185,12 @@ body {
   display: flex;
   justify-content: center;
   gap: 20px;
+  animation: slideUp 1.5s ease-in-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .product-item {
@@ -214,8 +221,9 @@ body {
 }
 
 .video-section {
-  margin: -240px 0;
+  margin: -250px 0;
   text-align: center;
+  animation: fadeIn 2s ease-in-out;
 }
 
 .video-section h2 {
@@ -240,4 +248,35 @@ body {
 
 .video-container iframe {
   border-radius: 10px;
+  animation: zoomIn 1.5s ease-in-out;
+}
+
+.about-shopsavvy {
+  margin: 280px 50px 20px;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #e0e0e0;
+  animation: fadeInUp 2s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.about-shopsavvy h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  color: #1DB954;
+}
+
+.about-shopsavvy p {
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
 }

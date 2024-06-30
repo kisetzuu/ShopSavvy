@@ -69,6 +69,11 @@ const Home = () => {
           </iframe>
         </div>
       </section>
+
+      <section className="about-shopsavvy">
+        <h2>About ShopSavvy</h2>
+        <p>At ShopSavvy, we believe in providing our customers with the best products at unbeatable prices. Our curated selection features the latest in technology, gaming, and lifestyle products. We are dedicated to offering a seamless shopping experience with top-notch customer service. Join our community and discover why ShopSavvy is your ultimate destination for all your shopping needs.</p>
+      </section>
     </div>
   );
 };
