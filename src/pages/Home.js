@@ -35,6 +35,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       <section className="featured-products">
         <h2>Featured Products</h2>
         <div className="product-list">
@@ -50,6 +51,22 @@ const Home = () => {
             <img src={process.env.PUBLIC_URL + '/product3.jpg'} alt="Product 3" className="product-image" />
             <p>ROG Pugio</p>
           </div>
+        </div>
+      </section>
+
+      <section className="video-section">
+        <h2>Promotional Video</h2>
+        <p>Ultimate speed and precision with the Razer Viper Mini.</p>
+        <div className="video-container">
+          <iframe 
+            width="560" 
+            height="315" 
+            src="https://www.youtube.com/embed/rk5LTWHLQ7I" 
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowFullScreen>
+          </iframe>
         </div>
       </section>
     </div>
