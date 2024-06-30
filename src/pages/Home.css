@@ -64,7 +64,8 @@ body {
   color: white;
   box-shadow: 0 8px 20px rgba(211, 168, 168, 0.3);
   animation: zoomIn 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  transform: translateY(100px); /* Move the content upwards */
+  margin-top: -720px;
+  transform: translateY(-200px); /* Move the content upwards */
   text-align: center;
   max-width: 80%;
   position: relative; /* Ensure it stays on top of the background */
@@ -161,13 +162,15 @@ body {
 }
 
 .featured-products {
-  margin-top: -30px;
+  margin-top: -200px;
   padding: 20px;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  transform: translateY(-140px); /* Adjust this value to move it upwards */
+  transform: translateY(-200px); /* Adjust this value to move it upwards */
+  position: relative; /* Add this line */
+  top: -300px; /* Adjust this value to move it upwards */
 }
 
 .featured-products h2 {
