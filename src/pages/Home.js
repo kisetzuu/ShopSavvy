@@ -35,6 +35,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       <section className="featured-products">
         <h2>Featured Products</h2>
         <div className="product-list">
@@ -51,6 +52,27 @@ const Home = () => {
             <p>ROG Pugio</p>
           </div>
         </div>
+      </section>
+
+      <section className="video-section">
+        <h2>Promotional Video</h2>
+        <p>Ultimate speed and precision with the Razer Viper Mini.</p>
+        <div className="video-container">
+          <iframe 
+            width="560" 
+            height="315" 
+            src="https://www.youtube.com/embed/rk5LTWHLQ7I" 
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowFullScreen>
+          </iframe>
+        </div>
+      </section>
+
+      <section className="about-shopsavvy">
+        <h2>About ShopSavvy</h2>
+        <p>At ShopSavvy, we believe in providing our customers with the best products at unbeatable prices. Our curated selection features the latest in technology, gaming, and lifestyle products. We are dedicated to offering a seamless shopping experience with top-notch customer service. Join our community and discover why ShopSavvy is your ultimate destination for all your shopping needs.</p>
       </section>
     </div>
   );

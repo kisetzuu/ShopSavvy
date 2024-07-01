@@ -1,6 +1,5 @@
 /* FontAwesome CDN for social media icons */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
@@ -64,7 +63,8 @@ body {
   color: white;
   box-shadow: 0 8px 20px rgba(211, 168, 168, 0.3);
   animation: zoomIn 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  transform: translateY(100px); /* Move the content upwards */
+  margin-top: -720px;
+  transform: translateY(-200px); /* Move the content upwards */
   text-align: center;
   max-width: 80%;
   position: relative; /* Ensure it stays on top of the background */
@@ -161,13 +161,16 @@ body {
 }
 
 .featured-products {
-  margin-top: -30px;
+  margin-top: -200px;
   padding: 20px;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  transform: translateY(-140px); /* Adjust this value to move it upwards */
+  transform: translateY(-200px); /* Adjust this value to move it upwards */
+  position: relative; /* Add this line */
+  top: -300px; /* Adjust this value to move it upwards */
+  animation: fadeIn 2s ease-in-out;
 }
 
 .featured-products h2 {
@@ -182,6 +185,12 @@ body {
   display: flex;
   justify-content: center;
   gap: 20px;
+  animation: slideUp 1.5s ease-in-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .product-item {
@@ -209,4 +218,65 @@ body {
   color: #e0e0e0;
   font-family: 'Roboto', sans-serif;
   text-align: center;
+}
+
+.video-section {
+  margin: -250px 0;
+  text-align: center;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.video-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  color: #1DB954;
+}
+
+.video-section p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #e0e0e0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.video-container {
+  display: flex;
+  justify-content: center;
+}
+
+.video-container iframe {
+  border-radius: 10px;
+  animation: zoomIn 1.5s ease-in-out;
+}
+
+.about-shopsavvy {
+  margin: 280px 50px 20px;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #e0e0e0;
+  animation: fadeInUp 2s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.about-shopsavvy h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  color: #1DB954;
+}
+
+.about-shopsavvy p {
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
 }
