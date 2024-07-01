@@ -12,52 +12,52 @@ const Home = () => {
   const bannerImage = `${process.env.PUBLIC_URL}/Home_Banner_NxQ.jpg`;
 
   return (
-    <div className="home">
-      <section className="banner">
-        <img src={bannerImage} alt="ShopSavvy Banner" className="banner-image" />
+    <div className="home-container">
+      <section className="home-banner">
+        <img src={bannerImage} alt="ShopSavvy Banner" className="home-banner-image" />
       </section>
-      <section className="hero">
-        <div className="hero-content">
-          <img src={process.env.PUBLIC_URL + '/nxQ_LogoN.png'} alt="NxQ Logo" className="hero-logo" />
+      <section className="home-hero">
+        <div className="home-hero-content">
+          <img src={process.env.PUBLIC_URL + '/nxQ_LogoN.png'} alt="NxQ Logo" className="home-hero-logo" />
           <h1>Welcome to ShopSavvy</h1>
           <p>Your one-stop shop for the latest products</p>
-          <button className="shop-now" onClick={onShopClicked}>Shop Now</button>
-          <div className="social-media">
-            <a href="#" className="social-icon">
+          <button className="home-shop-now" onClick={onShopClicked}>Shop Now</button>
+          <div className="home-social-media">
+            <a href="#" className="home-social-icon">
               <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="#" className="social-icon">
+            <a href="#" className="home-social-icon">
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="#" className="social-icon">
+            <a href="#" className="home-social-icon">
               <i className="fab fa-twitter"></i>
             </a>
           </div>
         </div>
       </section>
 
-      <section className="featured-products">
+      <section className="home-featured-products">
         <h2>Featured Products</h2>
-        <div className="product-list">
-          <div className="product-item">
-            <img src={process.env.PUBLIC_URL + '/product1.jpg'} alt="Product 1" className="product-image" />
+        <div className="home-product-list">
+          <div className="home-product-item">
+            <img src={process.env.PUBLIC_URL + '/product1.jpg'} alt="Product 1" className="home-product-image" />
             <p>Razer Basilisk V3</p>
           </div>
-          <div className="product-item">
-            <img src={process.env.PUBLIC_URL + '/product2.jpg'} alt="Product 2" className="product-image" />
+          <div className="home-product-item">
+            <img src={process.env.PUBLIC_URL + '/product2.jpg'} alt="Product 2" className="home-product-image" />
             <p>GeForce RTX 4090</p>
           </div>
-          <div className="product-item">
-            <img src={process.env.PUBLIC_URL + '/product3.jpg'} alt="Product 3" className="product-image" />
+          <div className="home-product-item">
+            <img src={process.env.PUBLIC_URL + '/product3.jpg'} alt="Product 3" className="home-product-image" />
             <p>ROG Pugio</p>
           </div>
         </div>
       </section>
 
-      <section className="video-section">
+      <section className="home-video-section">
         <h2>Promotional Video</h2>
         <p>Ultimate speed and precision with the Razer Viper Mini.</p>
-        <div className="video-container">
+        <div className="home-video-container">
           <iframe 
             width="560" 
             height="315" 
@@ -70,7 +70,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="about-shopsavvy">
+      <section className="home-about-shopsavvy">
         <h2>About ShopSavvy</h2>
         <p>At ShopSavvy, we believe in providing our customers with the best products at unbeatable prices. Our curated selection features the latest in technology, gaming, and lifestyle products. We are dedicated to offering a seamless shopping experience with top-notch customer service. Join our community and discover why ShopSavvy is your ultimate destination for all your shopping needs.</p>
       </section>
