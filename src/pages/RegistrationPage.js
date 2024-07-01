@@ -1,45 +1,27 @@
 import React, { useState } from 'react';
+import { auth } from '../services/FirebaseConfig';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 //import authService from '../services/AuthService';
 
 const RegistrationPage = () => {
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
-
-    
   
-    const handleLogin = async (e) => {
-      e.preventDefault();
-      if (!username || !password) {
-        setError('Please fill in both fields.');
-        return;
-      }
-  
-      /*try {
-        const { success, error: errorMsg } = await authService.login(emailOrUsername, password);
-  
-        if (success) {
-          setMessage('Login successful');
-          console.log('Login successful');
-          // Handle further logic here, like redirecting to another page
-        } else {
-          setError(errorMsg || 'Login failed');
-          console.error('Login failed:', errorMsg);
-        }
+    const handleRegister = async (e) => {
+      e.preventDefault();  
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        setMessage('Registration successful');
+        console.log('Registration successful', userCredential);
+        // Handle further logic here, like redirecting to another page or updating user profile
       } catch (error) {
-        setError('An error occurred. Please try again.');
-        console.error('Error during login:', error);
-      }*/
-    };
-  
-    const handleRegister = (e) => {
-      e.preventDefault();
-      setMessage('Register button clicked');
-      // Handle register logic here
-      console.log('Register button clicked');
+        setError('Registration failed: ' + error.message);
+        console.error('Error during registration:', error);
+      }
     };
     
     return (
@@ -52,15 +34,6 @@ const RegistrationPage = () => {
             {error && <p className="error">{error}</p>}
             {message && <p className="success">{message}</p>}
             <form>
-              <div className="form-group">
-                <label htmlFor="username">Username:</label>
-                <input
-                  type="text"
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
               <div className="form-group">
                 <label htmlFor="email">Email:</label>
                 <input
