@@ -63,17 +63,17 @@ body {
 
 /* Styles for the heading inside the featured products section */
 .shop-featured-products h2 {
-  margin-bottom: 20px; /* Space below the heading */
-  font-size: 2rem; /* Large font size */
+  margin-bottom: 30px; /* Space below the heading */
+  font-size: 2.5rem; /* Larger font size */
   letter-spacing: 1px; /* Add space between letters */
+  font-weight: 700;
 }
 
 /* Styles for the product list inside the featured products section */
 .shop-product-list {
-  display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Center align children horizontally */
+  display: grid; /* Use CSS Grid for layout */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
   gap: 20px; /* Space between items */
-  flex-wrap: wrap; /* Ensure products wrap on smaller screens */
 }
 
 /* Styles for individual product items */
@@ -82,12 +82,11 @@ body {
   padding: 20px; /* Padding around content */
   border: 1px solid #444; /* Darker border color to match the theme */
   border-radius: 5px; /* Rounded corners */
-  flex: 1; /* Flexible width */
-  max-width: 200px; /* Maximum width */
   text-align: center; /* Center align text */
   color: white; /* White text color for contrast */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Add shadow */
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 /* Styles for images inside product items */
@@ -97,16 +96,44 @@ body {
   object-fit: cover; /* Ensure the image covers the area without distortion */
   border-radius: 5px; /* Rounded corners */
   margin-bottom: 10px; /* Space below the image */
+  transition: transform 0.3s ease-in-out;
+}
+
+.shop-product-image:hover {
+  transform: scale(1.1); /* Scale up on hover */
 }
 
 /* Styles for paragraphs inside product items */
 .shop-product-item p {
   margin: 0; /* Remove default margin */
   font-weight: 500; /* Slightly bolder text */
+  font-size: 1.1rem;
+  margin-top: 10px;
 }
 
 /* Styles for product items on hover */
 .shop-product-item:hover {
   transform: scale(1.05); /* Scale up slightly */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Increase shadow on hover */
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1); /* Increase shadow on hover */
+}
+
+/* Styles for buttons inside product items */
+.shop-product-item button {
+  background-color: #1abc9c; /* Primary button color */
+  color: white; /* White text color */
+  border: none; /* No border */
+  padding: 10px 20px; /* Padding */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-top: 10px; /* Space above the button */
+  transition: background-color 0.3s ease;
+}
+
+.shop-product-item button:hover {
+  background-color: #16a085; /* Darker green on hover */
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }

@@ -35,6 +35,14 @@ const ShopPage = () => {
             <img src={process.env.PUBLIC_URL + '/product3.jpg'} alt="Product 3" className="shop-product-image" />
             <p>ROG Pugio</p>
           </div>
+          <div className="shop-product-item">
+            <img src={process.env.PUBLIC_URL + '/product4.jpg'} alt="Product 3" className="shop-product-image" />
+            <p>ROG Ally 7</p>
+          </div>
+          <div className="shop-product-item">
+            <img src={process.env.PUBLIC_URL + '/product5.jpg'} alt="Product 3" className="shop-product-image" />
+            <p>Acer Predator Helios</p>
+          </div>
         </div>
       </section>
     </div>
