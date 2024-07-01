@@ -21,9 +21,15 @@ const LoginPage = () => {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      setMessage('Login successful');
-      // Handle further logic here, like redirecting to another page
+      signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    return userCredential.user.getIdToken();
+  })
+  .then((token) => {
+        // Signed in 
+        setMessage(token);
+        // ...
+      })
     } catch (error) {
       setError('Login failed: ' + error.message);
       console.error('Error during login:', error);
@@ -34,6 +40,10 @@ const LoginPage = () => {
     e.preventDefault();
     navigate('/register');
   };
+
+  /*const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };*/
 
   return (
     <div className='login-div'>
