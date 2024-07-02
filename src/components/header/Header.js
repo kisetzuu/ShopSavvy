@@ -45,17 +45,16 @@ const Header = () => {
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/cart">Cart</a></li>
-          <li><a href="/login">Login</a></li>
           <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-          <button type="submit">Search</button>
-        </div>
-        {user ? (
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+            <button type="submit">Search</button>
+          </div>
+          {user ? (
             <>
               <li>{user.email}</li>
               <li>

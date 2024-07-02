@@ -23,7 +23,7 @@ const LoginPage = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       setMessage('Login successful');
-      // Handle further logic here, like redirecting to another page
+      navigate('/shop');
     } catch (error) {
       setError('Login failed: ' + error.message);
       console.error('Error during login:', error);
