@@ -4,7 +4,6 @@ import { auth } from '../../services/FirebaseConfig';
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -31,11 +30,6 @@ const Header = () => {
     setMenuActive(!menuActive);
   };
 
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-    // Handle search functionality here, e.g., filtering results, making API calls, etc.
-  };
-
   return (
     <header className="header">
       <nav className={`nav ${menuActive ? 'active' : ''}`}>
@@ -45,15 +39,6 @@ const Header = () => {
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/cart">Cart</a></li>
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            <button type="submit">Search</button>
-          </div>
           {user ? (
             <>
               <li>{user.email}</li>

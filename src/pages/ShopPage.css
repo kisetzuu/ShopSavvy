@@ -14,6 +14,36 @@ body {
   animation: fadeInBackground 2s ease-in-out;
 }
 
+/* Keyframes for fade-in background */
+@keyframes fadeInBackground {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Keyframes for slide-in effect */
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Keyframes for pop-up effect */
+@keyframes popUp {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 /* Styles for the main container of the shop page */
 .shop-container {
   display: flex;
@@ -42,25 +72,29 @@ body {
   margin-top: -150px;
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add shadow */
+  animation: fadeInBackground 2s ease-in-out, slideInFromBottom 2s ease-in-out;
 }
 
 /* Styles for the 'Shop Now' button on hover */
 .shop-now-btn:hover {
   background-color: #148F42; /* Slightly darker green for hover */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Increase shadow on hover */
+  transform: translateY(-3px); /* Slight lift effect on hover */
+  transition: all 0.3s ease;
 }
 
 /* Styles for the featured products section */
 .shop-featured-products {
   padding: 30px; /* Increased padding around content */
   background-color: rgba(0, 0, 0, 0.6); /* Darker black background with more opacity */
-  color: white; /* White text color for contrast */
+  color: #1DB954;
   border-radius: 10px; /* Consistent border radius */
   margin: 30px 0; /* Increased vertical margin */
   max-width: 1200px; /* Maximum width */
   width: 100%; /* Full width within max-width */
   text-align: center; /* Center align text */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Add shadow */
+  animation: popUp 1s ease-in-out;
 }
 
 /* Styles for the heading inside the featured products section */
@@ -69,6 +103,7 @@ body {
   font-size: 3rem; /* Larger font size */
   letter-spacing: 1.5px; /* Add more space between letters */
   font-weight: 700;
+  animation: fadeInBackground 2s ease-in-out;
 }
 
 /* Styles for the product list inside the featured products section */
@@ -88,7 +123,12 @@ body {
   color: white; /* White text color for contrast */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1); /* Add shadow */
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out, popUp 1s ease-in-out;
+}
+
+/* Styles for selected product items */
+.shop-product-item.selected {
+  background-color: #1DB954; /* Green background for selected items */
 }
 
 /* Styles for images inside product items */
@@ -136,16 +176,12 @@ body {
   transform: scale(1.05); /* Slightly scale up on hover */
 }
 
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
 /* Styles for the single category section */
 .shop-category {
   padding: 40px;
-  margin-top: -30px;
+  margin-top: -60px;
   text-align: center;
+  animation: popUp 1s ease-in-out;
 }
 
 .shop-category h2 {
@@ -153,6 +189,7 @@ body {
   font-size: 2.5rem;
   letter-spacing: 1.5px;
   font-weight: 700;
+  color: #1DB954;
 }
 
 /* Styles for category items */
@@ -163,6 +200,7 @@ body {
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin: 30px;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .category-item:hover {
@@ -185,8 +223,10 @@ body {
 
 /* Styles for the products list */
 .shop-products {
-  padding: 30px;
+  padding: -30px;
   text-align: center;
+  margin-top: -30px;
+  color: #1DB954;
 }
 
 .shop-products h2 {
@@ -194,6 +234,7 @@ body {
   font-size: 2.5rem;
   letter-spacing: 1.5px;
   font-weight: 700;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .shop-product-list-inline {
@@ -201,6 +242,7 @@ body {
   flex-wrap: wrap; /* Allow wrapping to the next line */
   gap: 35px; /* Space between items */
   justify-content: center; /* Center align items */
+  animation: fadeIn 1s ease-in-out;
 }
 
 /* Styles for the reset button */
@@ -210,6 +252,7 @@ body {
   cursor: pointer; /* Pointer cursor on hover */
   margin-top: 20px; /* Space above the button */
   padding: 0;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .reset-button img {
@@ -220,4 +263,83 @@ body {
 
 .reset-button:hover img {
   transform: rotate(360deg); /* Rotate effect on hover */
+}
+
+/* Styles for the cart section */
+.shop-cart {
+  padding: 30px;
+  text-align: center;
+  color: #1DB954;
+}
+
+.shop-cart h2 {
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.remove-item-button {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.remove-item-button:hover {
+  background-color: #c0392b;
+}
+
+.empty-cart-button {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.empty-cart-button:hover {
+  background-color: #c0392b;
+}
+
+.add-to-cart-button {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-to-cart-button:hover {
+  background-color: #16a085;
+  transform: scale(1.05);
 }

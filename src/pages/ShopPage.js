@@ -2,9 +2,55 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ShopPage.css';
 
+const ProductItem = ({ product, onClick, isSelected }) => (
+  <div className={`shop-product-item ${isSelected ? 'selected' : ''}`} onClick={() => onClick(product.id)}>
+    <img src={`${process.env.PUBLIC_URL}${product.image}`} alt={product.name} className="shop-product-image" />
+    <p>{product.name}</p>
+  </div>
+);
+
+const CategoryItem = ({ category, onClick }) => (
+  <div className="category-item" onClick={() => onClick(category.value)}>
+    <img src={`${process.env.PUBLIC_URL}${category.image}`} alt={category.name} className="category-image" />
+    <p>{category.name}</p>
+  </div>
+);
+
+const ProductList = ({ products, selectedProducts, onProductClick }) => (
+  <div className="shop-product-list-inline">
+    {products.map(product => (
+      <ProductItem
+        key={product.id}
+        product={product}
+        onClick={onProductClick}
+        isSelected={selectedProducts.includes(product.id)}
+      />
+    ))}
+  </div>
+);
+
+const Cart = ({ cartItems, onRemoveItem, onEmptyCart }) => (
+  <div className="shop-cart">
+    <h2>Cart</h2>
+    <div className="cart-items">
+      {cartItems.map(item => (
+        <div key={item.id} className="cart-item">
+          {item.name}
+          <button className="remove-item-button" onClick={() => onRemoveItem(item.id)}>Remove</button>
+        </div>
+      ))}
+    </div>
+    {cartItems.length > 0 && (
+      <button className="empty-cart-button" onClick={onEmptyCart}>Empty Cart</button>
+    )}
+  </div>
+);
+
 const ShopPage = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   const onShopClicked = () => {
     navigate('/shop');
@@ -23,6 +69,9 @@ const ShopPage = () => {
     { id: 8, category: 'steelseries', name: 'Steelseries Aerox', image: '/steelseries_aerox.jpg' },
     { id: 9, category: 'logitech', name: 'Logitech G29', image: '/logitech_g29.jpg' },
     { id: 10, category: 'predator', name: 'Acer Predator X45', image: '/acer_predator_x45.jpg' },
+    { id: 11, category: 'razer', name: 'Razer Tartarus V2', image: '/razer_tartarus.jpg' },
+    { id: 12, category: 'rog', name: 'ASUS ROG Strix XG27ACS', image: '/rog_asus_strix_xg.jpg' },
+    { id: 13, category: 'steelseries', name: 'Steelseries Arctis 7P', image: '/steelseries_arctis7.jpg' },
   ];
 
   const categories = [
@@ -39,6 +88,28 @@ const ShopPage = () => {
 
   const handleResetClick = () => {
     setSelectedCategory('');
+  };
+
+  const handleProductClick = (productId) => {
+    setSelectedProducts(prevSelected =>
+      prevSelected.includes(productId)
+        ? prevSelected.filter(id => id !== productId)
+        : [...prevSelected, productId]
+    );
+  };
+
+  const handleAddToCart = () => {
+    const selectedItems = products.filter(product => selectedProducts.includes(product.id));
+    setCartItems(prevCartItems => [...prevCartItems, ...selectedItems.filter(item => !prevCartItems.includes(item))]);
+    setSelectedProducts([]);
+  };
+
+  const handleRemoveItem = (itemId) => {
+    setCartItems(prevCartItems => prevCartItems.filter(item => item.id !== itemId));
+  };
+
+  const handleEmptyCart = () => {
+    setCartItems([]);
   };
 
   const filteredProducts = selectedCategory
@@ -59,26 +130,9 @@ const ShopPage = () => {
       <section className="shop-featured-products">
         <h2>Featured Products</h2>
         <div className="shop-product-list">
-          <div className="shop-product-item">
-            <img src={`${process.env.PUBLIC_URL}/product1.jpg`} alt="Product 1" className="shop-product-image" />
-            <p>Razer Basilisk V3</p>
-          </div>
-          <div className="shop-product-item">
-            <img src={`${process.env.PUBLIC_URL}/product2.jpg`} alt="Product 2" className="shop-product-image" />
-            <p>GeForce RTX 4090</p>
-          </div>
-          <div className="shop-product-item">
-            <img src={`${process.env.PUBLIC_URL}/product3.jpg`} alt="Product 3" className="shop-product-image" />
-            <p>ROG Pugio</p>
-          </div>
-          <div className="shop-product-item">
-            <img src={`${process.env.PUBLIC_URL}/product4.jpg`} alt="Product 4" className="shop-product-image" />
-            <p>ROG Ally 7</p>
-          </div>
-          <div className="shop-product-item">
-            <img src={`${process.env.PUBLIC_URL}/product5.jpg`} alt="Product 5" className="shop-product-image" />
-            <p>Acer Predator Helios</p>
-          </div>
+          {products.slice(0, 5).map(product => (
+            <ProductItem key={product.id} product={product} onClick={handleProductClick} isSelected={false} />
+          ))}
         </div>
       </section>
 
@@ -87,10 +141,7 @@ const ShopPage = () => {
         <h2>Categories</h2>
         <div className="category-list">
           {categories.map(category => (
-            <div key={category.value} className="category-item" onClick={() => handleCategoryClick(category.value)}>
-              <img src={`${process.env.PUBLIC_URL}${category.image}`} alt={category.name} className="category-image" />
-              <p>{category.name}</p>
-            </div>
+            <CategoryItem key={category.value} category={category} onClick={handleCategoryClick} />
           ))}
           <button className="reset-button" onClick={handleResetClick}>
             <img src={`${process.env.PUBLIC_URL}/refresh.png`} alt="Reset" className="reset-icon" />
@@ -101,15 +152,14 @@ const ShopPage = () => {
       {/* Products List Section */}
       <section className="shop-products">
         <h2>Products</h2>
-        <div className="shop-product-list-inline">
-          {filteredProducts.map(product => (
-            <div key={product.id} className="shop-product-item">
-              <img src={`${process.env.PUBLIC_URL}${product.image}`} alt={product.name} className="shop-product-image" />
-              <p>{product.name}</p>
-            </div>
-          ))}
-        </div>
+        <ProductList products={filteredProducts} selectedProducts={selectedProducts} onProductClick={handleProductClick} />
+        <button className="add-to-cart-button" onClick={handleAddToCart}>
+          Add to Cart
+        </button>
       </section>
+
+      {/* Cart Section */}
+      <Cart cartItems={cartItems} onRemoveItem={handleRemoveItem} onEmptyCart={handleEmptyCart} />
     </div>
   );
 };
