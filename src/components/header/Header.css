@@ -6,13 +6,12 @@
   color: #191414;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 10vh;
   padding-top: 1.5%;
   padding-bottom: 1.5%;
   padding-left: 2px;
   padding-right: 2px; /* Add padding-right to balance */
   box-sizing: border-box; /* Include padding and border in width calculation */
-  /* Adjust width to fit within container */
 }
 
 .nav {
@@ -43,7 +42,7 @@
 /* Responsive Navigation Menu (Mobile View) */
 @media (max-width: 768px) {
   .nav-links {
-    display: none;
+    display:contents;
   }
 
   .header {
