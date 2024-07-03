@@ -6,7 +6,7 @@
   color: #191414;
   position: sticky;
   top: 0;
-  z-index: 10vh;
+  z-index: 1000; /* Ensure header stays on top with a high z-index value */
   padding-top: 1.5%;
   padding-bottom: 1.5%;
   padding-left: 2px;
@@ -42,7 +42,7 @@
 /* Responsive Navigation Menu (Mobile View) */
 @media (max-width: 768px) {
   .nav-links {
-    display:contents;
+    display: contents;
   }
 
   .header {

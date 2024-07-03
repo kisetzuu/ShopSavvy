@@ -1,0 +1,48 @@
+/* SupportPage.css */
+
+.support-container {
+    padding: 20px;
+    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .support-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .support-container p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .support-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .support-container ul li {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+  }
+  
+  .faq-section {
+    margin-top: 20px;
+  }
+  
+  .faq-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #1DB954;
+  }
+  
+  .faq-section p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  

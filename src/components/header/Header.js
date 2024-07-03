@@ -39,6 +39,7 @@ const Header = () => {
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/cart">Cart</a></li>
+          <li><a href="/support">Support</a></li> {/* Added Support Link */}
           {user ? (
             <>
               <li>{user.email}</li>

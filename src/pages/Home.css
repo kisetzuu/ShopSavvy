@@ -28,6 +28,7 @@ body {
   min-height: 100vh;
   text-align: center;
   animation: slideInFromBottom 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Using a custom cubic-bezier for smoother effect */
+  padding-top: 80px; /* Add padding-top to accommodate the fixed header */
 }
 
 @keyframes slideInFromBottom {
@@ -169,6 +170,7 @@ body {
   text-align: center;
   position: relative;
   animation: fadeIn 2s ease-in-out;
+  z-index: 10; /* Ensure it stays below the header */
 }
 
 .home-featured-products h2 {
@@ -264,6 +266,7 @@ body {
   text-align: center;
   color: #e0e0e0;
   animation: fadeInUp 2s ease-in-out;
+  z-index: 10; /* Ensure it stays below the header */
 }
 
 @keyframes fadeInUp {
