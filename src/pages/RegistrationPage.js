@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { auth } from '../services/FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 //import authService from '../services/AuthService';
 
 const RegistrationPage = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -12,12 +14,17 @@ const RegistrationPage = () => {
     const [message, setMessage] = useState('');
   
     const handleRegister = async (e) => {
-      e.preventDefault();  
+      e.preventDefault(); 
+      if (!email || !password || !confirmPassword) {
+        setError('Please fill in both fields.');
+        return;
+      }
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         setMessage('Registration successful');
         console.log('Registration successful', userCredential);
         // Handle further logic here, like redirecting to another page or updating user profile
+        navigate('/shop');
       } catch (error) {
         setError('Registration failed: ' + error.message);
         console.error('Error during registration:', error);
