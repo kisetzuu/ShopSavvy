@@ -51,21 +51,44 @@ const Home = () => {
             <img src={process.env.PUBLIC_URL + '/product3.jpg'} alt="Product 3" className="home-product-image" />
             <p>ROG Pugio</p>
           </div>
+          <div className="home-product-item">
+            <img src={process.env.PUBLIC_URL + '/product4.jpg'} alt="Product 4" className="home-product-image" />
+            <p>Logitech G Pro X</p>
+          </div>
+          <div className="home-product-item">
+            <img src={process.env.PUBLIC_URL + '/product5.jpg'} alt="Product 5" className="home-product-image" />
+            <p>Acer Predator Helios</p>
+          </div>
         </div>
       </section>
 
       <section className="home-video-section">
-        <h2>Promotional Video</h2>
-        <p>Ultimate speed and precision with the Razer Viper Mini.</p>
+        <h2>Razer</h2>
+        <p>Immersive gaming experiences tailored for gamers and esports enthusiasts.</p>
         <div className="home-video-container">
-          <iframe 
-            width="560" 
-            height="315" 
-            src="https://www.youtube.com/embed/rk5LTWHLQ7I" 
-            title="YouTube video player" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/rk5LTWHLQ7I"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen>
+          </iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/29Zs-grSWxg"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen>
+          </iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/W7vZEi6xR8Q?si=U1gI3CmexEQIyDI3" 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
           </iframe>
         </div>
       </section>

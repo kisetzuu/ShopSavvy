@@ -163,7 +163,7 @@ body {
 
 .home-featured-products {
   margin-top: 250px; /* Moved higher */
-  padding: 85px;
+  padding: 120px;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -227,7 +227,7 @@ body {
 }
 
 .home-video-section {
-  margin: 30px 0;
+  margin: 10px 0;
   text-align: center;
   animation: fadeIn 2s ease-in-out;
 }
@@ -242,7 +242,7 @@ body {
 
 .home-video-section p {
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   color: #e0e0e0;
   font-family: 'Roboto', sans-serif;
 }
@@ -250,6 +250,8 @@ body {
 .home-video-container {
   display: flex;
   justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
 .home-video-container iframe {
