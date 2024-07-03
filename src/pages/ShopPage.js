@@ -49,6 +49,7 @@ const Cart = ({ cartItems, onRemoveItem, onEmptyCart }) => (
 const ShopPage = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
 
@@ -88,6 +89,7 @@ const ShopPage = () => {
 
   const handleResetClick = () => {
     setSelectedCategory('');
+    setSearchTerm('');
   };
 
   const handleProductClick = (productId) => {
@@ -112,9 +114,14 @@ const ShopPage = () => {
     setCartItems([]);
   };
 
-  const filteredProducts = selectedCategory
-    ? products.filter(product => product.category === selectedCategory)
-    : products;
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredProducts = products.filter(product =>
+    (selectedCategory ? product.category === selectedCategory : true) &&
+    (searchTerm ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : true)
+  );
 
   return (
     <div className="shop-container">
@@ -129,7 +136,7 @@ const ShopPage = () => {
 
       <section className="shop-featured-products">
         <h2>Featured Products</h2>
-        <div className="shop-product-list">
+        <div className="shop-featured-product-list">
           {products.slice(0, 5).map(product => (
             <ProductItem key={product.id} product={product} onClick={handleProductClick} isSelected={false} />
           ))}
@@ -147,6 +154,20 @@ const ShopPage = () => {
             <img src={`${process.env.PUBLIC_URL}/refresh.png`} alt="Reset" className="reset-icon" />
           </button>
         </div>
+      </section>
+
+      {/* Search Section */}
+      <section className="shop-search">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search for products..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <button className="reset-button" onClick={handleResetClick}>
+          <img src={`${process.env.PUBLIC_URL}/refresh.png`} alt="Reset" className="reset-icon" />
+        </button>
       </section>
 
       {/* Products List Section */}

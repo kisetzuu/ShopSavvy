@@ -85,12 +85,12 @@ body {
 
 /* Styles for the featured products section */
 .shop-featured-products {
-  padding: 30px; /* Increased padding around content */
+  padding: 40px; /* Increased padding around content */
   background-color: rgba(0, 0, 0, 0.6); /* Darker black background with more opacity */
   color: #1DB954;
   border-radius: 10px; /* Consistent border radius */
   margin: 30px 0; /* Increased vertical margin */
-  max-width: 1200px; /* Maximum width */
+  max-width: 1600px; /* Maximum width */
   width: 100%; /* Full width within max-width */
   text-align: center; /* Center align text */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Add shadow */
@@ -107,16 +107,16 @@ body {
 }
 
 /* Styles for the product list inside the featured products section */
-.shop-product-list {
+.shop-featured-product-list {
   display: grid; /* Use CSS Grid for layout */
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
   gap: 30px; /* Increased space between items */
 }
 
 /* Styles for individual product items */
-.shop-product-item {
+.shop-featured-product-item {
   background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque white background */
-  padding: 20px; /* Padding around content */
+  padding: 50px; /* Padding around content */
   border: 1px solid #555; /* Slightly lighter border color */
   border-radius: 10px; /* More rounded corners */
   text-align: center; /* Center align text */
@@ -126,9 +126,69 @@ body {
   animation: fadeIn 0.5s ease-in-out, popUp 1s ease-in-out;
 }
 
-/* Styles for selected product items */
-.shop-product-item.selected {
-  background-color: #1DB954; /* Green background for selected items */
+/* Styles for images inside product items */
+.shop-featured-product-image {
+  width: 150px; /* Fixed width */
+  height: 150px; /* Fixed height */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+  border-radius: 10px; /* Rounded corners */
+  margin-bottom: 15px; /* Increased space below the image */
+  transition: transform 0.3s ease-in-out;
+}
+
+.shop-featured-product-image:hover {
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+/* Styles for paragraphs inside product items */
+.shop-featured-product-item p {
+  margin: 0; /* Remove default margin */
+  font-weight: 500; /* Slightly bolder text */
+  font-size: 1.2rem; /* Increased font size */
+  margin-top: 15px; /* Increased space above the text */
+}
+
+/* Styles for product items on hover */
+.shop-featured-product-item:hover {
+  transform: scale(1.05); /* Scale up slightly */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.1); /* Increase shadow on hover */
+}
+
+/* Styles for buttons inside product items */
+.shop-featured-product-item button {
+  background-color: #1abc9c; /* Primary button color */
+  color: white; /* White text color */
+  border: none; /* No border */
+  padding: 12px 24px; /* Increased padding */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-top: 15px; /* Increased space above the button */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.shop-featured-product-item button:hover {
+  background-color: #16a085; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+/* Styles for the product list */
+.shop-product-list {
+  display: grid; /* Use CSS Grid for layout */
+  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+  gap: 30px; /* Increased space between items */
+}
+
+/* Styles for individual product items */
+.shop-product-item {
+  background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque white background */
+  padding: 40px; /* Padding around content */
+  border: 1px solid #555; /* Slightly lighter border color */
+  border-radius: 10px; /* More rounded corners */
+  text-align: center; /* Center align text */
+  color: white; /* White text color for contrast */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1); /* Add shadow */
+  animation: fadeIn 0.5s ease-in-out, popUp 1s ease-in-out;
 }
 
 /* Styles for images inside product items */
@@ -208,8 +268,8 @@ body {
 }
 
 .category-image {
-  width: 280px;
-  height: 80px;
+  width: 420px;
+  height: 100px;
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -221,11 +281,36 @@ body {
   font-size: 1.1rem;
 }
 
+/* Styles for the search section */
+.shop-search {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-input {
+  width: 300px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  opacity: 0.8;
+}
+
+.search-input:focus {
+  border-color: #1DB954;
+  opacity: 1;
+}
+
 /* Styles for the products list */
 .shop-products {
-  padding: -30px;
+  padding: -40px;
   text-align: center;
-  margin-top: -30px;
+  margin-top: 10px;
   color: #1DB954;
 }
 
@@ -250,7 +335,6 @@ body {
   background-color: transparent; /* Transparent background for button */
   border: none; /* No border */
   cursor: pointer; /* Pointer cursor on hover */
-  margin-top: 20px; /* Space above the button */
   padding: 0;
   animation: fadeIn 1s ease-in-out;
 }
@@ -332,10 +416,10 @@ body {
   background-color: #1abc9c;
   color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 20px 200px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 45px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -343,5 +427,3 @@ body {
   background-color: #16a085;
   transform: scale(1.05);
 }
-
-
