@@ -143,6 +143,13 @@ const ShopPage = () => {
         </div>
       </section>
 
+      {/* Video Section */}
+      <section className="shop-video-section">
+        <iframe width="650" height="400" src="https://www.youtube.com/embed/qvSmM68xW5Q?si=agsNsXhg_f_gl8ZQ" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        <iframe width="650" height="400" src="https://www.youtube.com/embed/jgDvJ7lFhgE?si=d5Kl9BI5lEVSeLjT" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        <iframe width="650" height="400" src="https://www.youtube.com/embed/KMLv1H1UjSU?si=ATMwXDnjRg4Fyq2Q" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+      </section>
+
       {/* Categories Section */}
       <section className="shop-category">
         <h2>Categories</h2>
