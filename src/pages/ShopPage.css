@@ -437,3 +437,10 @@ body {
   background-color: #16a085;
   transform: scale(1.05);
 }
+
+/* Styles for selected product items */
+.shop-product-item.selected {
+  border-color: #1DB954;
+  box-shadow: 0 0 20px #1DB954;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}

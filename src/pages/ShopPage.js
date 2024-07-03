@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../CartContext';
 import './ShopPage.css';
 
 const ProductItem = ({ product, onClick, isSelected }) => (
@@ -29,33 +30,29 @@ const ProductList = ({ products, selectedProducts, onProductClick }) => (
   </div>
 );
 
-const Cart = ({ cartItems, onRemoveItem, onEmptyCart }) => (
-  <div className="shop-cart">
-    <h2>Cart</h2>
-    <div className="cart-items">
-      {cartItems.map(item => (
-        <div key={item.id} className="cart-item">
-          {item.name}
-          <button className="remove-item-button" onClick={() => onRemoveItem(item.id)}>Remove</button>
+const Modal = ({ show, onClose, onViewCart, itemCount }) => {
+  if (!show) return null;
+  return (
+    <div className="modal-overlay">
+      <div className="modal">
+        <h2>Items Added to Cart</h2>
+        <p>You have selected {itemCount} items.</p>
+        <div className="modal-buttons">
+          <button onClick={onViewCart}>View Cart</button>
+          <button onClick={onClose}>Close</button>
         </div>
-      ))}
+      </div>
     </div>
-    {cartItems.length > 0 && (
-      <button className="empty-cart-button" onClick={onEmptyCart}>Empty Cart</button>
-    )}
-  </div>
-);
+  );
+};
 
 const ShopPage = () => {
   const navigate = useNavigate();
+  const { addToCart } = useContext(CartContext);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
-
-  const onShopClicked = () => {
-    navigate('/shop');
-  };
+  const [showModal, setShowModal] = useState(false);
 
   const bannerImage = `${process.env.PUBLIC_URL}/Geforce2.jpg`;
 
@@ -73,6 +70,8 @@ const ShopPage = () => {
     { id: 11, category: 'razer', name: 'Razer Tartarus V2', image: '/razer_tartarus.jpg' },
     { id: 12, category: 'rog', name: 'ASUS ROG Strix XG27ACS', image: '/rog_asus_strix_xg.jpg' },
     { id: 13, category: 'steelseries', name: 'Steelseries Arctis 7P', image: '/steelseries_arctis7.jpg' },
+    { id: 14, category: 'logitech', name: 'Logitech G502 Light', image: '/logitech_g502.jpg' },
+    { id: 15, category: 'predator', name: 'Predator Helios Neo 16', image: '/acer_predator_helios16.jpg' },
   ];
 
   const categories = [
@@ -102,16 +101,9 @@ const ShopPage = () => {
 
   const handleAddToCart = () => {
     const selectedItems = products.filter(product => selectedProducts.includes(product.id));
-    setCartItems(prevCartItems => [...prevCartItems, ...selectedItems.filter(item => !prevCartItems.includes(item))]);
+    addToCart(selectedItems);
+    setShowModal(true);
     setSelectedProducts([]);
-  };
-
-  const handleRemoveItem = (itemId) => {
-    setCartItems(prevCartItems => prevCartItems.filter(item => item.id !== itemId));
-  };
-
-  const handleEmptyCart = () => {
-    setCartItems([]);
   };
 
   const handleSearchChange = (e) => {
@@ -122,6 +114,14 @@ const ShopPage = () => {
     (selectedCategory ? product.category === selectedCategory : true) &&
     (searchTerm ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : true)
   );
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleViewCart = () => {
+    navigate('/cart');
+  };
 
   return (
     <div className="shop-container">
@@ -138,7 +138,7 @@ const ShopPage = () => {
         <h2>Featured Products</h2>
         <div className="shop-featured-product-list">
           {products.slice(0, 5).map(product => (
-            <ProductItem key={product.id} product={product} onClick={handleProductClick} isSelected={false} />
+            <ProductItem key={product.id} product={product} onClick={handleProductClick} isSelected={selectedProducts.includes(product.id)} />
           ))}
         </div>
       </section>
@@ -172,9 +172,6 @@ const ShopPage = () => {
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <button className="reset-button" onClick={handleResetClick}>
-          <img src={`${process.env.PUBLIC_URL}/refresh.png`} alt="Reset" className="reset-icon" />
-        </button>
       </section>
 
       {/* Products List Section */}
@@ -186,8 +183,13 @@ const ShopPage = () => {
         </button>
       </section>
 
-      {/* Cart Section */}
-      <Cart cartItems={cartItems} onRemoveItem={handleRemoveItem} onEmptyCart={handleEmptyCart} />
+      {/* Modal for Add to Cart Confirmation */}
+      <Modal
+        show={showModal}
+        onClose={handleCloseModal}
+        onViewCart={handleViewCart}
+        itemCount={selectedProducts.length}
+      />
     </div>
   );
 };
