@@ -36,7 +36,7 @@ const Modal = ({ show, onClose, onViewCart, itemCount }) => {
     <div className="modal-overlay">
       <div className="modal">
         <h2>Items Added to Cart</h2>
-        <p>You have selected {itemCount} items.</p>
+        <p>You have added {itemCount} items to your cart.</p>
         <div className="modal-buttons">
           <button onClick={onViewCart}>View Cart</button>
           <button onClick={onClose}>Close</button>
@@ -53,6 +53,7 @@ const ShopPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [itemCount, setItemCount] = useState(0);
 
   const bannerImage = `${process.env.PUBLIC_URL}/Geforce2.jpg`;
 
@@ -97,13 +98,16 @@ const ShopPage = () => {
         ? prevSelected.filter(id => id !== productId)
         : [...prevSelected, productId]
     );
+    setItemCount(selectedProducts.length + 1); // Update item count immediately
+    setShowModal(true); // Show modal to indicate selection
   };
 
   const handleAddToCart = () => {
     const selectedItems = products.filter(product => selectedProducts.includes(product.id));
     addToCart(selectedItems);
-    setShowModal(true);
+    setShowModal(false); // Close the modal
     setSelectedProducts([]);
+    setItemCount(0); // Reset item count
   };
 
   const handleSearchChange = (e) => {
@@ -120,6 +124,7 @@ const ShopPage = () => {
   };
 
   const handleViewCart = () => {
+    setShowModal(false);
     navigate('/cart');
   };
 
@@ -178,6 +183,9 @@ const ShopPage = () => {
       <section className="shop-products">
         <h2>Products</h2>
         <ProductList products={filteredProducts} selectedProducts={selectedProducts} onProductClick={handleProductClick} />
+        <div className="selected-item-count">
+          <p>{itemCount} items selected</p>
+        </div>
         <button className="add-to-cart-button" onClick={handleAddToCart}>
           Add to Cart
         </button>
@@ -188,7 +196,7 @@ const ShopPage = () => {
         show={showModal}
         onClose={handleCloseModal}
         onViewCart={handleViewCart}
-        itemCount={selectedProducts.length}
+        itemCount={itemCount}
       />
     </div>
   );
