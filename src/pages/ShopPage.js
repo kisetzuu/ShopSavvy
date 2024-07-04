@@ -30,13 +30,13 @@ const ProductList = ({ products, selectedProducts, onProductClick }) => (
   </div>
 );
 
-const Modal = ({ show, onClose, onViewCart, itemCount }) => {
+const Modal = ({ show, onClose, onViewCart }) => {
   if (!show) return null;
   return (
     <div className="modal-overlay">
       <div className="modal">
         <h2>Items Added to Cart</h2>
-        <p>You have added {itemCount} items to your cart.</p>
+        <p>Your items have been added to the cart. Would you like to view your cart?</p>
         <div className="modal-buttons">
           <button onClick={onViewCart}>View Cart</button>
           <button onClick={onClose}>Close</button>
@@ -53,7 +53,6 @@ const ShopPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [itemCount, setItemCount] = useState(0);
 
   const bannerImage = `${process.env.PUBLIC_URL}/Geforce2.jpg`;
 
@@ -98,16 +97,13 @@ const ShopPage = () => {
         ? prevSelected.filter(id => id !== productId)
         : [...prevSelected, productId]
     );
-    setItemCount(selectedProducts.length + 1); // Update item count immediately
-    setShowModal(true); // Show modal to indicate selection
   };
 
   const handleAddToCart = () => {
     const selectedItems = products.filter(product => selectedProducts.includes(product.id));
     addToCart(selectedItems);
-    setShowModal(false); // Close the modal
-    setSelectedProducts([]);
-    setItemCount(0); // Reset item count
+    setShowModal(true); // Show modal after adding to cart
+    setSelectedProducts([]); // Clear selected products
   };
 
   const handleSearchChange = (e) => {
@@ -184,7 +180,7 @@ const ShopPage = () => {
         <h2>Products</h2>
         <ProductList products={filteredProducts} selectedProducts={selectedProducts} onProductClick={handleProductClick} />
         <div className="selected-item-count">
-          <p>{itemCount} items selected</p>
+          <p>{selectedProducts.length} items selected</p>
         </div>
         <button className="add-to-cart-button" onClick={handleAddToCart}>
           Add to Cart
@@ -196,7 +192,7 @@ const ShopPage = () => {
         show={showModal}
         onClose={handleCloseModal}
         onViewCart={handleViewCart}
-        itemCount={itemCount}
+        itemCount={selectedProducts.length}
       />
     </div>
   );
