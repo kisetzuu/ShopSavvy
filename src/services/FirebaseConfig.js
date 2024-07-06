@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 // src/services/FirebaseConfig.js
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+=======
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import {getAuth} from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+>>>>>>> 740de9a5326cd4e28c7f2dfc0b12e95d58398129
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAYngPpJc9rxtqi0FQNrKdk-SjvlXekG9I',
@@ -15,6 +23,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+<<<<<<< HEAD
 const db = getFirestore(app);
 
 export { app, auth, db };
+=======
+const analytics = getAnalytics(app);
+const fs = getFirestore(app)
+
+export {app, auth, analytics, fs};
+>>>>>>> 740de9a5326cd4e28c7f2dfc0b12e95d58398129

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { auth } from '../services/FirebaseConfig';
+import { auth, fs} from '../services/FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { doc, setDoc } from 'firebase/firestore';
 
 //import authService from '../services/AuthService';
 
 const RegistrationPage = () => {
     const navigate = useNavigate();
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -20,10 +22,16 @@ const RegistrationPage = () => {
         return;
       }
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        var userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        var user = userCredential.user;
+  
+        // Step 2: Store user data in Firestore database
+        await setDoc(doc(fs, 'users', user.uid), {
+          name: name,
+          email: user.email,
+          createdAt: new Date().toISOString(),
+        });
         setMessage('Registration successful');
-        console.log('Registration successful', userCredential);
-        // Handle further logic here, like redirecting to another page or updating user profile
         navigate('/shop');
       } catch (error) {
         setError('Registration failed: ' + error.message);
@@ -41,6 +49,15 @@ const RegistrationPage = () => {
             {error && <p className="error">{error}</p>}
             {message && <p className="success">{message}</p>}
             <form>
+            <div className="form-group">
+                <label htmlFor="name">Name:</label>
+                <input
+                  type="name"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="email">Email:</label>
                 <input
