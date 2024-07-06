@@ -1,6 +1,8 @@
+// src/pages/ShopPage.js
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../CartContext';
+import { SavedToCartContext } from '../SavedToCartContext';
 import { auth, db } from '../services/FirebaseConfig';
 import { collection, getDocs, doc, getDoc, setDoc } from 'firebase/firestore';
 import './ShopPage.css';
@@ -37,15 +39,14 @@ const ProductList = ({ products, onProductClick, onViewProduct }) => (
   </div>
 );
 
-const Modal = ({ show, onClose, onViewCart }) => {
+const Modal = ({ show, onClose }) => {
   if (!show) return null;
   return (
     <div className="modal-overlay">
       <div className="modal">
         <h2>Items Added to Cart</h2>
-        <p>Your items have been added to the cart. Would you like to view your cart?</p>
+        <p>Items have been added to the cart. Click 'View Cart' to view items.</p>
         <div className="modal-buttons">
-          <button onClick={onViewCart}>View Cart</button>
           <button onClick={onClose}>Close</button>
         </div>
       </div>
@@ -56,6 +57,7 @@ const Modal = ({ show, onClose, onViewCart }) => {
 const ShopPage = () => {
   const navigate = useNavigate();
   const { addToCart, cartItems, setCartItems, balance } = useContext(CartContext);
+  const { saveToCart, savedItems, setSavedItems } = useContext(SavedToCartContext);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -73,13 +75,21 @@ const ShopPage = () => {
         } else {
           setCartItems([]);
         }
+
+        const savedDoc = await getDoc(doc(db, 'saved-to-cart', currentUser.uid));
+        if (savedDoc.exists()) {
+          setSavedItems(savedDoc.data().items || []);
+        } else {
+          setSavedItems([]);
+        }
       } else {
         setCartItems([]);
+        setSavedItems([]);
       }
     });
 
     return () => unsubscribe();
-  }, [setCartItems]);
+  }, [setCartItems, setSavedItems]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -159,6 +169,31 @@ const ShopPage = () => {
     }
   };
 
+  const handleSaveToCart = async () => {
+    if (!user) {
+      alert('You must be logged in to save items to the cart.');
+      navigate('/login'); // Redirect to login page
+      return;
+    }
+
+    const selectedItems = products.filter(product => selectedProducts.includes(product.id));
+    try {
+      const savedRef = doc(db, 'saved-to-cart', user.uid);
+      const savedDoc = await getDoc(savedRef);
+      let currentItems = [];
+      if (savedDoc.exists()) {
+        currentItems = savedDoc.data().items || [];
+      }
+      const newItems = [...currentItems, ...selectedItems];
+      await setDoc(savedRef, { items: newItems }, { merge: true });
+      setSavedItems(newItems); // Update context with new saved items
+      setShowModal(true); // Show modal after saving to cart
+      setSelectedProducts([]); // Clear selected products
+    } catch (error) {
+      console.error("Error saving items to Firestore:", error);
+    }
+  };
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -173,7 +208,6 @@ const ShopPage = () => {
   };
 
   const handleViewCart = () => {
-    setShowModal(false);
     navigate('/cart');
   };
 
@@ -237,6 +271,12 @@ const ShopPage = () => {
           <button className="add-to-cart-button" onClick={handleAddToCart}>
             Add to Cart
           </button>
+          <button className="save-to-cart-button" onClick={handleSaveToCart}>
+            Save to Cart
+          </button>
+          <button className="view-cart-button" onClick={handleViewCart}>
+            View Cart
+          </button>
         </div>
       </section>
 
@@ -244,8 +284,6 @@ const ShopPage = () => {
       <Modal
         show={showModal}
         onClose={handleCloseModal}
-        onViewCart={handleViewCart}
-        itemCount={selectedProducts.length}
       />
     </div>
   );

@@ -444,3 +444,41 @@ body {
   box-shadow: 0 0 20px #1DB954;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
+/* src/pages/ShopPage.css */
+
+/* General button styles */
+.shop-buttons button {
+  background-color: #1abc9c; /* Primary button color */
+  color: white; /* White text color */
+  border: none; /* No border */
+  padding: 12px 24px; /* Increased padding */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-top: 15px; /* Increased space above the button */
+  margin-right: 10px; /* Space between buttons */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.shop-buttons button:last-child {
+  margin-right: 0; /* Remove margin for the last button */
+}
+
+.shop-buttons button:hover {
+  background-color: #16a085; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+/* Specific button styles */
+.add-to-cart-button,
+.save-to-cart-button,
+.view-cart-button {
+  /* Any specific styles for individual buttons can go here */
+}
+
+/* Ensuring uniform styles */
+.shop-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

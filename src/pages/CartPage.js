@@ -17,7 +17,7 @@ const CartPage = () => {
         try {
           const cartDoc = await getDoc(doc(db, 'carts', user.uid));
           if (cartDoc.exists()) {
-            setCartItems(cartDoc.data().items || []);
+            setCartItems(cartDoc.data().items);
           }
         } catch (error) {
           console.error("Error fetching cart items from Firestore:", error);
@@ -38,7 +38,7 @@ const CartPage = () => {
       <div className="cart-items">
         {cartItems.map(item => (
           <div key={item.id} className="cart-item">
-            <img src={`${process.env.PUBLIC_URL}${item.image}`} alt={item.name} className="cart-item-image" />
+            <img src={item.image} alt={item.name} className="cart-item-image" />
             <div className="cart-item-details">
               <p className="cart-item-name">{item.name}</p>
               <button className="remove-item-button" onClick={() => removeFromCart(item.id)}>Remove</button>
