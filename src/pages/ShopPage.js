@@ -1,30 +1,37 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../CartContext';
+import { auth, db } from '../services/FirebaseConfig';
+import { collection, getDocs, doc, getDoc, setDoc } from 'firebase/firestore';
 import './ShopPage.css';
 
-const ProductItem = ({ product, onClick, isSelected }) => (
-  <div className={`shop-product-item ${isSelected ? 'selected' : ''}`} onClick={() => onClick(product.id)}>
-    <img src={`${process.env.PUBLIC_URL}${product.image}`} alt={product.name} className="shop-product-image" />
+const ProductItem = ({ product, onClick, onView }) => (
+  <div className={`shop-product-item`} onClick={() => onClick(product.id)}>
+    <img src={product.image} alt={product.name} className="shop-product-image" />
     <p>{product.name}</p>
+    <p>${product.price}</p>
+    <button onClick={(e) => {
+      e.stopPropagation(); // Prevents the parent onClick from firing
+      onView(product.id);
+    }}>View Product</button>
   </div>
 );
 
 const CategoryItem = ({ category, onClick }) => (
   <div className="category-item" onClick={() => onClick(category.value)}>
-    <img src={`${process.env.PUBLIC_URL}${category.image}`} alt={category.name} className="category-image" />
+    <img src={category.image} alt={category.name} className="category-image" />
     <p>{category.name}</p>
   </div>
 );
 
-const ProductList = ({ products, selectedProducts, onProductClick }) => (
+const ProductList = ({ products, onProductClick, onViewProduct }) => (
   <div className="shop-product-list-inline">
     {products.map(product => (
       <ProductItem
         key={product.id}
         product={product}
         onClick={onProductClick}
-        isSelected={selectedProducts.includes(product.id)}
+        onView={onViewProduct}
       />
     ))}
   </div>
@@ -48,31 +55,47 @@ const Modal = ({ show, onClose, onViewCart }) => {
 
 const ShopPage = () => {
   const navigate = useNavigate();
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, cartItems, setCartItems, balance } = useContext(CartContext);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [user, setUser] = useState(null);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        const cartDoc = await getDoc(doc(db, 'carts', currentUser.uid));
+        if (cartDoc.exists()) {
+          setCartItems(cartDoc.data().items || []);
+        } else {
+          setCartItems([]);
+        }
+      } else {
+        setCartItems([]);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [setCartItems]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'products'));
+        const productsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setProducts(productsData);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const bannerImage = `${process.env.PUBLIC_URL}/Geforce2.jpg`;
-
-  const products = [
-    { id: 1, category: 'razer', name: 'Razer Basilisk V3', image: '/product1.jpg' },
-    { id: 2, category: 'rog', name: 'ROG Pugio', image: '/product2.jpg' },
-    { id: 3, category: 'steelseries', name: 'SteelSeries Apex Pro', image: '/product3.jpg' },
-    { id: 4, category: 'logitech', name: 'Logitech G Pro X', image: '/product4.jpg' },
-    { id: 5, category: 'predator', name: 'Acer Predator Helios', image: '/product5.jpg' },
-    { id: 6, category: 'razer', name: 'Razer BlackWidow V3', image: '/razer_black_widow_v3.jpg' },
-    { id: 7, category: 'rog', name: 'ROG Delta', image: '/rog_delta.jpg' },
-    { id: 8, category: 'steelseries', name: 'Steelseries Aerox', image: '/steelseries_aerox.jpg' },
-    { id: 9, category: 'logitech', name: 'Logitech G29', image: '/logitech_g29.jpg' },
-    { id: 10, category: 'predator', name: 'Acer Predator X45', image: '/acer_predator_x45.jpg' },
-    { id: 11, category: 'razer', name: 'Razer Tartarus V2', image: '/razer_tartarus.jpg' },
-    { id: 12, category: 'rog', name: 'ASUS ROG Strix XG27ACS', image: '/rog_asus_strix_xg.jpg' },
-    { id: 13, category: 'steelseries', name: 'Steelseries Arctis 7P', image: '/steelseries_arctis7.jpg' },
-    { id: 14, category: 'logitech', name: 'Logitech G502 Light', image: '/logitech_g502.jpg' },
-    { id: 15, category: 'predator', name: 'Predator Helios Neo 16', image: '/acer_predator_helios16.jpg' },
-  ];
 
   const categories = [
     { name: 'Razer', image: '/razer.jpg', value: 'razer' },
@@ -99,11 +122,41 @@ const ShopPage = () => {
     );
   };
 
-  const handleAddToCart = () => {
+  const handleViewProduct = (productId) => {
+    navigate(`/product/${productId}`); // Navigate to product detail page
+  };
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      alert('You must be logged in to add items to the cart.');
+      navigate('/login'); // Redirect to login page
+      return;
+    }
+
     const selectedItems = products.filter(product => selectedProducts.includes(product.id));
-    addToCart(selectedItems);
-    setShowModal(true); // Show modal after adding to cart
-    setSelectedProducts([]); // Clear selected products
+    const totalCost = selectedItems.reduce((total, product) => total + product.price, 0);
+
+    if (totalCost > balance) {
+      alert('Insufficient balance to add these items to the cart.');
+      return;
+    }
+
+    // Merge with existing items in Firestore
+    try {
+      const cartRef = doc(db, 'carts', user.uid);
+      const cartDoc = await getDoc(cartRef);
+      let currentItems = [];
+      if (cartDoc.exists()) {
+        currentItems = cartDoc.data().items || [];
+      }
+      const newItems = [...currentItems, ...selectedItems];
+      await setDoc(cartRef, { items: newItems, balance: balance - totalCost }, { merge: true });
+      setCartItems(newItems); // Update context with new items
+      setShowModal(true); // Show modal after adding to cart
+      setSelectedProducts([]); // Clear selected products
+    } catch (error) {
+      console.error("Error saving cart items to Firestore:", error);
+    }
   };
 
   const handleSearchChange = (e) => {
@@ -139,16 +192,14 @@ const ShopPage = () => {
         <h2>Featured Products</h2>
         <div className="shop-featured-product-list">
           {products.slice(0, 5).map(product => (
-            <ProductItem key={product.id} product={product} onClick={handleProductClick} isSelected={selectedProducts.includes(product.id)} />
+            <ProductItem key={product.id} product={product} onClick={handleProductClick} onView={handleViewProduct} />
           ))}
         </div>
       </section>
 
-      {/* Video Section */}
-      <section className="shop-video-section">
-        <iframe width="650" height="400" src="https://www.youtube.com/embed/qvSmM68xW5Q?si=agsNsXhg_f_gl8ZQ" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-        <iframe width="650" height="400" src="https://www.youtube.com/embed/jgDvJ7lFhgE?si=d5Kl9BI5lEVSeLjT" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-        <iframe width="650" height="400" src="https://www.youtube.com/embed/KMLv1H1UjSU?si=ATMwXDnjRg4Fyq2Q" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+      {/* Balance Display */}
+      <section className="balance-section">
+        <h2>Your Balance: ${balance}</h2>
       </section>
 
       {/* Categories Section */}
@@ -178,13 +229,15 @@ const ShopPage = () => {
       {/* Products List Section */}
       <section className="shop-products">
         <h2>Products</h2>
-        <ProductList products={filteredProducts} selectedProducts={selectedProducts} onProductClick={handleProductClick} />
+        <ProductList products={filteredProducts} onProductClick={handleProductClick} onViewProduct={handleViewProduct} />
         <div className="selected-item-count">
           <p>{selectedProducts.length} items selected</p>
         </div>
-        <button className="add-to-cart-button" onClick={handleAddToCart}>
-          Add to Cart
-        </button>
+        <div className="shop-buttons">
+          <button className="add-to-cart-button" onClick={handleAddToCart}>
+            Add to Cart
+          </button>
+        </div>
       </section>
 
       {/* Modal for Add to Cart Confirmation */}

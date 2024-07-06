@@ -1,11 +1,32 @@
-import React, { useContext } from 'react';
+// src/pages/CartPage.js
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../CartContext';
+import { auth, db } from '../services/FirebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
 import './CartPage.css';
 
 const CartPage = () => {
-  const { cartItems, removeFromCart, emptyCart } = useContext(CartContext);
+  const { cartItems, setCartItems, removeFromCart, emptyCart } = useContext(CartContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        try {
+          const cartDoc = await getDoc(doc(db, 'carts', user.uid));
+          if (cartDoc.exists()) {
+            setCartItems(cartDoc.data().items || []);
+          }
+        } catch (error) {
+          console.error("Error fetching cart items from Firestore:", error);
+        }
+      }
+    };
+
+    fetchCartItems();
+  }, [setCartItems]);
 
   const handleContinueShopping = () => {
     navigate('/shop');

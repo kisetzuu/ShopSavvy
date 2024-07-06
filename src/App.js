@@ -1,3 +1,4 @@
+// src/App.js
 import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
@@ -9,6 +10,7 @@ import RegistrationPage from './pages/RegistrationPage';
 import SupportPage from './pages/SupportPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CartProvider } from './CartContext';
+import ProductDetailPage from './pages/ProductDetailPage';
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/support" element={<SupportPage />} />
+          <Route path="/product/:productId" element={<ProductDetailPage />} />
         </Routes>
       </CartProvider>
     </Router>
