@@ -1,12 +1,9 @@
-/* Import Google Fonts for a modern look */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
 /* General styles for the body element */
 body {
-  background: linear-gradient(to bottom, #292929, #000000); /* Gradient from top to bottom */
-  background-repeat: no-repeat; /* Do not repeat the background */
-  background-attachment: fixed; /* Fixed background */
-  background-size: cover; /* Cover the entire page */
+  background: linear-gradient(to bottom, #292929, #000000);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
@@ -14,13 +11,11 @@ body {
   animation: fadeInBackground 2s ease-in-out;
 }
 
-/* Keyframes for fade-in background */
 @keyframes fadeInBackground {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
 
-/* Keyframes for slide-in effect */
 @keyframes slideInFromBottom {
   0% {
     transform: translateY(20px);
@@ -32,7 +27,6 @@ body {
   }
 }
 
-/* Keyframes for pop-up effect */
 @keyframes popUp {
   0% {
     transform: scale(0.95);
@@ -52,191 +46,176 @@ body {
   justify-content: center;
   min-height: 100vh;
   text-align: center;
-  animation: slideInFromBottom 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Using a custom cubic-bezier for smoother effect */
+  animation: slideInFromBottom 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   padding: 20px;
 }
 
 /* Styles for the hero section */
 .shop-hero {
   width: 100%;
-  height: 500px; /* Adjusted height */
-  display: flex; /* Use flexbox for layout */
-  align-items: center; /* Center align children vertically */
-  justify-content: center; /* Center align children horizontally */
-  color: white; /* White text color */
-  text-align: center; /* Center align text */
-  padding: 40px; /* Padding around content */
-  box-sizing: border-box; /* Include padding in height/width */
-  background-size: cover; /* Make the background cover the entire area */
-  background-repeat: no-repeat; /* Prevent background from repeating */
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 40px;
+  box-sizing: border-box;
+  background-size: cover;
+  background-repeat: no-repeat;
   margin-top: -150px;
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add shadow */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   animation: fadeInBackground 2s ease-in-out, slideInFromBottom 2s ease-in-out;
 }
 
-/* Styles for the 'Shop Now' button on hover */
 .shop-now-btn:hover {
-  background-color: #148F42; /* Slightly darker green for hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Increase shadow on hover */
-  transform: translateY(-3px); /* Slight lift effect on hover */
+  background-color: #148F42;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
   transition: all 0.3s ease;
 }
 
 /* Styles for the featured products section */
 .shop-featured-products {
-  padding: 40px; /* Increased padding around content */
-  background-color: rgba(0, 0, 0, 0.6); /* Darker black background with more opacity */
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.6);
   color: #1DB954;
-  border-radius: 10px; /* Consistent border radius */
-  margin: 30px 0; /* Increased vertical margin */
-  max-width: 1600px; /* Maximum width */
-  width: 100%; /* Full width within max-width */
-  text-align: center; /* Center align text */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Add shadow */
+  border-radius: 10px;
+  margin: 30px 0;
+  max-width: 1600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   animation: popUp 1s ease-in-out;
 }
 
-/* Styles for the heading inside the featured products section */
 .shop-featured-products h2 {
-  margin-bottom: 40px; /* Increased space below the heading */
-  font-size: 3rem; /* Larger font size */
-  letter-spacing: 1.5px; /* Add more space between letters */
+  margin-bottom: 40px;
+  font-size: 3rem;
+  letter-spacing: 1.5px;
   font-weight: 700;
   animation: fadeInBackground 2s ease-in-out;
 }
 
-/* Styles for the product list inside the featured products section */
 .shop-featured-product-list {
-  display: grid; /* Use CSS Grid for layout */
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
-  gap: 30px; /* Increased space between items */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
 }
 
-/* Styles for individual product items */
 .shop-featured-product-item {
-  background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque white background */
-  padding: 50px; /* Padding around content */
-  border: 1px solid #555; /* Slightly lighter border color */
-  border-radius: 10px; /* More rounded corners */
-  text-align: center; /* Center align text */
-  color: white; /* White text color for contrast */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1); /* Add shadow */
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 50px;
+  border: 1px solid #555;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.5s ease-in-out, popUp 1s ease-in-out;
 }
 
-/* Styles for images inside product items */
 .shop-featured-product-image {
-  width: 150px; /* Fixed width */
-  height: 150px; /* Fixed height */
-  object-fit: cover; /* Ensure the image covers the area without distortion */
-  border-radius: 10px; /* Rounded corners */
-  margin-bottom: 15px; /* Increased space below the image */
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
   transition: transform 0.3s ease-in-out;
 }
 
 .shop-featured-product-image:hover {
-  transform: scale(1.1); /* Scale up on hover */
+  transform: scale(1.1);
 }
 
-/* Styles for paragraphs inside product items */
 .shop-featured-product-item p {
-  margin: 0; /* Remove default margin */
-  font-weight: 500; /* Slightly bolder text */
-  font-size: 1.2rem; /* Increased font size */
-  margin-top: 15px; /* Increased space above the text */
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.2rem;
+  margin-top: 15px;
 }
 
-/* Styles for product items on hover */
 .shop-featured-product-item:hover {
-  transform: scale(1.05); /* Scale up slightly */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.1); /* Increase shadow on hover */
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Styles for buttons inside product items */
 .shop-featured-product-item button {
-  background-color: #1abc9c; /* Primary button color */
-  color: white; /* White text color */
-  border: none; /* No border */
-  padding: 12px 24px; /* Increased padding */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  margin-top: 15px; /* Increased space above the button */
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .shop-featured-product-item button:hover {
-  background-color: #16a085; /* Darker green on hover */
-  transform: scale(1.05); /* Slightly scale up on hover */
+  background-color: #16a085;
+  transform: scale(1.05);
 }
 
-/* Styles for the product list */
 .shop-product-list {
-  display: grid; /* Use CSS Grid for layout */
-  grid-template-columns: repeat(5, 1fr); /* 5 columns */
-  gap: 30px; /* Increased space between items */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
 }
 
-/* Styles for individual product items */
 .shop-product-item {
-  background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque white background */
-  padding: 40px; /* Padding around content */
-  border: 1px solid #555; /* Slightly lighter border color */
-  border-radius: 10px; /* More rounded corners */
-  text-align: center; /* Center align text */
-  color: white; /* White text color for contrast */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1); /* Add shadow */
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 40px;
+  border: 1px solid #555;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.5s ease-in-out, popUp 1s ease-in-out;
 }
 
-/* Styles for images inside product items */
 .shop-product-image {
-  width: 150px; /* Fixed width */
-  height: 150px; /* Fixed height */
-  object-fit: cover; /* Ensure the image covers the area without distortion */
-  border-radius: 10px; /* Rounded corners */
-  margin-bottom: 15px; /* Increased space below the image */
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
   transition: transform 0.3s ease-in-out;
 }
 
 .shop-product-image:hover {
-  transform: scale(1.1); /* Scale up on hover */
+  transform: scale(1.1);
 }
 
-/* Styles for paragraphs inside product items */
 .shop-product-item p {
-  margin: 0; /* Remove default margin */
-  font-weight: 500; /* Slightly bolder text */
-  font-size: 1.2rem; /* Increased font size */
-  margin-top: 15px; /* Increased space above the text */
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.2rem;
+  margin-top: 15px;
 }
 
-/* Styles for product items on hover */
 .shop-product-item:hover {
-  transform: scale(1.05); /* Scale up slightly */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.1); /* Increase shadow on hover */
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Styles for buttons inside product items */
 .shop-product-item button {
-  background-color: #1abc9c; /* Primary button color */
-  color: white; /* White text color */
-  border: none; /* No border */
-  padding: 12px 24px; /* Increased padding */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  margin-top: 15px; /* Increased space above the button */
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .shop-product-item button:hover {
-  background-color: #16a085; /* Darker green on hover */
-  transform: scale(1.05); /* Slightly scale up on hover */
+  background-color: #16a085;
+  transform: scale(1.05);
 }
 
-/* Styles for the single category section */
 .shop-category {
   padding: 40px;
   margin-top: -60px;
@@ -252,7 +231,6 @@ body {
   color: #1DB954;
 }
 
-/* Styles for category items */
 .category-item {
   display: inline-block;
   text-align: center;
@@ -281,7 +259,6 @@ body {
   font-size: 1.1rem;
 }
 
-/* Styles for the search section */
 .shop-search {
   margin-top: 20px;
   display: flex;
@@ -306,7 +283,6 @@ body {
   opacity: 1;
 }
 
-/* Styles for the products list */
 .shop-products {
   padding: -40px;
   text-align: center;
@@ -324,34 +300,32 @@ body {
 
 .shop-product-list-inline {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 columns */
-  gap: 35px; /* Space between items */
-  justify-content: center; /* Center align items */
+  grid-template-columns: repeat(5, 1fr);
+  gap: 35px;
+  justify-content: center;
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Styles for the reset button */
 .reset-button {
-  background-color: transparent; /* Transparent background for button */
-  border: none; /* No border */
-  cursor: pointer; /* Pointer cursor on hover */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
   padding: 0;
   animation: fadeIn 1s ease-in-out;
 }
 
 .reset-button img {
-  width: 30px; /* Size of the refresh icon */
-  height: 30px; /* Size of the refresh icon */
-  transition: transform 0.3s ease; /* Smooth transition */
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
 }
 
 .reset-button:hover img {
-  transform: rotate(360deg); /* Rotate effect on hover */
+  transform: rotate(360deg);
 }
 
-/* Styles for the video section */
 .shop-video-section {
-  display: flex; /* Use flexbox for layout */
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
@@ -359,7 +333,6 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Styles for the cart section */
 .shop-cart {
   padding: 30px;
   text-align: center;
@@ -438,40 +411,36 @@ body {
   transform: scale(1.05);
 }
 
-/* Styles for selected product items */
 .shop-product-item.selected {
   border-color: #1DB954;
   box-shadow: 0 0 20px #1DB954;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* src/pages/ShopPage.css */
-
 /* General button styles */
 .shop-buttons button {
-  background-color: #1abc9c; /* Primary button color */
-  color: white; /* White text color */
-  border: none; /* No border */
-  padding: 12px 24px; /* Increased padding */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  margin-top: 15px; /* Increased space above the button */
-  margin-right: 10px; /* Space between buttons */
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-right: 10px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .shop-buttons button:last-child {
-  margin-right: 0; /* Remove margin for the last button */
+  margin-right: 0;
 }
 
 .shop-buttons button:hover {
-  background-color: #16a085; /* Darker green on hover */
-  transform: scale(1.05); /* Slightly scale up on hover */
+  background-color: #16a085;
+  transform: scale(1.05);
 }
 
 /* Specific button styles */
 .add-to-cart-button,
-.save-to-cart-button,
 .view-cart-button {
   /* Any specific styles for individual buttons can go here */
 }
@@ -481,4 +450,41 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+}
+
+/* Add styles for the add balance section */
+.add-balance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.balance-input {
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.balance-input:focus {
+  border-color: #1DB954;
+}
+
+.add-balance-button {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-balance-button:hover {
+  background-color: #16a085;
+  transform: scale(1.05);
 }

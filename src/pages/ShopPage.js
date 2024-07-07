@@ -2,13 +2,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../CartContext';
-import { SavedToCartContext } from '../SavedToCartContext';
-import { auth, db } from '../services/FirebaseConfig';
-import { collection, getDocs, doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db, database } from '../services/FirebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
+import { ref, set, get, child } from 'firebase/database';
 import './ShopPage.css';
 
 const ProductItem = ({ product, onClick, onView }) => (
-  <div className={`shop-product-item`} onClick={() => onClick(product.id)}>
+  <div className="shop-product-item" onClick={() => onClick(product.id)}>
     <img src={product.image} alt={product.name} className="shop-product-image" />
     <p>{product.name}</p>
     <p>${product.price}</p>
@@ -56,40 +56,45 @@ const Modal = ({ show, onClose }) => {
 
 const ShopPage = () => {
   const navigate = useNavigate();
-  const { addToCart, cartItems, setCartItems, balance } = useContext(CartContext);
-  const { saveToCart, savedItems, setSavedItems } = useContext(SavedToCartContext);
+  const { setCartItems, balance, setBalance } = useContext(CartContext);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
+  const [balanceToAdd, setBalanceToAdd] = useState('');
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        const cartDoc = await getDoc(doc(db, 'carts', currentUser.uid));
-        if (cartDoc.exists()) {
-          setCartItems(cartDoc.data().items || []);
-        } else {
-          setCartItems([]);
-        }
+        try {
+          const dbRef = ref(database);
+          const cartSnapshot = await get(child(dbRef, `carts/${currentUser.uid}`));
+          if (cartSnapshot.exists()) {
+            setCartItems(cartSnapshot.val().items || []);
+          } else {
+            setCartItems([]);
+          }
 
-        const savedDoc = await getDoc(doc(db, 'saved-to-cart', currentUser.uid));
-        if (savedDoc.exists()) {
-          setSavedItems(savedDoc.data().items || []);
-        } else {
-          setSavedItems([]);
+          const balanceSnapshot = await get(child(dbRef, `balances/${currentUser.uid}`));
+          if (balanceSnapshot.exists()) {
+            setBalance(balanceSnapshot.val());
+          } else {
+            setBalance(0);
+          }
+        } catch (error) {
+          console.error("Error loading cart items and balance from Realtime Database:", error);
         }
       } else {
         setCartItems([]);
-        setSavedItems([]);
+        setBalance(0);
       }
     });
 
     return () => unsubscribe();
-  }, [setCartItems, setSavedItems]);
+  }, [setCartItems, setBalance]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -133,64 +138,83 @@ const ShopPage = () => {
   };
 
   const handleViewProduct = (productId) => {
-    navigate(`/product/${productId}`); // Navigate to product detail page
+    navigate(`/product/${productId}`);
+  };
+
+  const handleAddBalance = async () => {
+    if (!user) {
+      alert('You must be logged in to add balance.');
+      navigate('/login');
+      return;
+    }
+
+    const newBalance = balance + parseFloat(balanceToAdd);
+
+    if (isNaN(newBalance) || newBalance < 0) {
+      alert('Invalid balance.');
+      return;
+    }
+
+    try {
+      const balanceRef = ref(database, `balances/${user.uid}`);
+      await set(balanceRef, newBalance);
+      setBalance(newBalance);
+      setBalanceToAdd('');
+    } catch (error) {
+      console.error("Error adding balance to Realtime Database:", error);
+      alert(`Error: ${error.message}`);
+    }
   };
 
   const handleAddToCart = async () => {
+    console.log("Add to Cart button clicked");
+
     if (!user) {
       alert('You must be logged in to add items to the cart.');
-      navigate('/login'); // Redirect to login page
+      navigate('/login');
       return;
     }
 
     const selectedItems = products.filter(product => selectedProducts.includes(product.id));
     const totalCost = selectedItems.reduce((total, product) => total + product.price, 0);
 
-    if (totalCost > balance) {
-      alert('Insufficient balance to add these items to the cart.');
+    console.log("Balance:", balance);
+    console.log("Total Cost:", totalCost);
+    console.log("New Balance:", balance - totalCost);
+
+    if (isNaN(balance) || isNaN(totalCost) || balance - totalCost < 0) {
+      alert('Invalid balance or cost.');
       return;
     }
 
-    // Merge with existing items in Firestore
     try {
-      const cartRef = doc(db, 'carts', user.uid);
-      const cartDoc = await getDoc(cartRef);
-      let currentItems = [];
-      if (cartDoc.exists()) {
-        currentItems = cartDoc.data().items || [];
-      }
-      const newItems = [...currentItems, ...selectedItems];
-      await setDoc(cartRef, { items: newItems, balance: balance - totalCost }, { merge: true });
-      setCartItems(newItems); // Update context with new items
-      setShowModal(true); // Show modal after adding to cart
-      setSelectedProducts([]); // Clear selected products
-    } catch (error) {
-      console.error("Error saving cart items to Firestore:", error);
-    }
-  };
+      const cartRef = ref(database, `carts/${user.uid}`);
+      const cartSnapshot = await get(cartRef);
 
-  const handleSaveToCart = async () => {
-    if (!user) {
-      alert('You must be logged in to save items to the cart.');
-      navigate('/login'); // Redirect to login page
-      return;
-    }
-
-    const selectedItems = products.filter(product => selectedProducts.includes(product.id));
-    try {
-      const savedRef = doc(db, 'saved-to-cart', user.uid);
-      const savedDoc = await getDoc(savedRef);
       let currentItems = [];
-      if (savedDoc.exists()) {
-        currentItems = savedDoc.data().items || [];
+      if (cartSnapshot.exists()) {
+        currentItems = cartSnapshot.val().items || [];
       }
+
       const newItems = [...currentItems, ...selectedItems];
-      await setDoc(savedRef, { items: newItems }, { merge: true });
-      setSavedItems(newItems); // Update context with new saved items
-      setShowModal(true); // Show modal after saving to cart
-      setSelectedProducts([]); // Clear selected products
+
+      console.log("Current Items: ", currentItems);
+      console.log("Selected Items: ", selectedItems);
+      console.log("New Items: ", newItems);
+
+      await set(cartRef, { items: newItems });
+
+      const newBalance = balance - totalCost;
+      const balanceRef = ref(database, `balances/${user.uid}`);
+      await set(balanceRef, newBalance);
+
+      setCartItems(newItems);
+      setBalance(newBalance);
+      setShowModal(true);
+      setSelectedProducts([]);
     } catch (error) {
-      console.error("Error saving items to Firestore:", error);
+      console.error("Error saving cart items to Realtime Database:", error);
+      alert(`Error: ${error.message}`);
     }
   };
 
@@ -222,6 +246,20 @@ const ShopPage = () => {
         </div>
       </section>
 
+      <section className="balance-section">
+        <h2>Your Balance: ${balance}</h2>
+        <div className="add-balance">
+          <input
+            type="number"
+            value={balanceToAdd}
+            onChange={(e) => setBalanceToAdd(e.target.value)}
+            placeholder="Add balance"
+            className="balance-input"
+          />
+          <button onClick={handleAddBalance} className="add-balance-button">Add Balance</button>
+        </div>
+      </section>
+
       <section className="shop-featured-products">
         <h2>Featured Products</h2>
         <div className="shop-featured-product-list">
@@ -229,11 +267,6 @@ const ShopPage = () => {
             <ProductItem key={product.id} product={product} onClick={handleProductClick} onView={handleViewProduct} />
           ))}
         </div>
-      </section>
-
-      {/* Balance Display */}
-      <section className="balance-section">
-        <h2>Your Balance: ${balance}</h2>
       </section>
 
       {/* Categories Section */}
@@ -270,9 +303,6 @@ const ShopPage = () => {
         <div className="shop-buttons">
           <button className="add-to-cart-button" onClick={handleAddToCart}>
             Add to Cart
-          </button>
-          <button className="save-to-cart-button" onClick={handleSaveToCart}>
-            Save to Cart
           </button>
           <button className="view-cart-button" onClick={handleViewCart}>
             View Cart
