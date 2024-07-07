@@ -2,8 +2,8 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../CartContext';
-import { auth, db } from '../services/FirebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
+import { auth, database } from '../services/FirebaseConfig';
+import { ref, get, child } from 'firebase/database';
 import './CartPage.css';
 
 const CartPage = () => {
@@ -15,12 +15,13 @@ const CartPage = () => {
       const user = auth.currentUser;
       if (user) {
         try {
-          const cartDoc = await getDoc(doc(db, 'carts', user.uid));
-          if (cartDoc.exists()) {
-            setCartItems(cartDoc.data().items);
+          const dbRef = ref(database);
+          const cartSnapshot = await get(child(dbRef, `carts/${user.uid}`));
+          if (cartSnapshot.exists()) {
+            setCartItems(cartSnapshot.val().items || []);
           }
         } catch (error) {
-          console.error("Error fetching cart items from Firestore:", error);
+          console.error("Error fetching cart items from Realtime Database:", error);
         }
       }
     };

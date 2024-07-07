@@ -1,10 +1,10 @@
 // src/pages/ShopPage.js
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../CartContext';
 import { auth, db, database } from '../services/FirebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
-import { ref, set, get, child } from 'firebase/database';
+import { ref, get, child, set } from 'firebase/database';
 import './ShopPage.css';
 
 const ProductItem = ({ product, onClick, onView }) => (
@@ -65,36 +65,35 @@ const ShopPage = () => {
   const [products, setProducts] = useState([]);
   const [balanceToAdd, setBalanceToAdd] = useState('');
 
+  const fetchUserData = useCallback(async (currentUser) => {
+    const dbRef = ref(database);
+
+    // Fetch cart items
+    const cartSnapshot = await get(child(dbRef, `carts/${currentUser.uid}`));
+    if (cartSnapshot.exists()) {
+      setCartItems(cartSnapshot.val().items || []);
+    }
+
+    // Fetch balance
+    const balanceSnapshot = await get(child(dbRef, `balances/${currentUser.uid}`));
+    if (balanceSnapshot.exists()) {
+      setBalance(balanceSnapshot.val());
+    }
+  }, [setCartItems, setBalance]);
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        try {
-          const dbRef = ref(database);
-          const cartSnapshot = await get(child(dbRef, `carts/${currentUser.uid}`));
-          if (cartSnapshot.exists()) {
-            setCartItems(cartSnapshot.val().items || []);
-          } else {
-            setCartItems([]);
-          }
-
-          const balanceSnapshot = await get(child(dbRef, `balances/${currentUser.uid}`));
-          if (balanceSnapshot.exists()) {
-            setBalance(balanceSnapshot.val());
-          } else {
-            setBalance(0);
-          }
-        } catch (error) {
-          console.error("Error loading cart items and balance from Realtime Database:", error);
-        }
+        await fetchUserData(currentUser);
       } else {
         setCartItems([]);
-        setBalance(0);
+        setBalance(null);
       }
     });
 
     return () => unsubscribe();
-  }, [setCartItems, setBalance]);
+  }, [fetchUserData, setCartItems, setBalance]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -167,8 +166,6 @@ const ShopPage = () => {
   };
 
   const handleAddToCart = async () => {
-    console.log("Add to Cart button clicked");
-
     if (!user) {
       alert('You must be logged in to add items to the cart.');
       navigate('/login');
@@ -177,10 +174,6 @@ const ShopPage = () => {
 
     const selectedItems = products.filter(product => selectedProducts.includes(product.id));
     const totalCost = selectedItems.reduce((total, product) => total + product.price, 0);
-
-    console.log("Balance:", balance);
-    console.log("Total Cost:", totalCost);
-    console.log("New Balance:", balance - totalCost);
 
     if (isNaN(balance) || isNaN(totalCost) || balance - totalCost < 0) {
       alert('Invalid balance or cost.');
@@ -197,10 +190,6 @@ const ShopPage = () => {
       }
 
       const newItems = [...currentItems, ...selectedItems];
-
-      console.log("Current Items: ", currentItems);
-      console.log("Selected Items: ", selectedItems);
-      console.log("New Items: ", newItems);
 
       await set(cartRef, { items: newItems });
 
@@ -246,8 +235,9 @@ const ShopPage = () => {
         </div>
       </section>
 
+      {/* Balance Display */}
       <section className="balance-section">
-        <h2>Your Balance: ${balance}</h2>
+        <h2>Your Balance: ${balance !== null ? balance : 'Loading...'}</h2>
         <div className="add-balance">
           <input
             type="number"
