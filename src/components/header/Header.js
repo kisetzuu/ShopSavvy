@@ -48,6 +48,11 @@ const Header = () => {
               <li>
                 <button onClick={handleLogout} className="button-link">Logout</button>
               </li>
+              <li className="profile-icon">
+                <a href="/profile">
+                  <img src={`${process.env.PUBLIC_URL}/account.png`} alt="Profile" />
+                </a>
+              </li>
             </>
           ) : (
             <>
@@ -56,11 +61,6 @@ const Header = () => {
               </li>
               <li>
                 <a href="/register" className="button-link">Signup</a>
-              </li>
-              <li className="profile-icon">
-                <a href="/profile">
-                  <img src={`${process.env.PUBLIC_URL}/account.png`} alt="Profile" />
-                </a>
               </li>
             </>
           )}

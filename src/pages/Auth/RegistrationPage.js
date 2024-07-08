@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { auth, db } from '../services/FirebaseConfig'; // Correctly import db instead of fs
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../../services/FirebaseConfig'; // Correctly import db instead of fs
 import { useNavigate } from 'react-router-dom';
-import { doc, setDoc } from 'firebase/firestore';
+import { handleRegister } from '../../services/AuthHelpers';
 
 const RegistrationPage = () => {
   const navigate = useNavigate();
@@ -13,30 +12,11 @@ const RegistrationPage = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    if (!email || !password || !confirmPassword) {
-      setError('Please fill in both fields.');
-      return;
-    }
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Step 2: Store user data in Firestore database
-      await setDoc(doc(db, 'users', user.uid), {
-        name: name,
-        email: user.email,
-        createdAt: new Date().toISOString(),
-      });
-      setMessage('Registration successful');
-      navigate('/shop');
-    } catch (error) {
-      setError('Registration failed: ' + error.message);
-      console.error('Error during registration:', error);
-    }
+  const handleSubmit = (e) => {
+    handleRegister(e, auth, db, email, password, confirmPassword, name, setError, setMessage, navigate);
   };
-
+  
+  
   return (
     <div className='login-div'>
       <div className="login-container">
@@ -46,7 +26,7 @@ const RegistrationPage = () => {
         <h2>Register</h2>
         {error && <p className="error">{error}</p>}
         {message && <p className="success">{message}</p>}
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input
@@ -84,7 +64,7 @@ const RegistrationPage = () => {
             />
           </div>
           <div>
-            <button type="submit" className="register-button" onClick={handleRegister}>Register</button>
+            <button type="submit" className="register-button">Register</button>
           </div>
         </form>
       </div>

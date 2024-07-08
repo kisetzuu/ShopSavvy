@@ -1,8 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD:src/pages/CartPage.js
 import { CartContext } from '../CartContext';
 import { auth, database } from '../services/FirebaseConfig';
 import { ref, get, child, set } from 'firebase/database';
+=======
+import { CartContext } from '../../CartContext';
+import { auth, database } from '../../services/FirebaseConfig';
+import { ref, get, child } from 'firebase/database';
+>>>>>>> cdf9b186d600948c68c9af04c8746cc28dd13dcb:src/pages/CartPage/CartPage.js
 import './CartPage.css';
 
 const CartPage = () => {
