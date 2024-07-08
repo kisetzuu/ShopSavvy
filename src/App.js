@@ -8,7 +8,7 @@ import ShopPage from './pages/ShopPage/ShopPage';
 import RegistrationPage from './pages/Auth/RegistrationPage';
 import SupportPage from './pages/SupportPage/SupportPage';
 import ReceiptPage from './pages/Receipt/ReceiptPage';
-import AboutPage from './pages/AboutPage/AboutPagePage';
+import AboutPage from './pages/AboutPage/AboutPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CartProvider } from './CartContext';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
