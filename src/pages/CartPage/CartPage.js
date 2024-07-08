@@ -1,8 +1,8 @@
 // src/pages/CartPage.js
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../CartContext';
-import { auth, database } from '../services/FirebaseConfig';
+import { CartContext } from '../../CartContext';
+import { auth, database } from '../../services/FirebaseConfig';
 import { ref, get, child } from 'firebase/database';
 import './CartPage.css';
 

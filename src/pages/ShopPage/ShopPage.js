@@ -1,11 +1,11 @@
 // src/pages/ShopPage.js
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../CartContext';
-import { auth, db, database } from '../services/FirebaseConfig';
+import { CartContext } from '../../CartContext';
+import { auth, db, database } from '../../services/FirebaseConfig'; 
 import { collection, getDocs } from 'firebase/firestore';
 import { ref, get, child, set } from 'firebase/database';
-import './ShopPage.css';
+import './ShopPage.css'
 
 const ProductItem = ({ product, onClick, onView }) => (
   <div className="shop-product-item" onClick={() => onClick(product.id)}>
