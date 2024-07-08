@@ -5,7 +5,7 @@ const AboutPage = () => {
   return (
     <div>
       <h2>About Page</h2>
-      <p>This is the About Page where we will provide information about this website.</p>
+      <p>This is the About Page where we will provide information about this website and many more.</p>
     </div>
     /*<div className="about">
       <div className="homeabout">
