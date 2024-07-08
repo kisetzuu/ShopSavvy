@@ -1,14 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD:src/pages/CartPage.js
-import { CartContext } from '../CartContext';
-import { auth, database } from '../services/FirebaseConfig';
+import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
+import { auth, database } from '../../services/FirebaseConfig'; // Adjusted path based on your structure
 import { ref, get, child, set } from 'firebase/database';
-=======
-import { CartContext } from '../../CartContext';
-import { auth, database } from '../../services/FirebaseConfig';
-import { ref, get, child } from 'firebase/database';
->>>>>>> cdf9b186d600948c68c9af04c8746cc28dd13dcb:src/pages/CartPage/CartPage.js
 import './CartPage.css';
 
 const CartPage = () => {
@@ -25,6 +19,8 @@ const CartPage = () => {
           const cartSnapshot = await get(child(dbRef, `carts/${user.uid}`));
           if (cartSnapshot.exists()) {
             setCartItems(cartSnapshot.val().items || []);
+          } else {
+            setCartItems([]);
           }
         } catch (error) {
           console.error("Error fetching cart items from Realtime Database:", error);
@@ -58,7 +54,16 @@ const CartPage = () => {
         const balanceRef = ref(database, `balances/${user.uid}`);
         const cartRef = ref(database, `carts/${user.uid}`);
 
-        await set(balanceRef, newBalance);
+        // Check if the balance node exists
+        const balanceSnapshot = await get(balanceRef);
+        if (balanceSnapshot.exists()) {
+          await set(balanceRef, newBalance);
+        } else {
+          // Create balance node if it doesn't exist
+          await set(balanceRef, newBalance);
+        }
+
+        // Clear the cart
         await set(cartRef, { items: [] });
 
         setBalance(newBalance);

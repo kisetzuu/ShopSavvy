@@ -1,10 +1,10 @@
-// src/pages/ShopPage.js
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../../CartContext';
-import { auth, db, database } from '../../services/FirebaseConfig'; 
-import { collection, getDocs, doc, getDoc, updateDoc} from 'firebase/firestore';
-import './ShopPage.css'
+import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
+import { auth, db, database } from '../../services/FirebaseConfig'; // Adjusted path based on your structure
+import { collection, getDocs } from 'firebase/firestore';
+import { ref, get, child, set } from 'firebase/database';
+import './ShopPage.css';
 
 const ProductItem = ({ product, onClick, onView }) => (
   <div className="shop-product-item" onClick={() => onClick(product.id)}>
@@ -63,27 +63,24 @@ const ShopPage = () => {
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [balanceToAdd, setBalanceToAdd] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 15;
 
   const fetchUserData = useCallback(async (currentUser) => {
+    const dbRef = ref(database);
+
     try {
-      const userDoc = doc(db, 'users', currentUser.uid);
-      const docSnap = await getDoc(userDoc);
-  
-      if (docSnap.exists()) {
-        const userData = docSnap.data();
-  
-        // Fetch cart items
-        setCartItems(userData.cartItems || []);
-  
-        // Fetch balance
-        setBalance(userData.balance || 0);
-      } else {
-        console.log('No such document!');
+      // Fetch cart items
+      const cartSnapshot = await get(child(dbRef, `carts/${currentUser.uid}`));
+      if (cartSnapshot.exists()) {
+        setCartItems(cartSnapshot.val().items || []);
+      }
+
+      // Fetch balance
+      const balanceSnapshot = await get(child(dbRef, `balances/${currentUser.uid}`));
+      if (balanceSnapshot.exists()) {
+        setBalance(balanceSnapshot.val());
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error("Error fetching user data from Realtime Database:", error);
     }
   }, [setCartItems, setBalance]);
 
@@ -161,8 +158,8 @@ const ShopPage = () => {
     }
 
     try {
-      const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { balance: newBalance });
+      const balanceRef = ref(database, `balances/${user.uid}`);
+      await set(balanceRef, newBalance);
       setBalance(newBalance);
       setBalanceToAdd('');
     } catch (error) {
@@ -177,40 +174,38 @@ const ShopPage = () => {
       navigate('/login');
       return;
     }
-  
+
     const selectedItems = products.filter(product => selectedProducts.includes(product.id));
     const totalCost = selectedItems.reduce((total, product) => total + product.price, 0);
-  
+
     if (isNaN(balance) || isNaN(totalCost) || balance - totalCost < 0) {
       alert('Invalid balance or cost.');
       return;
     }
-  
+
     try {
-      const userRef = doc(db, 'users', user.uid);
-      const userSnap = await getDoc(userRef);
-  
+      const cartRef = ref(database, `carts/${user.uid}`);
+      const cartSnapshot = await get(cartRef);
+
       let currentItems = [];
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        currentItems = userData.cartItems || [];
+      if (cartSnapshot.exists()) {
+        currentItems = cartSnapshot.val().items || [];
       }
-  
+
       const newItems = [...currentItems, ...selectedItems];
-  
+
+      await set(cartRef, { items: newItems });
+
       const newBalance = balance - totalCost;
-  
-      await updateDoc(userRef, {
-        cartItems: newItems,
-        balance: newBalance
-      });
-  
+      const balanceRef = ref(database, `balances/${user.uid}`);
+      await set(balanceRef, newBalance);
+
       setCartItems(newItems);
       setBalance(newBalance);
       setShowModal(true);
       setSelectedProducts([]);
     } catch (error) {
-      console.error("Error saving cart items to Firestore:", error);
+      console.error("Error saving cart items to Realtime Database:", error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -223,32 +218,6 @@ const ShopPage = () => {
     (selectedCategory ? product.category === selectedCategory : true) &&
     (searchTerm ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : true)
   );
-
-  // Pagination logic
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(
-        <button
-          key={i}
-          className={`page-number ${currentPage === i ? 'active' : ''}`}
-          onClick={() => handlePageChange(i)}
-        >
-          {i}
-        </button>
-      );
-    }
-    return pageNumbers;
-  };
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -317,15 +286,10 @@ const ShopPage = () => {
         />
       </section>
 
-      {/* Pagination Controls */}
-      <section className="pagination-controls">
-        {renderPageNumbers()}
-      </section>
-
       {/* Products List Section */}
       <section className="shop-products">
         <h2>Products</h2>
-        <ProductList products={currentProducts} onProductClick={handleProductClick} onViewProduct={handleViewProduct} />
+        <ProductList products={filteredProducts} onProductClick={handleProductClick} onViewProduct={handleViewProduct} />
         <div className="selected-item-count">
           <p>{selectedProducts.length} items selected</p>
         </div>
