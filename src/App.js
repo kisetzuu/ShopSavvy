@@ -17,6 +17,7 @@ import ShopPage from './pages/ShopPage/ShopPage';
 import RegistrationPage from './pages/Auth/RegistrationPage';
 import SupportPage from './pages/SupportPage/SupportPage';
 import ReceiptPage from './pages/Receipt/ReceiptPage';
+import AboutPage from './pages/AboutPage/AboutPage';
 >>>>>>> e112336d44dc47018030b285b32e50a6a25934a1
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CartProvider } from './CartContext';
