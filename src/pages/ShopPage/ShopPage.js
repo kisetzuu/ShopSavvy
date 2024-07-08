@@ -6,8 +6,8 @@ import { collection, getDocs } from 'firebase/firestore';
 import { ref, get, child, set } from 'firebase/database';
 import './ShopPage.css';
 
-const ProductItem = ({ product, onClick, onView }) => (
-  <div className="shop-product-item" onClick={() => onClick(product.id)}>
+const ProductItem = ({ product, onClick, onView, isSelected }) => (
+  <div className={`shop-product-item ${isSelected ? 'selected' : ''}`} onClick={() => onClick(product.id)}>
     <img src={product.image} alt={product.name} className="shop-product-image" />
     <p>{product.name}</p>
     <p>${product.price}</p>
@@ -25,7 +25,7 @@ const CategoryItem = ({ category, onClick }) => (
   </div>
 );
 
-const ProductList = ({ products, onProductClick, onViewProduct }) => (
+const ProductList = ({ products, onProductClick, onViewProduct, selectedProducts }) => (
   <div className="shop-product-list-inline">
     {products.map(product => (
       <ProductItem
@@ -33,6 +33,7 @@ const ProductList = ({ products, onProductClick, onViewProduct }) => (
         product={product}
         onClick={onProductClick}
         onView={onViewProduct}
+        isSelected={selectedProducts.includes(product.id)}
       />
     ))}
   </div>
@@ -63,6 +64,7 @@ const ShopPage = () => {
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [balanceToAdd, setBalanceToAdd] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const fetchUserData = useCallback(async (currentUser) => {
     const dbRef = ref(database);
@@ -176,12 +178,6 @@ const ShopPage = () => {
     }
 
     const selectedItems = products.filter(product => selectedProducts.includes(product.id));
-    const totalCost = selectedItems.reduce((total, product) => total + product.price, 0);
-
-    if (isNaN(balance) || isNaN(totalCost) || balance - totalCost < 0) {
-      alert('Invalid balance or cost.');
-      return;
-    }
 
     try {
       const cartRef = ref(database, `carts/${user.uid}`);
@@ -196,12 +192,7 @@ const ShopPage = () => {
 
       await set(cartRef, { items: newItems });
 
-      const newBalance = balance - totalCost;
-      const balanceRef = ref(database, `balances/${user.uid}`);
-      await set(balanceRef, newBalance);
-
       setCartItems(newItems);
-      setBalance(newBalance);
       setShowModal(true);
       setSelectedProducts([]);
     } catch (error) {
@@ -225,6 +216,15 @@ const ShopPage = () => {
 
   const handleViewCart = () => {
     navigate('/cart');
+  };
+
+  // Pagination Logic
+  const productsPerPage = 15;
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const displayedProducts = filteredProducts.slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -257,7 +257,13 @@ const ShopPage = () => {
         <h2>Featured Products</h2>
         <div className="shop-featured-product-list">
           {products.slice(0, 5).map(product => (
-            <ProductItem key={product.id} product={product} onClick={handleProductClick} onView={handleViewProduct} />
+            <ProductItem
+              key={product.id}
+              product={product}
+              onClick={handleProductClick}
+              onView={handleViewProduct}
+              isSelected={selectedProducts.includes(product.id)}
+            />
           ))}
         </div>
       </section>
@@ -289,19 +295,34 @@ const ShopPage = () => {
       {/* Products List Section */}
       <section className="shop-products">
         <h2>Products</h2>
-        <ProductList products={filteredProducts} onProductClick={handleProductClick} onViewProduct={handleViewProduct} />
-        <div className="selected-item-count">
-          <p>{selectedProducts.length} items selected</p>
-        </div>
-        <div className="shop-buttons">
-          <button className="add-to-cart-button" onClick={handleAddToCart}>
-            Add to Cart
-          </button>
-          <button className="view-cart-button" onClick={handleViewCart}>
-            View Cart
-          </button>
-        </div>
+        <ProductList products={displayedProducts} onProductClick={handleProductClick} onViewProduct={handleViewProduct} selectedProducts={selectedProducts} />
       </section>
+
+      {/* Pagination Controls */}
+      <div className="pagination-controls">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            className={`page-number ${currentPage === index + 1 ? 'active' : ''}`}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+
+      {/* Selected Items Count and Cart Actions */}
+      <div className="selected-item-count">
+        <p>{selectedProducts.length} items selected</p>
+      </div>
+      <div className="shop-buttons">
+        <button className="add-to-cart-button" onClick={handleAddToCart}>
+          Add to Cart
+        </button>
+        <button className="view-cart-button" onClick={handleViewCart}>
+          View Cart
+        </button>
+      </div>
 
       {/* Modal for Add to Cart Confirmation */}
       <Modal
