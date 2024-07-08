@@ -64,6 +64,8 @@ const ShopPage = () => {
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [balanceToAdd, setBalanceToAdd] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 15;
 
   const fetchUserData = useCallback(async (currentUser) => {
     const dbRef = ref(database);
@@ -216,6 +218,32 @@ const ShopPage = () => {
     (searchTerm ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : true)
   );
 
+  // Pagination logic
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          className={`page-number ${currentPage === i ? 'active' : ''}`}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+    return pageNumbers;
+  };
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -283,10 +311,15 @@ const ShopPage = () => {
         />
       </section>
 
+      {/* Pagination Controls */}
+      <section className="pagination-controls">
+        {renderPageNumbers()}
+      </section>
+
       {/* Products List Section */}
       <section className="shop-products">
         <h2>Products</h2>
-        <ProductList products={filteredProducts} onProductClick={handleProductClick} onViewProduct={handleViewProduct} />
+        <ProductList products={currentProducts} onProductClick={handleProductClick} onViewProduct={handleViewProduct} />
         <div className="selected-item-count">
           <p>{selectedProducts.length} items selected</p>
         </div>

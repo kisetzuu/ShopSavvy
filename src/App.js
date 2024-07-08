@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import ShopPage from './pages/ShopPage';
 import RegistrationPage from './pages/RegistrationPage';
 import SupportPage from './pages/SupportPage';
+import ReceiptPage from './pages/ReceiptPage'; // Import ReceiptPage
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CartProvider } from './CartContext';
 import ProductDetailPage from './pages/ProductDetailPage';
@@ -26,6 +27,7 @@ function App() {
             <Route path="/register" element={<RegistrationPage />} />
             <Route path="/support" element={<SupportPage />} />
             <Route path="/product/:productId" element={<ProductDetailPage />} />
+            <Route path="/receipt" element={<ReceiptPage />} /> {/* Add ReceiptPage route */}
           </Routes>
         </SavedToCartProvider>
       </CartProvider>

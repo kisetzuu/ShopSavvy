@@ -488,3 +488,29 @@ body {
   background-color: #16a085;
   transform: scale(1.05);
 }
+
+/* src/pages/ShopPage.css */
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.page-number {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.page-number.active {
+  background-color: #16a085;
+}
+
+.page-number:hover {
+  background-color: #16a085;
+}
