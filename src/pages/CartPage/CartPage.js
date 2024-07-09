@@ -8,27 +8,38 @@ import './CartPage.css';
 const CartPage = () => {
   const { cartItems, setCartItems, removeFromCart, emptyCart, balance, setBalance } = useContext(CartContext);
   const [totalCost, setTotalCost] = useState(0);
+  const [wishlistItems, setWishlistItems] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCartItems = async () => {
+    const fetchCartAndWishlistItems = async () => {
       const user = auth.currentUser;
       if (user) {
         try {
           const dbRef = ref(database);
+
+          // Fetch cart items
           const cartSnapshot = await get(child(dbRef, `carts/${user.uid}`));
           if (cartSnapshot.exists()) {
             setCartItems(cartSnapshot.val().items || []);
           } else {
             setCartItems([]);
           }
+
+          // Fetch wishlist items
+          const wishlistSnapshot = await get(child(dbRef, `wishlists/${user.uid}`));
+          if (wishlistSnapshot.exists()) {
+            setWishlistItems(wishlistSnapshot.val().items || []);
+          } else {
+            setWishlistItems([]);
+          }
         } catch (error) {
-          console.error("Error fetching cart items from Realtime Database:", error);
+          console.error("Error fetching items from Realtime Database:", error);
         }
       }
     };
 
-    fetchCartItems();
+    fetchCartAndWishlistItems();
   }, [setCartItems]);
 
   useEffect(() => {
@@ -80,40 +91,115 @@ const CartPage = () => {
     navigate('/shop');
   };
 
+  const handleRemoveFromWishlist = async (id) => {
+    const user = auth.currentUser;
+    if (user) {
+      const updatedWishlist = wishlistItems.filter(item => item.id !== id);
+
+      try {
+        const wishlistRef = ref(database, `wishlists/${user.uid}`);
+        await set(wishlistRef, { items: updatedWishlist });
+        setWishlistItems(updatedWishlist);
+      } catch (error) {
+        console.error("Error removing item from wishlist:", error);
+        alert(`Error: ${error.message}`);
+      }
+    }
+  };
+
+  const handleMoveToCart = async (item) => {
+    const user = auth.currentUser;
+    if (user) {
+      // Remove from wishlist
+      const updatedWishlist = wishlistItems.filter(wishlistItem => wishlistItem.id !== item.id);
+      try {
+        const wishlistRef = ref(database, `wishlists/${user.uid}`);
+        await set(wishlistRef, { items: updatedWishlist });
+        setWishlistItems(updatedWishlist);
+      } catch (error) {
+        console.error("Error removing item from wishlist:", error);
+        alert(`Error: ${error.message}`);
+        return;
+      }
+
+      // Add to cart
+      const updatedCart = [...cartItems, item];
+      try {
+        const cartRef = ref(database, `carts/${user.uid}`);
+        await set(cartRef, { items: updatedCart });
+        setCartItems(updatedCart);
+      } catch (error) {
+        console.error("Error adding item to cart:", error);
+        alert(`Error: ${error.message}`);
+      }
+    }
+  };
+
   return (
     <div className="cart-container">
-      <h2>Your Shopping Cart</h2>
-      <div className="cart-items">
-        {cartItems.map(item => (
-          <div key={item.id} className="cart-item">
-            <img src={item.image} alt={item.name} className="cart-item-image" />
-            <div className="cart-item-details">
-              <p className="cart-item-name">{item.name}</p>
-              <p className="cart-item-price">${item.price}</p>
-              <button className="remove-item-button" onClick={() => removeFromCart(item.id)}>Remove</button>
-            </div>
-          </div>
-        ))}
+      <div className="cart-header">
       </div>
-      {cartItems.length > 0 && (
-        <>
-          <div className="cart-total">
-            <p>Total Cost: ${totalCost}</p>
-            <p>Balance: ${balance}</p>
+      <div className="cart-wishlist-container">
+        <div className="cart-section">
+          <h3>Shopping Cart</h3>
+          <div className="cart-items">
+            {cartItems.map(item => (
+              <div key={item.id} className="cart-item">
+                <img src={item.image} alt={item.name} className="cart-item-image" />
+                <div className="cart-item-details">
+                  <p className="cart-item-name">{item.name}</p>
+                  <p className="cart-item-price">${item.price}</p>
+                  <button className="remove-item-button" onClick={() => removeFromCart(item.id)}>Remove</button>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="cart-actions">
-            <button className="empty-cart-button" onClick={emptyCart}>Empty Cart</button>
-            <button className="checkout-button" onClick={handleCheckout}>Checkout</button>
-            <button className="continue-shopping-button" onClick={handleContinueShopping}>Continue Shopping</button>
-          </div>
-        </>
-      )}
-      {cartItems.length === 0 && (
-        <div className="empty-cart-message">
-          <p>Your cart is currently empty.</p>
-          <button className="continue-shopping-button" onClick={handleContinueShopping}>Continue Shopping</button>
+          {cartItems.length > 0 && (
+            <>
+              <div className="cart-total">
+                <p>Total Cost: ${totalCost}</p>
+                <p>Balance: ${balance}</p>
+              </div>
+              <div className="cart-actions">
+                <button className="empty-cart-button" onClick={emptyCart}>Empty Cart</button>
+                <button className="checkout-button" onClick={handleCheckout}>Checkout</button>
+                <button className="continue-shopping-button" onClick={handleContinueShopping}>Continue Shopping</button>
+              </div>
+            </>
+          )}
+          {cartItems.length === 0 && (
+            <div className="empty-cart-message">
+              <p>Your cart is currently empty.</p>
+              <button className="continue-shopping-button" onClick={handleContinueShopping}>Continue Shopping</button>
+            </div>
+          )}
         </div>
-      )}
+
+        <div className="wishlist-section">
+          <h3>Wishlist</h3>
+          <div className="wishlist-items">
+            {wishlistItems.map(item => (
+              <div key={item.id} className="wishlist-item">
+                <img src={item.image} alt={item.name} className="wishlist-item-image" />
+                <div className="wishlist-item-details">
+                  <p className="wishlist-item-name">{item.name}</p>
+                  <p className="wishlist-item-price">${item.price}</p>
+                  <div className="wishlist-item-actions">
+                    <button className="move-to-cart-button" onClick={() => handleMoveToCart(item)}>Move to Cart</button>
+                    <button className="remove-item-button" onClick={() => handleRemoveFromWishlist(item.id)}>Remove</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {wishlistItems.length === 0 && (
+            <div className="empty-wishlist-message">
+              <p>Your wishlist is currently empty.</p>
+              <button className="continue-shopping-button" onClick={handleContinueShopping}>Continue Shopping</button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

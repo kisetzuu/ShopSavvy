@@ -64,6 +64,7 @@ const ShopPage = () => {
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [balanceToAdd, setBalanceToAdd] = useState('');
+  const [wishlist, setWishlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const fetchUserData = useCallback(async (currentUser) => {
@@ -81,6 +82,12 @@ const ShopPage = () => {
       if (balanceSnapshot.exists()) {
         setBalance(balanceSnapshot.val());
       }
+
+      // Fetch wishlist
+      const wishlistSnapshot = await get(child(dbRef, `wishlists/${currentUser.uid}`));
+      if (wishlistSnapshot.exists()) {
+        setWishlist(wishlistSnapshot.val().items || []);
+      }
     } catch (error) {
       console.error("Error fetching user data from Realtime Database:", error);
     }
@@ -94,6 +101,7 @@ const ShopPage = () => {
       } else {
         setCartItems([]);
         setBalance(null);
+        setWishlist([]);
       }
     });
 
@@ -201,6 +209,37 @@ const ShopPage = () => {
     }
   };
 
+  const handleAddToWishlist = async () => {
+    if (!user) {
+      alert('You must be logged in to add items to the wishlist.');
+      navigate('/login');
+      return;
+    }
+
+    const selectedItems = products.filter(product => selectedProducts.includes(product.id));
+
+    try {
+      const wishlistRef = ref(database, `wishlists/${user.uid}`);
+      const wishlistSnapshot = await get(wishlistRef);
+
+      let currentWishlist = [];
+      if (wishlistSnapshot.exists()) {
+        currentWishlist = wishlistSnapshot.val().items || [];
+      }
+
+      const newWishlist = [...currentWishlist, ...selectedItems];
+
+      await set(wishlistRef, { items: newWishlist });
+
+      setWishlist(newWishlist);
+      setSelectedProducts([]);
+      alert('Items added to wishlist.');
+    } catch (error) {
+      console.error("Error saving wishlist items to Realtime Database:", error);
+      alert(`Error: ${error.message}`);
+    }
+  };
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -295,7 +334,12 @@ const ShopPage = () => {
       {/* Products List Section */}
       <section className="shop-products">
         <h2>Products</h2>
-        <ProductList products={displayedProducts} onProductClick={handleProductClick} onViewProduct={handleViewProduct} selectedProducts={selectedProducts} />
+        <ProductList
+          products={displayedProducts}
+          onProductClick={handleProductClick}
+          onViewProduct={handleViewProduct}
+          selectedProducts={selectedProducts}
+        />
       </section>
 
       {/* Pagination Controls */}
@@ -318,6 +362,9 @@ const ShopPage = () => {
       <div className="shop-buttons">
         <button className="add-to-cart-button" onClick={handleAddToCart}>
           Add to Cart
+        </button>
+        <button className="wishlist-button" onClick={handleAddToWishlist}>
+          Add to Wishlist
         </button>
         <button className="view-cart-button" onClick={handleViewCart}>
           View Cart

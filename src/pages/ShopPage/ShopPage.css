@@ -114,6 +114,7 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.5s ease-in-out, popUp 1s ease-in-out;
+  overflow: hidden;
 }
 
 .shop-featured-product-image {
@@ -539,3 +540,21 @@ body {
 .page-number:hover {
   background-color: #16a085;
 }
+
+/* Add styles for wishlist button */
+.wishlist-button {
+  background-color: #e67e22;
+  margin-top: 10px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.wishlist-button:hover {
+  background-color: #d35400;
+  transform: scale(1.05);
+}
+
