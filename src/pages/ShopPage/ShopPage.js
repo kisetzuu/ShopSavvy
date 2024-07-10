@@ -5,17 +5,26 @@ import { CartContext } from '../../CartContext'; // Adjusted path based on your 
 import { auth, db, database } from '../../services/FirebaseConfig'; // Adjusted path based on your structure
 import { collection, getDocs } from 'firebase/firestore';
 import { ref, get, child, set } from 'firebase/database';
+import Modal from 'react-bootstrap/Modal';
 import './ShopPage.css';
 
-const ProductItem = ({ product, onClick, onView, isSelected }) => (
-  <div className={`shop-product-item ${isSelected ? 'selected' : ''}`} onClick={() => onClick(product.id)}>
+const ProductItem = ({ product, onClick, onDoubleClick, onView, isSelected, isDoubleSelected }) => (
+  <div
+    className={`shop-product-item ${isSelected ? 'selected' : ''} ${isDoubleSelected ? 'double-selected' : ''}`}
+    onClick={() => onClick(product.id)}
+    onDoubleClick={() => onDoubleClick(product.id)}
+  >
     <img src={product.image} alt={product.name} className="shop-product-image" />
     <p>{product.name}</p>
     <p>${product.price}</p>
-    <button onClick={(e) => {
-      e.stopPropagation(); // Prevents the parent onClick from firing
-      onView(product.id);
-    }}>View Product</button>
+    <button
+      onClick={(e) => {
+        e.stopPropagation(); // Prevents the parent onClick from firing
+        onView(product.id);
+      }}
+    >
+      View Product
+    </button>
   </div>
 );
 
@@ -26,34 +35,21 @@ const CategoryItem = ({ category, onClick }) => (
   </div>
 );
 
-const ProductList = ({ products, onProductClick, onViewProduct, selectedProducts }) => (
+const ProductList = ({ products, onProductClick, onProductDoubleClick, onViewProduct, selectedProducts, doubleSelectedProducts }) => (
   <div className="shop-product-list-inline">
-    {products.map(product => (
+    {products.map((product) => (
       <ProductItem
         key={product.id}
         product={product}
         onClick={onProductClick}
+        onDoubleClick={onProductDoubleClick}
         onView={onViewProduct}
         isSelected={selectedProducts.includes(product.id)}
+        isDoubleSelected={doubleSelectedProducts.includes(product.id)}
       />
     ))}
   </div>
 );
-
-const Modal = ({ show, onClose }) => {
-  if (!show) return null;
-  return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <h2>Items Added to Cart</h2>
-        <p>Items have been added to the cart. Click 'View Cart' to view items.</p>
-        <div className="modal-buttons">
-          <button onClick={onClose}>Close</button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const ShopPage = () => {
   const navigate = useNavigate();
@@ -61,38 +57,44 @@ const ShopPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [doubleSelectedProducts, setDoubleSelectedProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [modalProduct, setModalProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [balanceToAdd, setBalanceToAdd] = useState('');
   const [wishlist, setWishlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchUserData = useCallback(async (currentUser) => {
-    const dbRef = ref(database);
+  const fetchUserData = useCallback(
+    async (currentUser) => {
+      const dbRef = ref(database);
 
-    try {
-      // Fetch cart items
-      const cartSnapshot = await get(child(dbRef, `carts/${currentUser.uid}`));
-      if (cartSnapshot.exists()) {
-        setCartItems(cartSnapshot.val().items || []);
-      }
+      try {
+        // Fetch cart items
+        const cartSnapshot = await get(child(dbRef, `carts/${currentUser.uid}`));
+        if (cartSnapshot.exists()) {
+          setCartItems(cartSnapshot.val().items || []);
+        }
 
-      // Fetch balance
-      const balanceSnapshot = await get(child(dbRef, `balances/${currentUser.uid}`));
-      if (balanceSnapshot.exists()) {
-        setBalance(balanceSnapshot.val());
-      }
+        // Fetch balance
+        const balanceSnapshot = await get(child(dbRef, `balances/${currentUser.uid}`));
+        if (balanceSnapshot.exists()) {
+          setBalance(balanceSnapshot.val());
+        }
 
-      // Fetch wishlist
-      const wishlistSnapshot = await get(child(dbRef, `wishlists/${currentUser.uid}`));
-      if (wishlistSnapshot.exists()) {
-        setWishlist(wishlistSnapshot.val().items || []);
+        // Fetch wishlist
+        const wishlistSnapshot = await get(child(dbRef, `wishlists/${currentUser.uid}`));
+        if (wishlistSnapshot.exists()) {
+          setWishlist(wishlistSnapshot.val().items || []);
+        }
+      } catch (error) {
+        console.error('Error fetching user data from Realtime Database:', error);
       }
-    } catch (error) {
-      console.error("Error fetching user data from Realtime Database:", error);
-    }
-  }, [setCartItems, setBalance]);
+    },
+    [setCartItems, setBalance]
+  );
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
@@ -113,10 +115,10 @@ const ShopPage = () => {
     const fetchProducts = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'products'));
-        const productsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const productsData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
         setProducts(productsData);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error('Error fetching products:', error);
       }
     };
 
@@ -143,11 +145,22 @@ const ShopPage = () => {
   };
 
   const handleProductClick = (productId) => {
-    setSelectedProducts(prevSelected =>
-      prevSelected.includes(productId)
-        ? prevSelected.filter(id => id !== productId)
-        : [...prevSelected, productId]
-    );
+    if (doubleSelectedProducts.includes(productId)) {
+      setDoubleSelectedProducts(doubleSelectedProducts.filter((id) => id !== productId));
+    } else if (selectedProducts.includes(productId)) {
+      setSelectedProducts(selectedProducts.filter((id) => id !== productId));
+      setDoubleSelectedProducts([...doubleSelectedProducts, productId]);
+      setShowModal(true);
+      setModalProduct(products.find((product) => product.id === productId));
+    } else {
+      setSelectedProducts([...selectedProducts, productId]);
+    }
+  };
+
+  const handleProductDoubleClick = (productId) => {
+    setDoubleSelectedProducts([...doubleSelectedProducts, productId]);
+    setShowModal(true);
+    setModalProduct(products.find((product) => product.id === productId));
   };
 
   const handleViewProduct = (productId) => {
@@ -174,7 +187,7 @@ const ShopPage = () => {
       setBalance(newBalance);
       setBalanceToAdd('');
     } catch (error) {
-      console.error("Error adding balance to Realtime Database:", error);
+      console.error('Error adding balance to Realtime Database:', error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -186,7 +199,10 @@ const ShopPage = () => {
       return;
     }
 
-    const selectedItems = products.filter(product => selectedProducts.includes(product.id));
+    const selectedItems = products.filter((product) => selectedProducts.includes(product.id));
+    const doubleSelectedItems = products
+      .filter((product) => doubleSelectedProducts.includes(product.id))
+      .map((product) => ({ ...product, quantity }));
 
     try {
       const cartRef = ref(database, `carts/${user.uid}`);
@@ -197,15 +213,17 @@ const ShopPage = () => {
         currentItems = cartSnapshot.val().items || [];
       }
 
-      const newItems = [...currentItems, ...selectedItems];
+      const newItems = [...currentItems, ...selectedItems, ...doubleSelectedItems];
 
       await set(cartRef, { items: newItems });
 
       setCartItems(newItems);
       setShowModal(true);
       setSelectedProducts([]);
+      setDoubleSelectedProducts([]);
+      setQuantity(1); // Reset quantity after adding to cart
     } catch (error) {
-      console.error("Error saving cart items to Realtime Database:", error);
+      console.error('Error saving cart items to Realtime Database:', error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -217,7 +235,7 @@ const ShopPage = () => {
       return;
     }
 
-    const selectedItems = products.filter(product => selectedProducts.includes(product.id));
+    const selectedItems = products.filter((product) => selectedProducts.includes(product.id));
 
     try {
       const wishlistRef = ref(database, `wishlists/${user.uid}`);
@@ -234,9 +252,10 @@ const ShopPage = () => {
 
       setWishlist(newWishlist);
       setSelectedProducts([]);
+      setDoubleSelectedProducts([]);
       alert('Items added to wishlist.');
     } catch (error) {
-      console.error("Error saving wishlist items to Realtime Database:", error);
+      console.error('Error saving wishlist items to Realtime Database:', error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -245,9 +264,10 @@ const ShopPage = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredProducts = products.filter(product =>
-    (selectedCategory ? product.category === selectedCategory : true) &&
-    (searchTerm ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : true)
+  const filteredProducts = products.filter(
+    (product) =>
+      (selectedCategory ? product.category === selectedCategory : true) &&
+      (searchTerm ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : true)
   );
 
   const handleCloseModal = () => {
@@ -289,20 +309,24 @@ const ShopPage = () => {
             placeholder="Add balance"
             className="balance-input"
           />
-          <button onClick={handleAddBalance} className="add-balance-button">Add Balance</button>
+          <button onClick={handleAddBalance} className="add-balance-button">
+            Add Balance
+          </button>
         </div>
       </section>
 
       <section className="shop-featured-products">
         <h2>Featured Products</h2>
         <div className="shop-featured-product-list">
-          {products.slice(0, 5).map(product => (
+          {products.slice(0, 5).map((product) => (
             <ProductItem
               key={product.id}
               product={product}
               onClick={handleProductClick}
+              onDoubleClick={handleProductDoubleClick}
               onView={handleViewProduct}
               isSelected={selectedProducts.includes(product.id)}
+              isDoubleSelected={doubleSelectedProducts.includes(product.id)}
             />
           ))}
         </div>
@@ -312,7 +336,7 @@ const ShopPage = () => {
       <section className="shop-category">
         <h2>Categories</h2>
         <div className="category-list">
-          {categories.map(category => (
+          {categories.map((category) => (
             <CategoryItem key={category.value} category={category} onClick={handleCategoryClick} />
           ))}
           <button className="reset-button" onClick={handleResetClick}>
@@ -338,8 +362,10 @@ const ShopPage = () => {
         <ProductList
           products={displayedProducts}
           onProductClick={handleProductClick}
+          onProductDoubleClick={handleProductDoubleClick}
           onViewProduct={handleViewProduct}
           selectedProducts={selectedProducts}
+          doubleSelectedProducts={doubleSelectedProducts}
         />
       </section>
 
@@ -358,7 +384,7 @@ const ShopPage = () => {
 
       {/* Selected Items Count and Cart Actions */}
       <div className="selected-item-count">
-        <p>{selectedProducts.length} items selected</p>
+        <p>{selectedProducts.length + doubleSelectedProducts.length} items selected</p>
       </div>
       <div className="shop-buttons">
         <button className="add-to-cart-button" onClick={handleAddToCart}>
@@ -372,14 +398,29 @@ const ShopPage = () => {
         </button>
         <button className="list-product-button" onClick={() => navigate('/product-listing')}>
           List a Product
-        </button> {/* Add this button */}
+        </button>
       </div>
 
-      {/* Modal for Add to Cart Confirmation */}
-      <Modal
-        show={showModal}
-        onClose={handleCloseModal}
-      />
+      {/* Modal for Entering Quantity */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Enter Quantity</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{modalProduct?.name}</p>
+          <input
+            type="number"
+            className="quantity-input"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            min="1"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={handleCloseModal}>Cancel</button>
+          <button onClick={handleAddToCart}>Add to Cart</button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

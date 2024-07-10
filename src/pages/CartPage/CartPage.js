@@ -44,7 +44,7 @@ const CartPage = () => {
 
   useEffect(() => {
     const calculateTotalCost = () => {
-      const cost = cartItems.reduce((total, item) => total + item.price, 0);
+      const cost = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
       setTotalCost(cost);
     };
 
@@ -123,7 +123,7 @@ const CartPage = () => {
       }
 
       // Add to cart
-      const updatedCart = [...cartItems, item];
+      const updatedCart = [...cartItems, { ...item, quantity: 1 }];
       try {
         const cartRef = ref(database, `carts/${user.uid}`);
         await set(cartRef, { items: updatedCart });
@@ -133,6 +133,13 @@ const CartPage = () => {
         alert(`Error: ${error.message}`);
       }
     }
+  };
+
+  const handleQuantityChange = (id, quantity) => {
+    const updatedCartItems = cartItems.map(item =>
+      item.id === id ? { ...item, quantity } : item
+    );
+    setCartItems(updatedCartItems);
   };
 
   return (
@@ -149,6 +156,16 @@ const CartPage = () => {
                 <div className="cart-item-details">
                   <p className="cart-item-name">{item.name}</p>
                   <p className="cart-item-price">${item.price}</p>
+                  <div className="cart-item-quantity">
+                    <label htmlFor={`quantity-${item.id}`}>Quantity: </label>
+                    <input
+                      type="number"
+                      id={`quantity-${item.id}`}
+                      value={item.quantity}
+                      min="1"
+                      onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                    />
+                  </div>
                   <button className="remove-item-button" onClick={() => removeFromCart(item.id)}>Remove</button>
                 </div>
               </div>

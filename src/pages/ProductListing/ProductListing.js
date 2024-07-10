@@ -1,7 +1,6 @@
-// src/pages/ProductListing/ProductListing.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, db, storage } from '../../services/FirebaseConfig'; // Adjusted path based on your structure
+import { auth, db, storage } from '../../services/FirebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import './ProductListing.css';
@@ -13,6 +12,7 @@ const ProductListing = () => {
     description: '',
     price: '',
     category: '',
+    stock: '',  // Add stock field
     imageFile: null,
   });
 
@@ -42,13 +42,13 @@ const ProductListing = () => {
       return;
     }
 
-    const { name, description, price, category, imageFile } = newProduct;
+    const { name, description, price, category, stock, imageFile } = newProduct;
     const userId = auth.currentUser.uid;
     const userEmail = auth.currentUser.email;
 
-    console.log('Product Details:', { name, description, price, category, imageFile, userId, userEmail });
+    console.log('Product Details:', { name, description, price, category, stock, imageFile, userId, userEmail });
 
-    if (!name || !description || !price || !category || !imageFile) {
+    if (!name || !description || !price || !category || !stock || !imageFile) {
       alert('Please fill out all fields and select an image.');
       return;
     }
@@ -77,14 +77,15 @@ const ProductListing = () => {
             description,
             price: parseFloat(price),
             category,
+            stock: parseInt(stock, 10),  // Save stock as integer
             image: imageURL,
             userId,
-            userEmail, // Store user email to display later
+            userEmail,
           });
 
           console.log('Product added successfully!');
           alert('Product added successfully!');
-          setNewProduct({ name: '', description: '', price: '', category: '', imageFile: null });
+          setNewProduct({ name: '', description: '', price: '', category: '', stock: '', imageFile: null });
           navigate('/shop');
         }
       );
@@ -118,6 +119,13 @@ const ProductListing = () => {
           value={newProduct.price}
           onChange={handleNewProductChange}
           placeholder="Product Price"
+        />
+        <input
+          type="number"
+          name="stock"  // Add stock input
+          value={newProduct.stock}
+          onChange={handleNewProductChange}
+          placeholder="Stock Quantity"
         />
         <select
           name="category"

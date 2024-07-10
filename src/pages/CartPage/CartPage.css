@@ -169,3 +169,20 @@ button:hover {
   display: flex;
   gap: 10px;
 }
+
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.cart-item-quantity label {
+  margin-right: 10px;
+}
+
+.cart-item-quantity input {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
