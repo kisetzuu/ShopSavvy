@@ -7,8 +7,8 @@ const AboutPage = () => {
       <div className='about-intro'>
         <div className="text">
           <h1><p>Our Story</p></h1>
-          Launced in 2024, ShopSavvy is on it's way to be the best premier online shopping
-          makterplace with an active presence in different worldwide locations. Supported by a wide
+          Launched in 2024, ShopSavvy is on it's way to be the best premier online shopping
+          marketplace with an active presence in different worldwide locations. Supported by a wide
           range of tailored marketing, data and service solutions, ShopSavvy has continued to gain
           numerous sellers, brand collaborations, and millions of customers all across the world.
           <p>
