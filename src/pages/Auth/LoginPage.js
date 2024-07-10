@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.css';
+import './AuthPage.css'
 import { auth } from '../../services/FirebaseConfig';
-import { handleLogin } from '../../services/AuthHelpers';
+import { handleLogin, handleFBAuth} from '../../services/AuthHelpers';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -20,6 +20,10 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     handleLogin(e, auth, email, password, setError, setMessage, navigate);
   };
+
+  const handleFacebookAuth = async (e) => {
+    await handleFBAuth(navigate, setError);
+  }
 
   return (
     <div className='login-div'>
@@ -54,6 +58,12 @@ const LoginPage = () => {
           </div>
           <div>
             <button type="button" className="register-button" onClick={handleRegister}>Register</button>
+          </div>
+          <div>
+            <label>Sign-up With</label>
+          </div>
+          <div>
+            <button type="button" className="facebook-button" onClick={handleFacebookAuth}>Facebook</button>
           </div>
         </form>
       </div>

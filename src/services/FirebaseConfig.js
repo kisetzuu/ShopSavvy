@@ -1,6 +1,6 @@
 // src/services/FirebaseConfig.js
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, FacebookAuthProvider} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getAnalytics } from 'firebase/analytics';
 import { getDatabase } from 'firebase/database';
@@ -23,5 +23,6 @@ const db = getFirestore(app);
 const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const storage = getStorage(app); // Initialize storage
+const fbAuth =  new FacebookAuthProvider();
 
-export { app, auth, db, analytics, database, storage };
+export { app, auth, db, analytics, database, storage, fbAuth };
