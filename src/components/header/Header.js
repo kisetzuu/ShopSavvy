@@ -50,6 +50,9 @@ const Header = () => {
           <li><Link to="/contact">Contact</Link></li>
           <li><Link to="/cart">Cart</Link></li>
           <li><Link to="/support">Support</Link></li>
+          {user && (
+            <li><Link to="/user-listings">Listings</Link></li>
+          )}
         </ul>
         <ul className={`nav-links right ${menuActive ? 'active' : ''}`}>
           {user ? (

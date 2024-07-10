@@ -1,3 +1,5 @@
+/* Header.css */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -65,6 +67,7 @@
   border-radius: 50%;
   transition: transform 0.3s ease;
   object-fit: cover;
+  margin-top: 5px; /* Adjust this value to move the profile picture down */
 }
 
 .nav-links .profile-icon img:hover {
