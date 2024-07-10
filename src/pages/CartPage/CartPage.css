@@ -6,6 +6,9 @@
   font-family: 'Roboto', sans-serif;
   max-width: 1400px;
   margin: 20px auto;
+  background: #292929;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .cart-header {
@@ -15,6 +18,8 @@
 
 .cart-header h2 {
   font-size: 2.5rem;
+  color: #1abc9c;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .cart-wishlist-container {
@@ -26,7 +31,7 @@
 .cart-section,
 .wishlist-section {
   flex: 1;
-  background: rgba(0, 0, 0, 0.8); /* Separate black box for each section */
+  background: rgba(0, 0, 0, 0.8);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -37,6 +42,7 @@
   font-size: 2rem;
   margin-bottom: 20px;
   text-align: center;
+  color: #1abc9c;
 }
 
 .cart-items,
@@ -95,7 +101,7 @@ button {
   padding: 12px 24px;
   cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   font-size: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -103,6 +109,7 @@ button {
 button:hover {
   background-color: #16a085;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 /* Specific button color overrides */
@@ -115,7 +122,7 @@ button:hover {
 }
 
 .move-to-cart-button {
-  background-color: #1abc9c; /* Green color for move to cart button */
+  background-color: #1abc9c;
 }
 
 .move-to-cart-button:hover {
@@ -185,4 +192,6 @@ button:hover {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  background: #333;
+  color: #e0e0e0;
 }

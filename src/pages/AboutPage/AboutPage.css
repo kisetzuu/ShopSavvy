@@ -1,28 +1,135 @@
 .about {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #000000;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(255, 255, 255);
+  animation: slideInFromBottom 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Using a custom cubic-bezier for smoother effect */
 }
 
-.homeabout {
-    height: 400px;
-    display: flex;
-    align-items: left;
-    justify-content: left;
-    padding: 40px;
-    font-family: 'Roboto', sans-serif;
-    color: #ffffff; /* Changed to a dark color for contrast against white background */
-    text-align: left;
-    position: relative;
-    background-color: #fff; /* Set background color to white */
-  }
+.about-intro {
+  margin-top: 7%;
+  margin-bottom: 9%;
+  display: flex;
+  gap: 120px;
+}
 
-.hero {
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /*color: #333; /* Changed to a dark color for contrast against white background */
-    text-align: center;
-    position: relative;
-    background-color: #fff; /* Set background color to white */
-  }
+.text {
+  flex: 1;
+  text-align: justify;
+  line-height: 1.6;
+  margin-left:10%;
+}
+
+.image {
+  max-width: 350px;
+  height: auto;
+  margin-right: 10%;
+  height: 350px;
+  object-fit: cover;
+}
+
+.about-statistics {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: center;
+  gap: 30px;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 2s ease-in-out;
+  overflow: auto;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.about-statistics-info {
+  background: #222;
+  padding: 20px; 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center; 
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 18%;
+}
+
+.about-statistics-info-one {
+  background: #1db954;
+  padding: 20px; 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  width: 18%;
+}
+
+.about-people {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  white-space: nowrap;
+  margin-bottom: 10%;
+}
+
+.spacing {
+  margin-bottom: 5%;
+}
+
+.about-people-info {
+  background: #222;
+  padding: 20px; 
+  border-radius: 10px;
+  text-align: left;
+  line-height: 1.6; 
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.about-people-info-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.about-assurance {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  white-space: nowrap; /* Ensure items are in a single line */
+  margin-bottom: 1%;
+  margin-left: 1%;
+  margin-right: 1%;
+  padding: 40px;
+  margin-bottom: 12%;
+}
+
+.about-assurance-width {
+  background: #222;
+  padding: 20px; 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center; 
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 25%;
+}
+
+.copyright {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2%;
+  margin-right: 1%;
+}
+
+.copyright-image {
+  margin-right: 1%;
+}

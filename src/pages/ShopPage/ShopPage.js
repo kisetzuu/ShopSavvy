@@ -145,22 +145,22 @@ const ShopPage = () => {
   };
 
   const handleProductClick = (productId) => {
-    if (doubleSelectedProducts.includes(productId)) {
-      setDoubleSelectedProducts(doubleSelectedProducts.filter((id) => id !== productId));
+    if (doubleSelectedProducts.some((product) => product.id === productId)) {
+      setDoubleSelectedProducts(doubleSelectedProducts.filter((product) => product.id !== productId));
     } else if (selectedProducts.includes(productId)) {
       setSelectedProducts(selectedProducts.filter((id) => id !== productId));
-      setDoubleSelectedProducts([...doubleSelectedProducts, productId]);
+      const product = products.find((product) => product.id === productId);
+      setModalProduct(product);
       setShowModal(true);
-      setModalProduct(products.find((product) => product.id === productId));
     } else {
       setSelectedProducts([...selectedProducts, productId]);
     }
   };
 
   const handleProductDoubleClick = (productId) => {
-    setDoubleSelectedProducts([...doubleSelectedProducts, productId]);
+    const product = products.find((product) => product.id === productId);
+    setModalProduct(product);
     setShowModal(true);
-    setModalProduct(products.find((product) => product.id === productId));
   };
 
   const handleViewProduct = (productId) => {
@@ -192,6 +192,22 @@ const ShopPage = () => {
     }
   };
 
+  const handleConfirmQuantity = () => {
+    const updatedDoubleSelectedProducts = [...doubleSelectedProducts];
+    const existingProductIndex = updatedDoubleSelectedProducts.findIndex(
+      (product) => product.id === modalProduct.id
+    );
+
+    if (existingProductIndex !== -1) {
+      updatedDoubleSelectedProducts[existingProductIndex].quantity = quantity;
+    } else {
+      updatedDoubleSelectedProducts.push({ ...modalProduct, quantity });
+    }
+
+    setDoubleSelectedProducts(updatedDoubleSelectedProducts);
+    setShowModal(false);
+  };
+
   const handleAddToCart = async () => {
     if (!user) {
       alert('You must be logged in to add items to the cart.');
@@ -199,10 +215,10 @@ const ShopPage = () => {
       return;
     }
 
-    const selectedItems = products.filter((product) => selectedProducts.includes(product.id));
-    const doubleSelectedItems = products
-      .filter((product) => doubleSelectedProducts.includes(product.id))
-      .map((product) => ({ ...product, quantity }));
+    const selectedItems = selectedProducts.map((productId) => ({
+      ...products.find((product) => product.id === productId),
+      quantity: 1,
+    }));
 
     try {
       const cartRef = ref(database, `carts/${user.uid}`);
@@ -213,12 +229,11 @@ const ShopPage = () => {
         currentItems = cartSnapshot.val().items || [];
       }
 
-      const newItems = [...currentItems, ...selectedItems, ...doubleSelectedItems];
+      const newItems = [...currentItems, ...selectedItems, ...doubleSelectedProducts];
 
       await set(cartRef, { items: newItems });
 
       setCartItems(newItems);
-      setShowModal(true);
       setSelectedProducts([]);
       setDoubleSelectedProducts([]);
       setQuantity(1); // Reset quantity after adding to cart
@@ -326,7 +341,7 @@ const ShopPage = () => {
               onDoubleClick={handleProductDoubleClick}
               onView={handleViewProduct}
               isSelected={selectedProducts.includes(product.id)}
-              isDoubleSelected={doubleSelectedProducts.includes(product.id)}
+              isDoubleSelected={doubleSelectedProducts.some((doubleSelectedProduct) => doubleSelectedProduct.id === product.id)}
             />
           ))}
         </div>
@@ -418,7 +433,7 @@ const ShopPage = () => {
         </Modal.Body>
         <Modal.Footer>
           <button onClick={handleCloseModal}>Cancel</button>
-          <button onClick={handleAddToCart}>Add to Cart</button>
+          <button onClick={handleConfirmQuantity}>Confirm Quantity</button>
         </Modal.Footer>
       </Modal>
     </div>
