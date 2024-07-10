@@ -3,26 +3,148 @@ import './AboutPage.css';
 
 const AboutPage = () => {
   return (
-    <div>
-      <h2>About Page</h2>
-      <p>This is the About Page where we will provide information about this website and many more.</p>
+    <div className="about">
+      <div className='about-intro'>
+        <div className="text">
+          <h1>Our Story</h1>
+          Launced in 2024, ShopSavvy is on it's way to be the best premier online shopping
+          makterplace with an active presence in different worldwide locations. Supported by a wide
+          range of tailored marketing, data and service solutions, ShopSavvy has continued to gain
+          numerous sellers, brand collaborations, and millions of customers all across the world.
+          <p>
+            ShopSavvy has a lot of diverse products to offer, growing with every single visit at a
+            fast pace to ensure customer satisfaction. ShopSavvy offers a diverse assortment of products
+            in categories which customers can freely explore for efficiency.
+          </p>
+        </div>
+          <img
+            loading="lazy"
+            srcSet={process.env.PUBLIC_URL + '/nxq_LogoN.png'} alt='Logo' className='image'
+          />
+      </div>
+      
+      <section className="about-statistics">
+        <div className='about-statistics-info-one'>
+          <img
+            loading="lazy"
+            src={process.env.PUBLIC_URL + '/monthly-product-sales.png'} alt='Monthly Product Sales'
+          />
+          <div>
+            <h2>52k</h2>
+          </div>
+          <div>
+            Monthly Product Sales
+          </div>
+        </div>  
+        
+        <div className="about-statistics-info">
+          <img
+            loading="lazy"
+            src={process.env.PUBLIC_URL + '/customers-active.png'} alt='Customers Active'
+          />
+          <div>
+            <h2>45.5k</h2>
+          </div>
+          <div>
+            Active Customers
+          </div>
+        </div>
+
+        <div className="about-statistics-info">
+          <img
+            loading="lazy"
+            src={process.env.PUBLIC_URL + '/annual-gross.png'} alt='Annual Gross Sales'
+          />
+          <div>
+            <h2>25k</h2>
+          </div>
+          <div>
+            Annual Gross Sale
+          </div>
+        </div>
+      </section>
+
+      <div className='about-people'>
+        <div className='about-people-info'>
+          <img
+            src={process.env.PUBLIC_URL + '/member-example.png'} alt='Member 1' className='about-people-info-image'
+          />
+          <h3>Keith Chadberc Villanueva</h3>
+          <div className='spacing'>
+            Back-end Developer
+          </div>
+        </div>
+
+        <div className='about-people-info'>
+          <img
+            src={process.env.PUBLIC_URL + '/member-example.png'} alt='Member 2' className='about-people-info-image'
+          />
+          <h3>Jeff Gabriel Leung</h3>
+          <div className='spacing'>
+            Back-end Developer
+          </div>
+        </div>
+
+        <div className='about-people-info'>
+          <img
+            src={process.env.PUBLIC_URL + '/member-example.png'} alt='Member 3' className='about-people-info-image'
+          />
+          <h3>Mark John Toroy</h3>
+          <div className='spacing'>
+            Front-end Developer
+          </div>
+        </div>
+
+        <div className='about-people-info'>
+          <img
+            src={process.env.PUBLIC_URL + '/member-example.png'} alt='Member 4' className='about-people-info-image'
+          />
+          <h3>Nicko Louis Adora</h3>
+          <div className='spacing'>
+            Front-end Developer
+          </div>
+        </div> 
+      </div>
+
+      <div className='about-assurance'> 
+        <div className="about-assurance-width">
+          <img
+            loading="lazy"
+            src={process.env.PUBLIC_URL + '/free-fast-delivery.png'} alt='Free And Fast Delivery'
+          />
+          <h3>FREE AND FAST DELIVERY</h3>
+          Free delivery for all orders over $200
+        </div>
+
+        <div className="about-assurance-width">
+          <img
+            loading="lazy"
+            src={process.env.PUBLIC_URL + '/customer-service.png'} alt='Customer Service'
+          />
+          <h3>24/7 CUSTOMER SERVICE</h3>
+            Friendly 24/7 customer support
+        </div>
+
+        <div className="about-assurance-width">
+          <img
+            loading="lazy"
+            src={process.env.PUBLIC_URL + '/money-back.png'} alt='Money Back'
+          />
+          <h3>MONEY BACK GUARANTEE</h3>
+          Free delivery for all orders over $140
+        </div>
+      </div>
+
+      <div className='copyright'>
+        <div className='copyright-image'>
+          <img
+            loading="lazy"
+            src={process.env.PUBLIC_URL + '/copyright.png'} alt='Copyright Image'
+          />
+        </div>
+        Copyright NexQ 2024. All rights reserved.
+      </div>
     </div>
-    /*<div className="about">
-      <div className="homeabout">
-        Home / About
-      </div>
-      <div className="hero">
-        Launced in 2015, Exclusive is South Asia’s premier online shopping
-        makterplace with an active presense in Bangladesh. Supported by wide
-        range of tailored marketing, data and service solutions, Exclusive has
-        10,500 sallers and 300 brands and serves 3 millioons customers across
-        the region.{"        "}
-        Exclusive has more than 1 Million products to offer, growing at a very
-        fast. Exclusive offers a diverse assotment in categories ranging from
-        consumer.
-      </div>
-    </div>*/
-    
   );
 };
 
