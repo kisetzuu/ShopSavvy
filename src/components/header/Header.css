@@ -1,3 +1,5 @@
+/* Header.css */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -7,7 +9,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  padding: 1.1% 2px;
+  padding: 1.1% 2%;
   box-sizing: border-box;
 }
 
@@ -33,20 +35,19 @@
 }
 
 .nav-links.right {
+  display: flex;
   justify-content: flex-end;
-  margin-left: auto; /* This pushes the right links to the right */
-  padding-right: 50px; /* Adjust the padding to move it more to the right */
+  align-items: center;
+  gap: 16px;
 }
 
 .nav-links a, .nav-links .button-link {
   color: #191414;
   text-decoration: none;
   font-size: 1rem;
-  transition: color 0.3s ease;
   font-weight: bold;
   padding: 8px 16px;
   border-radius: 5px;
-  text-decoration: none;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -61,10 +62,12 @@
 }
 
 .nav-links .profile-icon img {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   transition: transform 0.3s ease;
+  object-fit: cover;
+  margin-top: 5px; /* Adjust this value to move the profile picture down */
 }
 
 .nav-links .profile-icon img:hover {
@@ -72,7 +75,22 @@
 }
 
 .nav-links .profile-icon {
-  transition: none; /* Remove transition for the profile icon container */
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+}
+
+.menu-toggle .bar {
+  width: 25px;
+  height: 3px;
+  background-color: #191414;
+  margin: 5px 0;
+  transition: 0.4s;
 }
 
 /* Responsive Navigation Menu (Mobile View) */
@@ -80,23 +98,11 @@
   .nav-links {
     flex-direction: column;
     align-items: center;
-  }
-
-  .header {
-    justify-content: space-between;
+    padding: 0;
   }
 
   .menu-toggle {
     display: inline-block;
-    cursor: pointer;
-  }
-
-  .menu-toggle .bar {
-    width: 25px;
-    height: 3px;
-    background-color: #191414;
-    margin: 5px 0;
-    transition: 0.4s;
   }
 
   .nav-links.active {
@@ -108,17 +114,25 @@
     top: 60px;
     right: 0;
     width: 100%;
-    text-align: left;
-    padding: 20px 0;
-  }
-
-  .nav-links a {
-    padding: 10px;
-    width: 100%;
     text-align: center;
+    padding: 20px 0;
+    gap: 16px;
   }
 
-  .nav-links .button-link {
+  .nav-links a, .nav-links .button-link {
+    width: 100%;
     padding: 12px 24px;
   }
+
+  .nav-links .profile-icon img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }

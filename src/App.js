@@ -9,6 +9,10 @@ import RegistrationPage from './pages/Auth/RegistrationPage';
 import SupportPage from './pages/SupportPage/SupportPage';
 import ReceiptPage from './pages/Receipt/ReceiptPage';
 import AboutPage from './pages/AboutPage/AboutPage';
+import AccountPage from './pages/Account/AccountPage';
+import ProductListing from './pages/ProductListing/ProductListing';
+import UpdateStock from './components/UpdateStock';
+import UserListings from './pages/User Listings/UserListings'; // Corrected import statement
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CartProvider } from './CartContext';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
@@ -17,6 +21,7 @@ import { SavedToCartProvider } from './SavedToCartContext';
 function App() {
   return (
     <Router>
+      <CartProvider>
         <SavedToCartProvider>
           <Header />
           <Routes>
@@ -29,8 +34,13 @@ function App() {
             <Route path="/product/:productId" element={<ProductDetailPage />} />
             <Route path="/receipt" element={<ReceiptPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/product-listing" element={<ProductListing />} />
+            <Route path="/user-listings" element={<UserListings />} /> {/* Corrected route */}
+            <Route path="/update-stock" element={<UpdateStock />} />
           </Routes>
         </SavedToCartProvider>
+      </CartProvider>
     </Router>
   );
 }

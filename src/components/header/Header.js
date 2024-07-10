@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css';
-import { auth } from '../../services/FirebaseConfig';
+import { Link } from 'react-router-dom';
+import { auth, db } from '../../services/FirebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
   const [user, setUser] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user);
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists() && userDoc.data().profilePicture) {
+          setProfilePicture(userDoc.data().profilePicture);
+        } else {
+          setProfilePicture(null);
+        }
       } else {
         setUser(null);
+        setProfilePicture(null);
       }
     });
 
@@ -34,12 +44,15 @@ const Header = () => {
     <header className="header">
       <nav className={`nav ${menuActive ? 'active' : ''}`}>
         <ul className={`nav-links left ${menuActive ? 'active' : ''}`}>
-          <li><a href="/">Home</a></li>
-          <li><a href="/shop">Shop</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/cart">Cart</a></li>
-          <li><a href="/support">Support</a></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/shop">Shop</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
+          <li><Link to="/cart">Cart</Link></li>
+          <li><Link to="/support">Support</Link></li>
+          {user && (
+            <li><Link to="/user-listings">Listings</Link></li>
+          )}
         </ul>
         <ul className={`nav-links right ${menuActive ? 'active' : ''}`}>
           {user ? (
@@ -49,18 +62,22 @@ const Header = () => {
                 <button onClick={handleLogout} className="button-link">Logout</button>
               </li>
               <li className="profile-icon">
-                <a href="/profile">
-                  <img src={`${process.env.PUBLIC_URL}/account.png`} alt="Profile" />
-                </a>
+                <Link to="/account">
+                  {profilePicture ? (
+                    <img src={profilePicture} alt="Profile" />
+                  ) : (
+                    <img src={`${process.env.PUBLIC_URL}/account.png`} alt="Profile" />
+                  )}
+                </Link>
               </li>
             </>
           ) : (
             <>
               <li>
-                <a href="/login" className="button-link">Login</a>
+                <Link to="/login" className="button-link">Login</Link>
               </li>
               <li>
-                <a href="/register" className="button-link">Signup</a>
+                <Link to="/register" className="button-link">Signup</Link>
               </li>
             </>
           )}

@@ -39,6 +39,8 @@ const ProductDetailPage = () => {
       </div>
       <p className="price">Price: ${product.price}</p>
       <p className="description">{product.description}</p>
+      <p className="stock">Stock: {product.stock}</p>
+      <p className="user-email">Listed by: {product.userEmail || 'Admin'}</p>
       <button className="back-button" onClick={() => navigate(-1)}>Back to Shop</button>
     </div>
   );
