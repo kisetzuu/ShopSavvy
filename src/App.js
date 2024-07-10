@@ -10,6 +10,7 @@ import SupportPage from './pages/SupportPage/SupportPage';
 import ReceiptPage from './pages/Receipt/ReceiptPage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import AccountPage from './pages/Account/AccountPage'; // Import AccountPage
+import ProductListing from './pages/ProductListing/ProductListing'; // Import ProductListing
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CartProvider } from './CartContext';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
@@ -32,6 +33,7 @@ function App() {
             <Route path="/receipt" element={<ReceiptPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/account" element={<AccountPage />} /> {/* Add AccountPage route */}
+            <Route path="/product-listing" element={<ProductListing />} /> {/* Add ProductListing route */}
           </Routes>
         </SavedToCartProvider>
       </CartProvider>

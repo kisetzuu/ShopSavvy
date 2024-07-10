@@ -1,3 +1,4 @@
+// src/pages/ShopPage/ShopPage.js
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
@@ -369,6 +370,9 @@ const ShopPage = () => {
         <button className="view-cart-button" onClick={handleViewCart}>
           View Cart
         </button>
+        <button className="list-product-button" onClick={() => navigate('/product-listing')}>
+          List a Product
+        </button> {/* Add this button */}
       </div>
 
       {/* Modal for Add to Cart Confirmation */}

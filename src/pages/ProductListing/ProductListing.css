@@ -1,0 +1,56 @@
+.product-listing-container {
+  padding: 40px;
+  background-color: #292929;
+  color: #e0e0e0;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.listing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.listing-form input,
+.listing-form textarea,
+.listing-form select {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.listing-form textarea {
+  resize: vertical;
+}
+
+.listing-form button {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.listing-form button:hover {
+  background-color: #16a085;
+  transform: scale(1.05);
+}
+
+.progress-bar {
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.progress {
+  height: 20px;
+  background-color: #1abc9c;
+}
