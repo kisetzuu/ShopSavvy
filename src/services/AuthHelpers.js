@@ -1,6 +1,20 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signOut, signInWithPopup } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
+import { auth, fbAuth } from './FirebaseConfig';
+import { profileCreation } from './UserServices';
+import { getAdditionalUserInfo } from 'firebase/auth';
+
+const handleFacebook = async () => {
+  try{
+    const userCredential = await signInWithPopup(auth, fbAuth)
+    const additionalUserInfo = await getAdditionalUserInfo(userCredential);
+    return { userCredential, additionalUserInfo };
+  }
+  catch(error){
+    console.log("handle fb" + error);
+  }
+};
 
 export const handleLogin = async (e, auth, email, password, setError, setMessage, navigate) => {
   e.preventDefault();
@@ -51,3 +65,19 @@ export const handleRegister = async (e, auth, db, email, password, confirmPasswo
     console.error('Error during registration:', error);
   }
 };
+
+export const handleFBAuth = async (navigate, setError) => {
+  try {
+    const { userCredential, additionalUserInfo } = await handleFacebook();
+    if (additionalUserInfo.isNewUser) {
+      await profileCreation(userCredential);
+      await navigate('/account');
+      window.location.reload();
+    } else {
+      await navigate('/shop');
+    }
+  } catch (error) {
+    setError('Registration failed: ' + error.message);
+  }
+};
+
