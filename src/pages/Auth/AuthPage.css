@@ -84,9 +84,8 @@
     background-color: #148F42;
   }
 
-  .facebook-button{
+  .facebook-button, .google-button {
     width: 100%;
-    background-color: #4267B2;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -94,7 +93,25 @@
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+  
+  .facebook-button {
+    background-color: #4267B2;
+  }
+  
+  .google-button {
+    background-color: #FFFFFF;
+    color: #555; /* Change the color for better contrast */
+  }
+  
+  .button-icon {
+    width: 20px; /* Adjust size of logo as needed */
+    margin-right: 10px; /* Space between logo and text */
+  }
+
 
   
   

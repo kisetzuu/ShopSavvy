@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { auth, db } from '../../services/FirebaseConfig'; // Correctly import db instead of fs
-import { useNavigate } from 'react-router-dom';
-import { handleRegister, handleFBAuth } from '../../services/AuthHelpers';
+import { auth, db, fbAuth, googleAuth } from '../../services/FirebaseConfig';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { handleRegister, handleOtherAuth } from '../../services/AuthHelpers';
 import './AuthPage.css'
 
 const RegistrationPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,9 +18,14 @@ const RegistrationPage = () => {
     handleRegister(e, auth, db, email, password, confirmPassword, name, setError, setMessage, navigate);
   };
   
-  const handleFacebookAuth = async (e) => {
-    await handleFBAuth(navigate, setError);
+  const handleFacebookAuth = async () => {
+    await handleOtherAuth(navigate, setError, location.pathname, fbAuth);
   }
+
+  const handleGoogleAuth = async () => {
+    await handleOtherAuth(navigate, setError, location.pathname, googleAuth);
+  }
+  
 
   
   return (
@@ -76,6 +82,9 @@ const RegistrationPage = () => {
           </div>
           <div>
             <button type="button" className="facebook-button" onClick={handleFacebookAuth}>Facebook</button>
+          </div>
+          <div>
+            <button type="button" className="google-button" onClick={handleGoogleAuth}>Google</button>
           </div>
         </form>
       </div>
