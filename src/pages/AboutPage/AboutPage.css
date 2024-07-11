@@ -12,6 +12,7 @@
 }
 
 .text {
+  margin-top: 2.8%;
   flex: 1;
   text-align: justify;
   line-height: 1.6;
@@ -82,7 +83,7 @@
 
 .about-people-info {
   background: #222;
-  padding: 20px; 
+  padding: 10px; 
   border-radius: 10px;
   text-align: left;
   line-height: 1.6; 
@@ -95,7 +96,7 @@
   width: 100%;
   height: 300px;
   object-fit: cover;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .about-assurance {

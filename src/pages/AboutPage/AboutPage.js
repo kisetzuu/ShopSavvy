@@ -6,9 +6,9 @@ const AboutPage = () => {
     <div className="about">
       <div className='about-intro'>
         <div className="text">
-          <h1>Our Story</h1>
-          Launced in 2024, ShopSavvy is on it's way to be the best premier online shopping
-          makterplace with an active presence in different worldwide locations. Supported by a wide
+          <h1><p>Our Story</p></h1>
+          Launched in 2024, ShopSavvy is on it's way to be the best premier online shopping
+          marketplace with an active presence in different worldwide locations. Supported by a wide
           range of tailored marketing, data and service solutions, ShopSavvy has continued to gain
           numerous sellers, brand collaborations, and millions of customers all across the world.
           <p>
@@ -69,7 +69,7 @@ const AboutPage = () => {
           <img
             src={process.env.PUBLIC_URL + '/member-example.png'} alt='Member 1' className='about-people-info-image'
           />
-          <h3>Keith Chadberc Villanueva</h3>
+          <h5>Keith Chadberc Villanueva</h5>
           <div className='spacing'>
             Back-end Developer
           </div>
@@ -79,7 +79,7 @@ const AboutPage = () => {
           <img
             src={process.env.PUBLIC_URL + '/member-example.png'} alt='Member 2' className='about-people-info-image'
           />
-          <h3>Jeff Gabriel Leung</h3>
+          <h5>Jeff Gabriel Leung</h5>
           <div className='spacing'>
             Back-end Developer
           </div>
@@ -89,7 +89,7 @@ const AboutPage = () => {
           <img
             src={process.env.PUBLIC_URL + '/member-example.png'} alt='Member 3' className='about-people-info-image'
           />
-          <h3>Mark John Toroy</h3>
+          <h5>Mark John Toroy</h5>
           <div className='spacing'>
             Front-end Developer
           </div>
@@ -99,7 +99,7 @@ const AboutPage = () => {
           <img
             src={process.env.PUBLIC_URL + '/member-example.png'} alt='Member 4' className='about-people-info-image'
           />
-          <h3>Nicko Louis Adora</h3>
+          <h5>Nicko Louis Adora</h5>
           <div className='spacing'>
             Front-end Developer
           </div>
@@ -112,7 +112,8 @@ const AboutPage = () => {
             loading="lazy"
             src={process.env.PUBLIC_URL + '/free-fast-delivery.png'} alt='Free And Fast Delivery'
           />
-          <h3>FREE AND FAST DELIVERY</h3>
+          <p></p>
+          <h5>FREE AND FAST DELIVERY</h5>
           Free delivery for all orders over $200
         </div>
 
@@ -121,7 +122,8 @@ const AboutPage = () => {
             loading="lazy"
             src={process.env.PUBLIC_URL + '/customer-service.png'} alt='Customer Service'
           />
-          <h3>24/7 CUSTOMER SERVICE</h3>
+          <p></p>
+          <h5>24/7 CUSTOMER SERVICE</h5>
             Friendly 24/7 customer support
         </div>
 
@@ -130,8 +132,9 @@ const AboutPage = () => {
             loading="lazy"
             src={process.env.PUBLIC_URL + '/money-back.png'} alt='Money Back'
           />
-          <h3>MONEY BACK GUARANTEE</h3>
-          Free delivery for all orders over $140
+          <p></p>
+          <h5>MONEY BACK GUARANTEE</h5>
+            We return money within 30 days
         </div>
       </div>
 
