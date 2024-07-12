@@ -44,8 +44,8 @@ const ProductList = ({ products, onProductClick, onProductDoubleClick, onViewPro
         onClick={onProductClick}
         onDoubleClick={onProductDoubleClick}
         onView={onViewProduct}
-        isSelected={selectedProducts.includes(product.id)}
-        isDoubleSelected={doubleSelectedProducts.includes(product.id)}
+        isSelected={Array.isArray(selectedProducts) && selectedProducts.includes(product.id)}
+        isDoubleSelected={Array.isArray(doubleSelectedProducts) && doubleSelectedProducts.some((doubleSelectedProduct) => doubleSelectedProduct.id === product.id)}
       />
     ))}
   </div>
@@ -145,9 +145,9 @@ const ShopPage = () => {
   };
 
   const handleProductClick = (productId) => {
-    if (doubleSelectedProducts.some((product) => product.id === productId)) {
+    if (Array.isArray(doubleSelectedProducts) && doubleSelectedProducts.some((product) => product.id === productId)) {
       setDoubleSelectedProducts(doubleSelectedProducts.filter((product) => product.id !== productId));
-    } else if (selectedProducts.includes(productId)) {
+    } else if (Array.isArray(selectedProducts) && selectedProducts.includes(productId)) {
       setSelectedProducts(selectedProducts.filter((id) => id !== productId));
       const product = products.find((product) => product.id === productId);
       setModalProduct(product);
@@ -215,7 +215,7 @@ const ShopPage = () => {
       return;
     }
 
-    const selectedItems = selectedProducts.map((productId) => ({
+    const selectedItems = Array.isArray(selectedProducts) && selectedProducts.map((productId) => ({
       ...products.find((product) => product.id === productId),
       quantity: 1,
     }));
@@ -340,8 +340,8 @@ const ShopPage = () => {
               onClick={handleProductClick}
               onDoubleClick={handleProductDoubleClick}
               onView={handleViewProduct}
-              isSelected={selectedProducts.includes(product.id)}
-              isDoubleSelected={doubleSelectedProducts.some((doubleSelectedProduct) => doubleSelectedProduct.id === product.id)}
+              isSelected={Array.isArray(selectedProducts) && selectedProducts.includes(product.id)}
+              isDoubleSelected={Array.isArray(doubleSelectedProducts) && doubleSelectedProducts.some((doubleSelectedProduct) => doubleSelectedProduct.id === product.id)}
             />
           ))}
         </div>

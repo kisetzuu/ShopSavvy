@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
-import { auth, database } from '../../services/FirebaseConfig'; // Adjusted path based on your structure
+import { auth, db, database } from '../../services/FirebaseConfig'; // Adjusted path based on your structure
+import { doc, getDoc, updateDoc, writeBatch } from 'firebase/firestore';
 import { ref, get, child, set } from 'firebase/database';
 import './CartPage.css';
 
@@ -44,7 +45,7 @@ const CartPage = () => {
 
   useEffect(() => {
     const calculateTotalCost = () => {
-      const cost = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+      const cost = cartItems.reduce((total, item) => total + item.price * (item.quantity || 1), 0);
       setTotalCost(cost);
     };
 
@@ -73,6 +74,38 @@ const CartPage = () => {
           // Create balance node if it doesn't exist
           await set(balanceRef, newBalance);
         }
+
+        // Deduct stock quantities from Firestore
+        const batch = writeBatch(db);
+        for (const item of cartItems) {
+          if (!item.id) {
+            console.error("Item does not have an id:", item);
+            continue;
+          }
+
+          const itemId = item.id.toString();
+          console.log("Processing item with ID:", itemId);
+
+          const productRef = doc(db, 'products', itemId);
+          const productDoc = await getDoc(productRef);
+
+          if (productDoc.exists()) {
+            const productData = productDoc.data();
+            const newStock = productData.stock - (item.quantity || 1);
+
+            if (newStock < 0) {
+              alert(`Not enough stock for ${item.name}. Available stock: ${productData.stock}`);
+              return;
+            }
+
+            batch.update(productRef, { stock: newStock });
+          } else {
+            console.error(`Product ${itemId} does not exist.`);
+            return;
+          }
+        }
+
+        await batch.commit();
 
         // Clear the cart
         await set(cartRef, { items: [] });
@@ -123,7 +156,7 @@ const CartPage = () => {
       }
 
       // Add to cart
-      const updatedCart = [...cartItems, { ...item, quantity: 1 }];
+      const updatedCart = [...cartItems, item];
       try {
         const cartRef = ref(database, `carts/${user.uid}`);
         await set(cartRef, { items: updatedCart });
@@ -133,13 +166,6 @@ const CartPage = () => {
         alert(`Error: ${error.message}`);
       }
     }
-  };
-
-  const handleQuantityChange = (id, quantity) => {
-    const updatedCartItems = cartItems.map(item =>
-      item.id === id ? { ...item, quantity } : item
-    );
-    setCartItems(updatedCartItems);
   };
 
   return (
@@ -156,16 +182,7 @@ const CartPage = () => {
                 <div className="cart-item-details">
                   <p className="cart-item-name">{item.name}</p>
                   <p className="cart-item-price">${item.price}</p>
-                  <div className="cart-item-quantity">
-                    <label htmlFor={`quantity-${item.id}`}>Quantity: </label>
-                    <input
-                      type="number"
-                      id={`quantity-${item.id}`}
-                      value={item.quantity}
-                      min="1"
-                      onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
-                    />
-                  </div>
+                  <p className="cart-item-quantity">Quantity: {item.quantity || 1}</p>
                   <button className="remove-item-button" onClick={() => removeFromCart(item.id)}>Remove</button>
                 </div>
               </div>
