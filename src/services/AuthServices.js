@@ -1,9 +1,32 @@
-import { deleteUser, signInWithEmailAndPassword } from 'firebase/auth';
+import { deleteUser, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { createUserWithEmailAndPassword, signOut, signInWithPopup } from 'firebase/auth';
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, getDoc, getFirestore } from 'firebase/firestore';
 import { auth } from './FirebaseConfig';
 import { accountCreation } from './UserServices';
 import { getAdditionalUserInfo } from 'firebase/auth';
+
+
+export const handleAuthStateChange = async (setUser, setProfilePicture) => {
+  const db = getFirestore();
+
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      setUser(user);
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists() && userDoc.data().profilePicture) {
+        setProfilePicture(userDoc.data().profilePicture);
+      } else {
+        setProfilePicture(null);
+      }
+    } else {
+      setUser(null);
+      setProfilePicture(null);
+    }
+  });
+
+  return unsubscribe;
+};
+
 
 export const handleLogin = async (e, auth, email, password, setError, setMessage, navigate) => {
   e.preventDefault();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
-import { auth, db } from '../../services/FirebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
+import { auth}  from '../../services/FirebaseConfig';
+import { handleAuthStateChange } from '../../services/AuthServices';
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -10,22 +10,9 @@ const Header = () => {
   const [profilePicture, setProfilePicture] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        setUser(user);
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists() && userDoc.data().profilePicture) {
-          setProfilePicture(userDoc.data().profilePicture);
-        } else {
-          setProfilePicture(null);
-        }
-      } else {
-        setUser(null);
-        setProfilePicture(null);
-      }
-    });
+    const unsubscribe = handleAuthStateChange(setUser, setProfilePicture);
 
-    return () => unsubscribe();
+    return () => unsubscribe;
   }, []);
 
   const handleLogout = async () => {
