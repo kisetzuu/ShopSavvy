@@ -1,9 +1,11 @@
 import { deleteUser, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { createUserWithEmailAndPassword, signOut, signInWithPopup } from 'firebase/auth';
+import { sendEmailVerification } from 'firebase/auth';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { auth, db} from './FirebaseConfig';
 import { accountCreation } from './UserServices';
 import { getAdditionalUserInfo } from 'firebase/auth';
+
 
 
 export const handleAuthStateChange = (setUser) => {
@@ -32,34 +34,24 @@ export const handleLogin = async (e, auth, email, password, setError, setMessage
   }
 };
 
-export const handleRegister = async (e, auth, db, email, password, confirmPassword, name, setError, setMessage, navigate) => {
+export const handleRegister = async (e, auth, email, password, confirmPassword, setError, setMessage, navigate) => {
   e.preventDefault();
-
   if (!email || !password || !confirmPassword) {
     setError('Please fill in all fields.');
     return;
-  }
-
-  if (password !== confirmPassword) {
+  }  if (password !== confirmPassword) {
     setError('Passwords do not match.');
     return;
   }
-
-  try {
+    try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-
-    await setDoc(doc(db, 'users', user.uid), {
-      name: name,
-      email: user.email,
-      createdAt: new Date().toISOString(),
-    });
-
-    await signOut(auth);
+    await  accountCreation(user);
     setMessage('Registration successful');
-    await navigate('/login');
+    await navigate('/account');
+    window.location.reload();
   } catch (error) {
-    setError('Registration failed: ' + error.message);
+    await setError('Registration failed: ' + error.message);
     console.error('Error during registration:', error);
   }
 };

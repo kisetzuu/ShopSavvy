@@ -1,8 +1,10 @@
 import { doc, setDoc, getDoc } from "firebase/firestore"; 
 import { db } from "./FirebaseConfig";
+import { sendEmailVerification } from "firebase/auth";
 
 //Account Creation
 export const accountCreation = async (user) => {
+    await sendEmailVerification(user);
     try {
         await setDoc(doc(db, 'users', user.uid), {
             email: user.email,

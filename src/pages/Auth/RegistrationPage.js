@@ -7,15 +7,14 @@ import './AuthPage.css'
 const RegistrationPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
-    handleRegister(e, auth, db, email, password, confirmPassword, name, setError, setMessage, navigate);
+  const handleSubmit = async (e) => {
+    await handleRegister(e, auth, email, password, confirmPassword, setError, setMessage, navigate);
   };
   
   const handleFacebookAuth = async () => {
@@ -38,15 +37,6 @@ const RegistrationPage = () => {
         {error && <p className="error">{error}</p>}
         {message && <p className="success">{message}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Name:</label>
-            <input
-              type="name"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
