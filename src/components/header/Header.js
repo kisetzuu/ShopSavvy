@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../../services/FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
 import { CartContext } from '../../CartContext';
+import { handleAuthStateChange } from '../../services/AuthServices';
+import { fetchProfilePicture } from '../../services/UserServices';
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -13,23 +15,14 @@ const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        setUser(user);
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists() && userDoc.data().profilePicture) {
-          setProfilePicture(userDoc.data().profilePicture);
-        } else {
-          setProfilePicture(null);
-        }
-      } else {
-        setUser(null);
-        setProfilePicture(null);
-      }
-    });
+    const unsubscribe = handleAuthStateChange(setUser);
 
-    return () => unsubscribe();
+    return () => unsubscribe;
   }, []);
+
+  useEffect(() => {
+    fetchProfilePicture(user, setProfilePicture);
+  }, [user]);
 
   const handleLogout = async () => {
     try {

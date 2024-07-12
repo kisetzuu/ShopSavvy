@@ -1,8 +1,8 @@
-import { getFirestore, doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, getDoc } from "firebase/firestore"; 
+import { db } from "./FirebaseConfig";
 
 //Account Creation
 export const accountCreation = async (user) => {
-    const db = await getFirestore();
     try {
         await setDoc(doc(db, 'users', user.uid), {
             email: user.email,
@@ -23,4 +23,18 @@ export const accountCreation = async (user) => {
     }
 };
 
-//export const profileEdit = async ()
+//Fetch Profile Picture
+export const fetchProfilePicture = async (user, setProfilePicture) =>{
+    if (user) {
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists() && userDoc.data().profilePicture) {
+        setProfilePicture(userDoc.data().profilePicture);
+      } else {
+        setProfilePicture(null);
+      }
+    } else {
+      setProfilePicture(null);
+    }
+  }
+
+//export const profileEdit = async () h
