@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './Header.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../../services/FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
 import { CartContext } from '../../CartContext';
@@ -10,6 +10,7 @@ const Header = () => {
   const [user, setUser] = useState(null);
   const [profilePicture, setProfilePicture] = useState(null);
   const { balance } = useContext(CartContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -42,6 +43,10 @@ const Header = () => {
     setMenuActive(!menuActive);
   };
 
+  const handleBalanceClick = () => {
+    navigate('/payment-portal');
+  };
+
   return (
     <header className="header">
       <nav className={`nav ${menuActive ? 'active' : ''}`}>
@@ -60,7 +65,7 @@ const Header = () => {
           {user ? (
             <>
               <li>{user.email}</li>
-              <li><span className="balance">Balance: ${balance !== null ? balance : 'Loading...'}</span></li>
+              <li><span className="balance" onClick={handleBalanceClick}>Balance: ${balance !== null ? balance : 'Loading...'}</span></li>
               <li>
                 <button onClick={handleLogout} className="button-link">Logout</button>
               </li>
