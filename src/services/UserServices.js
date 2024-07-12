@@ -1,22 +1,26 @@
 import { getFirestore, doc, setDoc } from "firebase/firestore"; 
 
-export const profileCreation = async (userCredential) => {
+//Account Creation
+export const accountCreation = async (user) => {
     const db = await getFirestore();
-   
     try {
-        const uid = await userCredential.user.uid;
-        const profileData = {
+        await setDoc(doc(db, 'users', user.uid), {
+            email: user.email,
             address: "",
-            fullName: "",
+            firstName: "",
+            lastName: "",
             phoneNumber: "",
             profilePicture: "",
-            username: ""
-        };
+            username: "",
+            createdAt:  new Date().toISOString()
+        });
 
-        const userDoc = doc(db, "users", uid);
-        await setDoc(userDoc, profileData);
         console.log("Profile created successfully");
     } catch (error) {
         console.error("Error creating profile: ", error);
+        throw new Error(error);
+        
     }
 };
+
+//export const profileEdit = async ()

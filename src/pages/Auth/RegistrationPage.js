@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { auth, db, fbAuth, googleAuth } from '../../services/FirebaseConfig';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { handleRegister, handleOtherAuth } from '../../services/AuthHelpers';
+import { handleRegister, handleOtherAuth } from '../../services/AuthServices';
 import './AuthPage.css'
 
 const RegistrationPage = () => {
@@ -77,14 +77,21 @@ const RegistrationPage = () => {
           <div>
             <button type="submit" className="register-button">Register</button>
           </div>
-          <div>
+          <div className='button-group'>
             <label>Sign-up With</label>
-          </div>
           <div>
-            <button type="button" className="facebook-button" onClick={handleFacebookAuth}>Facebook</button>
+            <button type="button" class="facebook-button" onClick={handleFacebookAuth}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo" class="button-icon" />
+              Facebook
+            </button>
           </div>
+
           <div>
-            <button type="button" className="google-button" onClick={handleGoogleAuth}>Google</button>
+            <button type="button" class="google-button" onClick={handleGoogleAuth}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" class="button-icon" />
+              Google
+            </button>
+          </div>
           </div>
         </form>
       </div>
