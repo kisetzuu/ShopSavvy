@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+// src/components/Header/Header.js
+import React, { useState, useEffect, useContext } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import { auth, db } from '../../services/FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
+import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
   const [user, setUser] = useState(null);
   const [profilePicture, setProfilePicture] = useState(null);
+  const { balance } = useContext(CartContext);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -69,6 +72,9 @@ const Header = () => {
                     <img src={`${process.env.PUBLIC_URL}/account.png`} alt="Profile" />
                   )}
                 </Link>
+              </li>
+              <li className="balance-display">
+                Balance: ${balance !== null ? balance : 'Loading...'}
               </li>
             </>
           ) : (
