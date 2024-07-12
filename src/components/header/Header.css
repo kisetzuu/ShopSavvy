@@ -93,6 +93,11 @@
   transition: 0.4s;
 }
 
+@media (min-width: 769px) {
+  .nav-links {
+    height: 3dvh;
+  }
+}
 /* Responsive Navigation Menu (Mobile View) */
 @media (max-width: 768px) {
   .nav-links {

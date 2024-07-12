@@ -1,9 +1,32 @@
-import { deleteUser, signInWithEmailAndPassword } from 'firebase/auth';
+import { deleteUser, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { createUserWithEmailAndPassword, signOut, signInWithPopup } from 'firebase/auth';
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, getDoc, getFirestore } from 'firebase/firestore';
 import { auth } from './FirebaseConfig';
-import { profileCreation } from './UserServices';
+import { accountCreation } from './UserServices';
 import { getAdditionalUserInfo } from 'firebase/auth';
+
+
+export const handleAuthStateChange = async (setUser, setProfilePicture) => {
+  const db = getFirestore();
+
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      setUser(user);
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists() && userDoc.data().profilePicture) {
+        setProfilePicture(userDoc.data().profilePicture);
+      } else {
+        setProfilePicture(null);
+      }
+    } else {
+      setUser(null);
+      setProfilePicture(null);
+    }
+  });
+
+  return unsubscribe;
+};
+
 
 export const handleLogin = async (e, auth, email, password, setError, setMessage, navigate) => {
   e.preventDefault();
@@ -57,12 +80,12 @@ export const handleRegister = async (e, auth, db, email, password, confirmPasswo
 
 export const handleOtherAuth = async (navigate, setError, currentPage, otherAuth) => {  try {
   const result = await signInWithPopup(auth, otherAuth);
-  const userCredential = result.user;
+  const user = result.user;
   const additionalUserInfo = getAdditionalUserInfo(result);
 
   if (currentPage === '/register') {
     if (additionalUserInfo.isNewUser) {
-      await profileCreation(userCredential);
+      await accountCreation(user);
       await navigate('/account');
       window.location.reload();
     } else {
@@ -74,14 +97,11 @@ export const handleOtherAuth = async (navigate, setError, currentPage, otherAuth
       await navigate('/shop');
       window.location.reload();
     } else {
-      await navigate('/login-error'); // Corrected route
+      await navigate('/login-error'); 
       await setError('Login Failed: Account Not Registered');
-      await deleteUser(userCredential);
+      await deleteUser(result);
     }
-  } else {
-    await navigate('/ily' + currentPage);
-  }
-  
+  } 
 } catch (error) {
   setError('Authentication failed: ' + error.message);
   await navigate('/' + error.message);
