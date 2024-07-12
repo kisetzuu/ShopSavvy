@@ -48,6 +48,7 @@ export const handleRegister = async (e, auth, email, password, confirmPassword, 
     const user = userCredential.user;
     await  accountCreation(user);
     setMessage('Registration successful');
+    await sendEmailVerification(user);
     await navigate('/account');
     window.location.reload();
   } catch (error) {
