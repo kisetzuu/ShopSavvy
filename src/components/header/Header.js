@@ -1,10 +1,9 @@
-// src/components/Header/Header.js
 import React, { useState, useEffect, useContext } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import { auth, db } from '../../services/FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
-import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
+import { CartContext } from '../../CartContext';
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -61,6 +60,7 @@ const Header = () => {
           {user ? (
             <>
               <li>{user.email}</li>
+              <li><span className="balance">Balance: ${balance !== null ? balance : 'Loading...'}</span></li>
               <li>
                 <button onClick={handleLogout} className="button-link">Logout</button>
               </li>
@@ -72,9 +72,6 @@ const Header = () => {
                     <img src={`${process.env.PUBLIC_URL}/account.png`} alt="Profile" />
                   )}
                 </Link>
-              </li>
-              <li className="balance-display">
-                Balance: ${balance !== null ? balance : 'Loading...'}
               </li>
             </>
           ) : (

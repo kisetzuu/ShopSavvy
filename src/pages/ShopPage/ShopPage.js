@@ -1,4 +1,3 @@
-// src/pages/ShopPage/ShopPage.js
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
@@ -53,7 +52,7 @@ const ProductList = ({ products, onProductClick, onProductDoubleClick, onViewPro
 
 const ShopPage = () => {
   const navigate = useNavigate();
-  const { setCartItems, balance, setBalance } = useContext(CartContext);
+  const { setCartItems } = useContext(CartContext);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -63,7 +62,6 @@ const ShopPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
-  const [balanceToAdd, setBalanceToAdd] = useState('');
   const [wishlist, setWishlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -78,12 +76,6 @@ const ShopPage = () => {
           setCartItems(cartSnapshot.val().items || []);
         }
 
-        // Fetch balance
-        const balanceSnapshot = await get(child(dbRef, `balances/${currentUser.uid}`));
-        if (balanceSnapshot.exists()) {
-          setBalance(balanceSnapshot.val());
-        }
-
         // Fetch wishlist
         const wishlistSnapshot = await get(child(dbRef, `wishlists/${currentUser.uid}`));
         if (wishlistSnapshot.exists()) {
@@ -93,7 +85,7 @@ const ShopPage = () => {
         console.error('Error fetching user data from Realtime Database:', error);
       }
     },
-    [setCartItems, setBalance]
+    [setCartItems]
   );
 
   useEffect(() => {
@@ -103,13 +95,12 @@ const ShopPage = () => {
         await fetchUserData(currentUser);
       } else {
         setCartItems([]);
-        setBalance(null);
         setWishlist([]);
       }
     });
 
     return () => unsubscribe();
-  }, [fetchUserData, setCartItems, setBalance]);
+  }, [fetchUserData, setCartItems]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -165,31 +156,6 @@ const ShopPage = () => {
 
   const handleViewProduct = (productId) => {
     navigate(`/product/${productId}`);
-  };
-
-  const handleAddBalance = async () => {
-    if (!user) {
-      alert('You must be logged in to add balance.');
-      navigate('/login');
-      return;
-    }
-
-    const newBalance = balance + parseFloat(balanceToAdd);
-
-    if (isNaN(newBalance) || newBalance < 0) {
-      alert('Invalid balance.');
-      return;
-    }
-
-    try {
-      const balanceRef = ref(database, `balances/${user.uid}`);
-      await set(balanceRef, newBalance);
-      setBalance(newBalance);
-      setBalanceToAdd('');
-    } catch (error) {
-      console.error('Error adding balance to Realtime Database:', error);
-      alert(`Error: ${error.message}`);
-    }
   };
 
   const handleConfirmQuantity = () => {
@@ -310,23 +276,6 @@ const ShopPage = () => {
       <section className="shop-hero" style={{ backgroundImage: `url(${bannerImage})` }}>
         <div className="shop-hero-content">
           {/* Hero Content */}
-        </div>
-      </section>
-
-      {/* Balance Display */}
-      <section className="balance-section">
-        <h2>Your Balance: ${balance !== null ? balance : 'Loading...'}</h2>
-        <div className="add-balance">
-          <input
-            type="number"
-            value={balanceToAdd}
-            onChange={(e) => setBalanceToAdd(e.target.value)}
-            placeholder="Add balance"
-            className="balance-input"
-          />
-          <button onClick={handleAddBalance} className="add-balance-button">
-            Add Balance
-          </button>
         </div>
       </section>
 

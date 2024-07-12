@@ -93,11 +93,27 @@
   transition: 0.4s;
 }
 
+.balance {
+  background-color: #1DB954; /* Same as the header color */
+  color: #191414; /* Text color */
+  font-size: 1.2rem;
+  font-weight: 700; /* Ensure bold font weight */
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.balance:hover {
+  color: #1DB954; /* Background color of header */
+  background-color: #ffdd57; /* Hover background color */
+}
+
 @media (min-width: 769px) {
   .nav-links {
     height: 3dvh;
   }
 }
+
 /* Responsive Navigation Menu (Mobile View) */
 @media (max-width: 768px) {
   .nav-links {
