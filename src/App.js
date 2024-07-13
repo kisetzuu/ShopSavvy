@@ -14,6 +14,7 @@ import ProductListing from './pages/ProductListing/ProductListing';
 import UpdateStock from './components/UpdateStock';
 import UserListings from './pages/User Listings/UserListings'; // Corrected import statement
 import PaymentPortal from './pages/Payment/PaymentPortal';
+import ContactPage from './pages/ContactPage/ContactUs';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CartProvider } from './CartContext';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
@@ -40,6 +41,7 @@ function App() {
             <Route path="/user-listings" element={<UserListings />} /> {/* Corrected route */}
             <Route path="/update-stock" element={<UpdateStock />} />
             <Route path="/payment-portal" element={<PaymentPortal />} />
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </SavedToCartProvider>
       </CartProvider>
