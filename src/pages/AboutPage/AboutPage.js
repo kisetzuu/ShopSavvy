@@ -67,7 +67,7 @@ const AboutPage = () => {
       <div className='about-people'>
         <div className='about-people-info'>
           <img
-            src={process.env.PUBLIC_URL + '/member-example.png'} alt='Member 1' className='about-people-info-image'
+            src={process.env.PUBLIC_URL + '/villanueva-picture.png'} alt='Member 1' className='about-people-info-image'
           />
           <h5>Keith Chadberc Villanueva</h5>
           <div className='spacing'>
