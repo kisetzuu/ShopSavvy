@@ -8,9 +8,9 @@ import { getAdditionalUserInfo } from 'firebase/auth';
 
 
 
-export const handleAuthStateChange = (setUser) => {
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
-    setUser(user);
+export const handleAuthStateChange = async (setUser) => {
+  const unsubscribe = await onAuthStateChanged(auth, (user) => {
+  setUser(user);
   });
   return unsubscribe;
 };
@@ -87,4 +87,14 @@ export const handleOtherAuth = async (navigate, setError, currentPage, otherAuth
 }
 };
 
+export const isVerified = async (user) => {
+  if (!user) return false;
 
+  const providers = user.providerData.map((provider) => provider.providerId);
+  if (providers.includes('google.com') || providers.includes('facebook.com')) {
+    return true;
+  }
+
+  await user.reload();
+  return user.emailVerified;
+};
