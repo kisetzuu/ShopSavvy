@@ -5,11 +5,10 @@ import { CartContext } from '../../CartContext'; // Adjusted path based on your 
 import './PaymentPortal.css';
 
 const paymentMethods = [
-  { name: 'GCash', image: '/path/to/image' },
-  { name: 'Smart', image: '/path/to/image' },
-  { name: 'Visa', image: '/path/to/image' },
-  { name: 'Mastercard', image: '/path/to/image' },
-  { name: 'GrabPay', image: '/path/to/image' },
+  { name: 'GCash', image: '/gcash_logo.png' },
+  { name: 'Visa', image: '/visa_logo.jpg' },
+  { name: 'Mastercard', image: '/mastercard_logo.png' },
+  { name: 'GrabPay', image: '/grab_logo.jpg' },
   // Add more payment methods as needed
 ];
 

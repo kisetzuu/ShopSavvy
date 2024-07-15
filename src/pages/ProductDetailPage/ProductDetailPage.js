@@ -69,7 +69,7 @@ const ProductDetailPage = () => {
     const newReviewData = {
       ...newReview,
       userId: user.uid,
-      userName: user.displayName || 'Anonymous',
+      userName: user.displayName || user.email || 'Anonymous',
       timestamp: new Date(),
     };
 
@@ -142,7 +142,7 @@ const ProductDetailPage = () => {
                 <h3>{review.userName}</h3>
                 <StarRating rating={review.rating} />
                 <p>{review.comment}</p>
-                <p className="review-date">{new Date(review.timestamp.toDate()).toLocaleString()}</p>
+                <p className="review-date">{new Date(review.timestamp.seconds * 1000).toLocaleString()}</p>
               </li>
             ))}
           </ul>
