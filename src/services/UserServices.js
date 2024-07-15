@@ -1,7 +1,8 @@
-import { doc, setDoc, getDoc } from "firebase/firestore"; 
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore"; 
 import { db, storage } from "./FirebaseConfig";
 import { sendEmailVerification } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { isEmptyOrWhitespace } from "./GeneralHelpers";
 
 //Account Creation
 export const accountCreation = async (user) => {
@@ -83,5 +84,33 @@ export const editProfilePicture = async (user, editPicture, setProfilePicture) =
   } catch (error) {
     console.error('Error updating profile picture:', error);
     throw new Error(error);
+  }
+};
+
+export const editProfileDetails = async (userId, fieldsToUpdate) => {
+  const userDocRef = doc(db, 'users', userId);
+  let updateData = {};
+
+  if (fieldsToUpdate.username && !isEmptyOrWhitespace(fieldsToUpdate.username)) {
+    updateData.username = fieldsToUpdate.username;
+  }
+
+  if (fieldsToUpdate.firstName && !isEmptyOrWhitespace(fieldsToUpdate.firstName) &&
+      fieldsToUpdate.lastName && !isEmptyOrWhitespace(fieldsToUpdate.lastName)) {
+    updateData.fullName = `${fieldsToUpdate.firstName} ${fieldsToUpdate.lastName}`;
+    updateData.firstName = fieldsToUpdate.firstName;
+    updateData.lastName = fieldsToUpdate.lastName;
+  }
+
+  if (fieldsToUpdate.phoneNumber && !isEmptyOrWhitespace(fieldsToUpdate.phoneNumber)) {
+    updateData.phoneNumber = fieldsToUpdate.phoneNumber;
+  }
+
+  try {
+    await updateDoc(userDocRef, updateData);
+    console.log('Document successfully updated!');
+  } catch (error) {
+    console.error('Error updating document: ', error);
+    throw error;
   }
 };
