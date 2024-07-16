@@ -75,11 +75,17 @@ export const handleOtherAuth = async (navigate, setError, currentPage, otherAuth
 }
 };
 
-export const isVerified = async (user) => {
+export const isThirdPartyProvider = (user) => {
   if (!user) return false;
 
   const providers = user.providerData.map((provider) => provider.providerId);
-  if (providers.includes('google.com') || providers.includes('facebook.com')) {
+  return providers.includes('google.com') || providers.includes('facebook.com');
+};
+
+export const checkEmailVerification = async (user) => {
+  if (!user) return false;
+
+  if (isThirdPartyProvider(user)) {
     return true;
   }
 

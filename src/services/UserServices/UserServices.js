@@ -114,3 +114,21 @@ export const editProfileDetails = async (userId, fieldsToUpdate) => {
     throw error;
   }
 };
+
+export const checkProfileCompletion = async (user) => {
+  if (!user) return false;
+  try {
+    const userRef = db.collection('users').doc(user.uid);
+    const snapshot = await userRef.get();
+
+    if (snapshot.exists()) {
+      const userData = snapshot.data();
+      return !!userData.fullName && !!userData.address && !!userData.username;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error('Error checking profile completion:', error);
+    return false;
+  }
+};

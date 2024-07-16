@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './GeneralAccountSettings.css'
 import { fetchProfileData, fetchProfilePicture, editProfilePicture, editProfileDetails } from '../../../services/UserServices/UserServices';
-import { isVerified } from '../../../services/AuthServices/AuthServices';
+import { checkEmailVerification } from '../../../services/AuthServices/AuthServices';
 import { isEmptyOrWhitespace } from '../../../services/GeneralHelpers';
 import { AuthContext } from '../../../services/AuthServices/AuthContext';
 import { ProfileContext } from '../../../services/UserServices/ProfilePictureContext';
@@ -29,7 +29,7 @@ const GeneralAccountSettings = () => {
       await editProfilePicture(user, file, updateProfilePicture);
     }
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -51,7 +51,7 @@ const GeneralAccountSettings = () => {
     const fetchDataAndCheckVerification = async () => {
       if (user) {
         fetchProfileData(user, setProfileData);
-        const verified = await isVerified(user);
+        const verified = await checkEmailVerification(user);
         setIsUserVerified(verified);
       }
     };

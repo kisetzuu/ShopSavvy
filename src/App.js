@@ -16,19 +16,22 @@ import UserListings from './pages/User Listings/UserListings'; // Corrected impo
 import PaymentPortal from './pages/Payment/PaymentPortal';
 import ContactPage from './pages/ContactPage/ContactPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { CartProvider } from './CartContext';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
 import { SavedToCartProvider } from './SavedToCartContext';
 import { AuthProvider } from './services/AuthServices/AuthContext'; // Import AuthProvider
-import { ProfileContext, ProfileProvider } from './services/UserServices/ProfilePictureContext';
+import { ProfileProvider } from './services/UserServices/ProfilePictureContext';
+import { CartProvider } from './CartContext';
+import { ProfileVerificationProvider } from './services/AuthServices/ProfileVerificationContext';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
+        <ProfileVerificationProvider>
         <CartProvider>
           <ProfileProvider>
           <SavedToCartProvider>
+
             <Header />
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -49,7 +52,8 @@ function App() {
               </Routes>
             </SavedToCartProvider>
           </ProfileProvider>
-        </CartProvider>
+          </CartProvider>
+        </ProfileVerificationProvider>
       </AuthProvider>
     </Router>
   );
