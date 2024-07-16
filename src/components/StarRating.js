@@ -1,21 +1,38 @@
-// src/components/StarRating.js
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import './StarRating.css';
+// components/StarRating.jsx
 
-const StarRating = ({ rating }) => {
-  const stars = [];
-  for (let i = 1; i <= 5; i++) {
-    stars.push(
-      <FontAwesomeIcon 
-        key={i} 
-        icon={faStar} 
-        className={i <= rating ? 'star filled' : 'star'} 
-      />
-    );
-  }
-  return <div className="star-rating">{stars}</div>;
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const StarRating = ({ rating, onRatingChange }) => {
+  const handleClick = (newRating) => {
+    if (onRatingChange) {
+      onRatingChange(newRating);
+    }
+  };
+
+  return (
+    <div>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          onClick={() => handleClick(star)}
+          style={{
+            cursor: onRatingChange ? 'pointer' : 'default',
+            color: star <= rating ? '#FFD700' : '#ccc',
+            fontSize: '3rem', // Increase the font size for bigger stars
+            margin: '0 5px' // Add some margin for spacing
+          }}
+        >
+          &#9733;
+        </span>
+      ))}
+    </div>
+  );
+};
+
+StarRating.propTypes = {
+  rating: PropTypes.number.isRequired,
+  onRatingChange: PropTypes.func
 };
 
 export default StarRating;

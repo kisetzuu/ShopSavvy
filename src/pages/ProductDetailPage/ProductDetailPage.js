@@ -1,4 +1,3 @@
-// src/pages/ProductDetailPage/ProductDetailPage.js
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../services/FirebaseConfig';
@@ -12,7 +11,9 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [filteredReviews, setFilteredReviews] = useState([]);
   const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
+  const [filterRating, setFilterRating] = useState(0);
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [reviewSubmitting, setReviewSubmitting] = useState(false);
@@ -43,9 +44,13 @@ const ProductDetailPage = () => {
       onSnapshot(q, (querySnapshot) => {
         const reviewsData = [];
         querySnapshot.forEach((doc) => {
-          reviewsData.push({ id: doc.id, ...doc.data() });
+          const data = doc.data();
+          data.rating = Number(data.rating); // Ensure rating is a number
+          reviewsData.push({ id: doc.id, ...data });
         });
+        console.log('Fetched reviews:', reviewsData); // Debugging log
         setReviews(reviewsData);
+        setFilteredReviews(reviewsData);
       });
     };
 
@@ -55,6 +60,10 @@ const ProductDetailPage = () => {
   const handleReviewChange = (e) => {
     const { name, value } = e.target;
     setNewReview((prevReview) => ({ ...prevReview, [name]: value }));
+  };
+
+  const handleRatingChange = (rating) => {
+    setNewReview((prevReview) => ({ ...prevReview, rating }));
   };
 
   const handleReviewSubmit = async (e) => {
@@ -85,6 +94,16 @@ const ProductDetailPage = () => {
     setReviewSubmitting(false);
   };
 
+  const handleFilterChange = (e) => {
+    const rating = Number(e.target.value);
+    setFilterRating(rating);
+    if (rating === 0) {
+      setFilteredReviews(reviews);
+    } else {
+      setFilteredReviews(reviews.filter(review => review.rating === rating));
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -99,23 +118,13 @@ const ProductDetailPage = () => {
       <p className="description">{product.description}</p>
       <p className="stock">Stock: {product.stock}</p>
       <p className="user-email">Listed by: {product.userEmail || 'Admin'}</p>
-      <button className="back-button" onClick={() => navigate(-1)}>Back to Shop</button>
 
       {/* Review Form */}
       <div className="review-section">
         <h2>Submit a Review</h2>
         <form onSubmit={handleReviewSubmit} className="review-form">
           <label htmlFor="rating">Rating:</label>
-          <input
-            type="number"
-            id="rating"
-            name="rating"
-            value={newReview.rating}
-            onChange={handleReviewChange}
-            min="1"
-            max="5"
-            required
-          />
+          <StarRating rating={newReview.rating} onRatingChange={handleRatingChange} />
           <label htmlFor="comment">Comment:</label>
           <textarea
             id="comment"
@@ -133,11 +142,20 @@ const ProductDetailPage = () => {
       {/* Reviews Section */}
       <div className="review-section">
         <h2>Reviews</h2>
-        {reviews.length === 0 ? (
+        <div className="filter-section">
+          <label htmlFor="filter-rating">Filter by rating:</label>
+          <select id="filter-rating" value={filterRating} onChange={handleFilterChange}>
+            <option value="0">All</option>
+            {[5, 4, 3, 2, 1].map((rating) => (
+              <option key={rating} value={rating}>{rating} stars</option>
+            ))}
+          </select>
+        </div>
+        {filteredReviews.length === 0 ? (
           <p>No reviews yet.</p>
         ) : (
           <ul className="review-list">
-            {reviews.map((review) => (
+            {filteredReviews.map((review) => (
               <li key={review.id} className="review-item">
                 <h3>{review.userName}</h3>
                 <StarRating rating={review.rating} />
@@ -148,6 +166,8 @@ const ProductDetailPage = () => {
           </ul>
         )}
       </div>
+
+      <button className="back-button" onClick={() => navigate(-1)}>Back to Shop</button>
     </div>
   );
 };
