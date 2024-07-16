@@ -1,0 +1,16 @@
+/* src/components/PromotionalSlider.css */
+.promotional-slider {
+    width: 100%;
+    max-width: 1700px; /* Increased max-width for wider banner */
+    margin: 20px auto;
+    padding: 0 20px; /* Optional padding for better appearance */
+  }
+  
+  .promotional-slider img {
+    width: 100%;
+    height: 400px; /* Set a fixed height for uniform image sizes */
+    object-fit: cover; /* Ensure images cover the specified dimensions while maintaining aspect ratio */
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  

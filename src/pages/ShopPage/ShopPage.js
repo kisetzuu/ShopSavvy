@@ -1,3 +1,4 @@
+// src/pages/ShopPage.js
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
@@ -6,6 +7,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { ref, get, child, set } from 'firebase/database';
 import Modal from 'react-bootstrap/Modal';
 import Footer from '../../components/Footer'; // Import the new Footer component
+import PromotionalSlider from '../../components/PromotionalSlider'; // Import the new PromotionalSlider component
 import './ShopPage.css';
 
 const ProductItem = ({ product, onClick, onDoubleClick, onView, isSelected, isDoubleSelected }) => (
@@ -296,6 +298,9 @@ const ShopPage = () => {
           ))}
         </div>
       </section>
+
+      {/* Add PromotionalSlider below Featured Products */}
+      <PromotionalSlider />
 
       {/* Categories Section */}
       <section className="shop-category">
