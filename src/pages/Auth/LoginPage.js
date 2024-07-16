@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './AuthPage.css'
 import { auth } from '../../services/FirebaseConfig';
-import { handleLogin, handleOtherAuth} from '../../services/AuthServices';
+import { handleLogin, handleOtherAuth } from '../../services/AuthServices/AuthServices';
 import { fbAuth, googleAuth } from '../../services/FirebaseConfig';
 
 const LoginPage = () => {

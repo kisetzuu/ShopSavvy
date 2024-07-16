@@ -1,12 +1,14 @@
 // src/pages/Account/AccountPage.js
-import React, { useState, useEffect } from 'react';
-import './AccountPage.css';
-import { fetchProfileData, fetchProfilePicture, editProfilePicture, editProfileDetails } from '../../services/UserServices';
-import { handleAuthStateChange, isVerified } from '../../services/AuthServices';
-import { isEmptyOrWhitespace } from '../../services/GeneralHelpers';
-const AccountPage = () => {
+import React, { useState, useEffect, useContext } from 'react';
+import './GeneralAccountSettings.css'
+import { fetchProfileData, fetchProfilePicture, editProfilePicture, editProfileDetails } from '../../../services/UserServices';
+import { isVerified } from '../../../services/AuthServices/AuthServices';
+import { isEmptyOrWhitespace } from '../../../services/GeneralHelpers';
+import { AuthContext } from '../../../services/AuthServices/AuthContext';
 
-  const [user, setUser] = useState(null);
+const GeneralAccountSettings = () => {
+
+  const { user } = useContext(AuthContext);
   const [profilePicture, setProfilePicture] = useState(null);
   const [isUserVerified, setIsUserVerified] = useState(true);
   const [firstName, setFirstName] = useState('');
@@ -30,7 +32,6 @@ const AccountPage = () => {
     e.preventDefault();
   
     try {
-  
       const fieldsToUpdate = {
         username,
         firstName,
@@ -47,22 +48,14 @@ const AccountPage = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = handleAuthStateChange(setUser);
-    return () => unsubscribe;
-  }, []);
-
-  useEffect(() => {
     const fetchDataAndCheckVerification = async () => {
       if (user) {
         fetchProfileData(user, setProfileData);
         fetchProfilePicture(user, setProfilePicture);
-        
-        // Check verification
         const verified = await isVerified(user);
         setIsUserVerified(verified);
       }
     };
-
     fetchDataAndCheckVerification();
   }, [user]);
 
@@ -78,9 +71,7 @@ const AccountPage = () => {
             Warning: Your email is not verified. Please verify your email to access all features.
           </div>
         )}
-
         <p>Main Information</p>
-
         <p><strong>Email:</strong> {user.email}</p>
         <form onSubmit={handleSubmit}>
           <p><strong>Username:</strong> {profileData.username}</p>
@@ -112,4 +103,4 @@ const AccountPage = () => {
   );
 };
 
-export default AccountPage;
+export default GeneralAccountSettings;
