@@ -20,32 +20,35 @@ import { CartProvider } from './CartContext';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
 import { SavedToCartProvider } from './SavedToCartContext';
 import { AuthProvider } from './services/AuthServices/AuthContext'; // Import AuthProvider
+import { ProfileContext, ProfileProvider } from './services/UserServices/ProfilePictureContext';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <CartProvider>
+          <ProfileProvider>
           <SavedToCartProvider>
             <Header />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/shop" element={<ShopPage />} />
-              <Route path="/register" element={<RegistrationPage />} />
-              <Route path="/support" element={<SupportPage />} />
-              <Route path="/product/:productId" element={<ProductDetailPage />} />
-              <Route path="/receipt" element={<ReceiptPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/account" element={<AccountPage />} />
-              <Route path="/product-listing" element={<ProductListing />} />
-              <Route path="/user-listings" element={<UserListings />} /> {/* Corrected route */}
-              <Route path="/update-stock" element={<UpdateStock />} />
-              <Route path="/payment-portal" element={<PaymentPortal />} />
-              <Route path="/contact" element={<ContactPage />} />
-            </Routes>
-          </SavedToCartProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/shop" element={<ShopPage />} />
+                <Route path="/register" element={<RegistrationPage />} />
+                <Route path="/support" element={<SupportPage />} />
+                <Route path="/product/:productId" element={<ProductDetailPage />} />
+                <Route path="/receipt" element={<ReceiptPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/account" element={<AccountPage />} />
+                <Route path="/product-listing" element={<ProductListing />} />
+                <Route path="/user-listings" element={<UserListings />} /> {/* Corrected route */}
+                <Route path="/update-stock" element={<UpdateStock />} />
+                <Route path="/payment-portal" element={<PaymentPortal />} />
+                <Route path="/contact" element={<ContactPage />} />
+              </Routes>
+            </SavedToCartProvider>
+          </ProfileProvider>
         </CartProvider>
       </AuthProvider>
     </Router>

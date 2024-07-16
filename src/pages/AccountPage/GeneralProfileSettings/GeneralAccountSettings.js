@@ -1,15 +1,16 @@
 // src/pages/Account/AccountPage.js
 import React, { useState, useEffect, useContext } from 'react';
 import './GeneralAccountSettings.css'
-import { fetchProfileData, fetchProfilePicture, editProfilePicture, editProfileDetails } from '../../../services/UserServices';
+import { fetchProfileData, fetchProfilePicture, editProfilePicture, editProfileDetails } from '../../../services/UserServices/UserServices';
 import { isVerified } from '../../../services/AuthServices/AuthServices';
 import { isEmptyOrWhitespace } from '../../../services/GeneralHelpers';
 import { AuthContext } from '../../../services/AuthServices/AuthContext';
+import { ProfileContext } from '../../../services/UserServices/ProfilePictureContext';
 
 const GeneralAccountSettings = () => {
 
   const { user } = useContext(AuthContext);
-  const [profilePicture, setProfilePicture] = useState(null);
+  const { profilePicture, updateProfilePicture } = useContext(ProfileContext);
   const [isUserVerified, setIsUserVerified] = useState(true);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -25,9 +26,10 @@ const GeneralAccountSettings = () => {
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      await editProfilePicture(user, file, setProfilePicture);
+      await editProfilePicture(user, file, updateProfilePicture);
     }
   };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -38,9 +40,7 @@ const GeneralAccountSettings = () => {
         lastName,
         phoneNumber,
       };
-  
       await editProfileDetails(user.uid, fieldsToUpdate);
-  
       console.log('Profile details updated successfully!');
     } catch (error) {
       console.error('Failed to update profile details:', error);
@@ -51,7 +51,6 @@ const GeneralAccountSettings = () => {
     const fetchDataAndCheckVerification = async () => {
       if (user) {
         fetchProfileData(user, setProfileData);
-        fetchProfilePicture(user, setProfilePicture);
         const verified = await isVerified(user);
         setIsUserVerified(verified);
       }

@@ -1,22 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './Header.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, db } from '../../services/FirebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
+import { auth } from '../../services/FirebaseConfig';
 import { CartContext } from '../../CartContext';
-import { fetchProfilePicture } from '../../services/UserServices';
+import { fetchProfilePicture } from '../../services/UserServices/UserServices';
 import { AuthContext } from '../../services/AuthServices/AuthContext';
+import { ProfileContext } from '../../services/UserServices/ProfilePictureContext';
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
   const { user } = useContext(AuthContext);
-  const [profilePicture, setProfilePicture] = useState(null);
+  const { profilePicture } = useContext(ProfileContext)
   const { balance } = useContext(CartContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchProfilePicture(user, setProfilePicture);
-  }, [user]);
 
   const handleLogout = async () => {
     try {

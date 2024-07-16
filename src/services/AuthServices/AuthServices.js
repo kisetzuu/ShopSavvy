@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, signOut, signInWithPopup } from 'fireba
 import { sendEmailVerification } from 'firebase/auth';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { auth, db} from '../FirebaseConfig';
-import { accountCreation } from '../UserServices';
+import { accountCreation } from '../UserServices/UserServices';
 import { getAdditionalUserInfo } from 'firebase/auth';
 
 export const handleLogin = async (e, auth, email, password, setError, setMessage, navigate) => {
