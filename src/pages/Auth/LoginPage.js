@@ -40,8 +40,8 @@ const LoginPage = () => {
         {error && <p className="error">{error}</p>}
         {message && <p className="success">{message}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email/Username:</label>
+          <div className="input-group">
+            <label htmlFor="email">Email:</label>
             <input
               type="text"
               id="email"
@@ -49,7 +49,7 @@ const LoginPage = () => {
               onChange={(e) => setemail(e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className='input-group'>
             <label htmlFor="password">Password:</label>
             <input
               type="password"

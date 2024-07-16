@@ -37,7 +37,7 @@ const RegistrationPage = () => {
         {error && <p className="error">{error}</p>}
         {message && <p className="success">{message}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="input-group">
             <label htmlFor="email">Email:</label>
             <input
               type="text"
@@ -46,7 +46,7 @@ const RegistrationPage = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className="input-group">
             <label htmlFor="password">Password:</label>
             <input
               type="password"
@@ -55,7 +55,7 @@ const RegistrationPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className="input-group">
             <label htmlFor="confirmPassword">Confirm Password:</label>
             <input
               type="password"

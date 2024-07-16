@@ -1,124 +1,127 @@
-/* LoginPage.css */
-  .login-div{
-    margin-top: 20px;
-  }
+/* Ensure box-sizing is consistent across all elements */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Parent container alignment */
+.login-div {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: flex-start; /* Aligns items to the top */
+  height: 100vh; /* Full viewport height */
+  padding-top: 20px; /* Add some padding from the top if needed */
+}
+
+/* Login container styling */
+.login-container {
+  padding: 40px;
+  max-width: 400px; /* Adjust width as needed */
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+/* Logo container styling */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; 
+}
+
+.logo {
+  max-width: 150px; /* Maximum width */
+  margin-bottom: 20px; /* Space below the logo */
+}
+
+/* Title styling */
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form group and button group styling */
+ .input-group, .button-group {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  color: black;
+}
 
 
-  .login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background: rgba(0, 0, 0, 0.5);
-    padding: 40px;
-    border-radius: 20px;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
+/* Button styling */
+.login-button, .register-button, .facebook-button, .google-button {
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  border: none;
+  box-sizing: border-box;
+}
 
-  .logo-container {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    margin-bottom: 20px; /* Optional: Adjust margin as needed */
-  }
-  
-  .logo {
-    max-width: 150px; /* Maximum width */
-    margin-bottom: 20px; /* Space below the logo */
-  }
-  
-  .login-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-group, .button-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .login-button {
-    width: 100%;
-    background-color: #1DB954;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    margin-bottom: 10px;
-  }
-  
-  .login-button:hover {
-    background-color: #148F42;
-  }
+.login-button {
+  background-color: #1DB954;
+  color: white;
+  margin-bottom: 10px;
+}
 
-  .register-button{
-    width: 100%;
-    background-color: #1DB954;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
+.login-button:hover {
+  background-color: #148F42;
+}
 
-  .reg-button:hover {
-    background-color: #148F42;
-  }
+.register-button {
+  background-color: #1DB954;
+  color: white;
+  margin-bottom: 10px;
+}
 
-  .facebook-button, .google-button {
-    width: 100%;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1.5vh;
-  }
-  
-  .facebook-button {
-    background-color: #4267B2;
-  }
-  
-  .google-button {
-    background-color: #FFFFFF;
-    color: #555; /* Change the color for better contrast */
-  }
-  
-  .button-icon {
-    width: 20px; /* Adjust size of logo as needed */
-    margin-right: 10px; /* Space between logo and text */
-  }
+.register-button:hover {
+  background-color: #148F42;
+}
 
+.facebook-button {
+  background-color: #4267B2;
+  color: white;
+  margin-bottom: 1.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  
-  
-  .error {
-    color: red;
-    text-align: center;
-    margin-bottom: 1.5vh;
-  }
-  
+.google-button {
+  background-color: #FFFFFF;
+  color: #555; /* Change the color for better contrast */
+  margin-bottom: 1.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-icon {
+  width: 20px; /* Adjust size of logo as needed */
+  margin-right: 10px; /* Space between logo and text */
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 1.5vh;
+}
