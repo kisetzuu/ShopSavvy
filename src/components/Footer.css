@@ -1,0 +1,91 @@
+/* src/components/Footer.css */
+.footer {
+  background-color: #000;
+  color: #e0e0e0;
+  padding: 30px 20px; /* Increased padding for a larger footer */
+  text-align: center;
+  width: 100%;
+  margin-top: 100px;
+  box-sizing: border-box;
+  animation: fadeInFooter 1.5s ease-in-out;
+}
+
+@keyframes fadeInFooter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.footer h2 {
+  font-size: 3rem; /* Increased font size */
+  margin-bottom: 30px; /* Increased margin for better spacing */
+  color: #1DB954;
+  animation: slideIn 1.5s ease-in-out;
+}
+
+.footer-sections {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px; /* Center content with a max-width */
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 250px; /* Increased minimum width for larger sections */
+  margin: 30px; /* Increased margin for better spacing */
+  box-sizing: border-box;
+  animation: fadeInSection 1.5s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInSection {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.footer-icon {
+  width: 60px; /* Increased size */
+  height: 60px;
+  margin-bottom: 20px; /* Increased margin for better spacing */
+  animation: bounceIn 1.5s ease-in-out;
+}
+
+@keyframes bounceIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.footer-section h3 {
+  font-size: 1.8rem; /* Increased font size */
+  margin-bottom: 15px; /* Increased margin for better spacing */
+}
+
+.footer-section p {
+  font-size: 1.2rem; /* Increased font size */
+  line-height: 1.8; /* Adjusted line height for better readability */
+}

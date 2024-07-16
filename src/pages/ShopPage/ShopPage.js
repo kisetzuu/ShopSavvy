@@ -5,6 +5,7 @@ import { auth, db, database } from '../../services/FirebaseConfig'; // Adjusted 
 import { collection, getDocs } from 'firebase/firestore';
 import { ref, get, child, set } from 'firebase/database';
 import Modal from 'react-bootstrap/Modal';
+import Footer from '../../components/Footer'; // Import the new Footer component
 import './ShopPage.css';
 
 const ProductItem = ({ product, onClick, onDoubleClick, onView, isSelected, isDoubleSelected }) => (
@@ -385,6 +386,9 @@ const ShopPage = () => {
           <button onClick={handleConfirmQuantity}>Confirm Quantity</button>
         </Modal.Footer>
       </Modal>
+
+      {/* Add Footer here */}
+      <Footer />
     </div>
   );
 };
