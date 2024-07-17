@@ -1,0 +1,56 @@
+.account-div {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: flex-start; /* Aligns items to the top */
+  height: 100vh; /* Full viewport height */
+  padding-top: 20px; /* Add some padding from the top if needed */
+}
+
+.account-div-container {
+  display: flex;
+  padding: 40px;
+  max-width: 90vw; /* Adjust width as needed */
+  margin-left: 5vw;
+  margin-right: 5vw;
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+/* Navbar styling */
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the start (top) */
+}
+
+.navbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%; /* Ensure the ul takes full width */
+}
+
+.navbar ul li {
+  width: 100%; /* Ensure the li takes full width */
+  padding: 8px 16px;
+}
+
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  width: 100%; /* Ensure the a tag takes full width */
+}
+
+.navbar ul li a:hover {
+  background-color: #575757;
+}
+
+/* Active component styling */
+.active-component {
+  width: 80%; /* 80% of the container */
+  padding-left: 20px; /* Optional: add some padding */
+}

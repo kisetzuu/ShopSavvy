@@ -6,7 +6,6 @@
   font-family: 'Roboto', sans-serif;
   background: rgba(0, 0, 0, 0.85);
   border-radius: 10px;
-  max-width: 70dvw;
   margin: 40px auto;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -23,7 +22,7 @@
 }
 
 .profile-picture-container {
-  margin-left: 20px; /* Add spacing between details and picture */
+  margin-left: 30px; /* Add spacing between details and picture */
 }
 
 .profile-picture {

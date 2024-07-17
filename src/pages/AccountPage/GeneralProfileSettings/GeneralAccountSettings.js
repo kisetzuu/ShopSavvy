@@ -1,6 +1,6 @@
 // src/pages/Account/AccountPage.js
 import React, { useState, useEffect, useContext } from 'react';
-import './GeneralAccountSettings.css'
+//import './GeneralAccountSettings.css'
 import { fetchProfileData, fetchProfilePicture, editProfilePicture, editProfileDetails } from '../../../services/UserServices/UserServices';
 import { checkEmailVerification } from '../../../services/AuthServices/AuthServices';
 import { isEmptyOrWhitespace } from '../../../services/GeneralHelpers';
@@ -70,7 +70,7 @@ const GeneralAccountSettings = () => {
             Warning: Your email is not verified. Please verify your email to access all features.
           </div>
         )}
-        <p>Main Information</p>
+        <h2>Main Information</h2>
         <p><strong>Email:</strong> {user.email}</p>
         <form onSubmit={handleSubmit}>
           <p><strong>Username:</strong> {profileData.username}</p>
