@@ -1,6 +1,6 @@
 // src/pages/Account/AccountPage.js
 import React, { useState, useEffect, useContext } from 'react';
-//import './GeneralAccountSettings.css'
+import './GeneralAccountSettings.css'
 import { fetchProfileData, fetchProfilePicture, editProfilePicture, editProfileDetails } from '../../../services/UserServices/UserServices';
 import { checkEmailVerification } from '../../../services/AuthServices/AuthServices';
 import { isEmptyOrWhitespace } from '../../../services/GeneralHelpers';
