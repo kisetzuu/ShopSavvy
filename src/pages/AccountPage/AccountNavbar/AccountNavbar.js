@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-//import './AccountNavbar.css'
+import './AccountNavbar.css'
 
 const AccountNavbar = ({ setActiveComponent }) => {
     return (

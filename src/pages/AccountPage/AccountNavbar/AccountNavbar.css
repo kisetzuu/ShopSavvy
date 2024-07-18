@@ -1,28 +1,41 @@
 .navbar {
-  position: fixed;
-  top: 0;
-  right: 0; /* Align to the right */
-  width: 200px; /* Adjust width as needed */
-  height: 100%;
-  background-color: #333;
-}
-
-.navbar ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.navbar ul li {
-  padding: 8px 16px;
-}
-
-.navbar ul li a {
-  color: white;
-  text-decoration: none;
-  display: block;
-}
-
-.navbar ul li a:hover {
-  background-color: #575757;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the start (top) */
+    position: relative; /* Make the .navbar position relative for ::after */
+  }
+  
+  .navbar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px; /* Width of the vertical line */
+    height: 100%; /* Height of the vertical line */
+    background-color: #575757; /* Color of the vertical line */
+  }
+  
+  .navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Ensure the ul takes full width */
+  }
+  
+  .navbar ul li {
+    width: 100%; /* Ensure the li takes full width */
+    padding: 8px 16px;
+    border: none; /* Remove any border */
+    margin: 0; /* Ensure no margin is causing gaps */
+  }
+  
+  .navbar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    width: 100%; /* Ensure the a tag takes full width */
+  }
+  
+  .navbar ul li a:hover {
+    background-color: #575757; /* Background color on hover */
+  }

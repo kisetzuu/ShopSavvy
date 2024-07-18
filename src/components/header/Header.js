@@ -3,7 +3,6 @@ import './Header.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../services/FirebaseConfig';
 import { CartContext } from '../../CartContext';
-import { fetchProfilePicture } from '../../services/UserServices/UserServices';
 import { AuthContext } from '../../services/AuthServices/AuthContext';
 import { ProfileContext } from '../../services/UserServices/ProfilePictureContext';
 

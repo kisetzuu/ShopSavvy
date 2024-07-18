@@ -1,4 +1,5 @@
 // src/pages/Account/AccountPage.js
+
 import React, { useState, useEffect, useContext } from 'react';
 import './GeneralAccountSettings.css'
 import { fetchProfileData, fetchProfilePicture, editProfilePicture, editProfileDetails } from '../../../services/UserServices/UserServices';
@@ -8,7 +9,6 @@ import { AuthContext } from '../../../services/AuthServices/AuthContext';
 import { ProfileContext } from '../../../services/UserServices/ProfilePictureContext';
 
 const GeneralAccountSettings = () => {
-
   const { user } = useContext(AuthContext);
   const { profilePicture, updateProfilePicture } = useContext(ProfileContext);
   const [isUserVerified, setIsUserVerified] = useState(true);
@@ -32,7 +32,7 @@ const GeneralAccountSettings = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const fieldsToUpdate = {
         username,
@@ -47,6 +47,10 @@ const GeneralAccountSettings = () => {
     }
   };
 
+  const handleFileButtonClick = () => {
+    document.getElementById('file-input').click();
+  };
+
   useEffect(() => {
     const fetchDataAndCheckVerification = async () => {
       if (user) {
@@ -58,45 +62,60 @@ const GeneralAccountSettings = () => {
     fetchDataAndCheckVerification();
   }, [user]);
 
-  if(!user){
-    return;
+  if (!user) {
+    return null;
   }
 
   return (
     <div className="account-container">
-      <div>
-        {!isUserVerified && (
-          <div style={{ color: 'red', marginBottom: '10px' }}>
-            Warning: Your email is not verified. Please verify your email to access all features.
-          </div>
-        )}
-        <h2>Main Information</h2>
-        <p><strong>Email:</strong> {user.email}</p>
+      <h2>General Information Settings</h2>
+      <div className='account-container-info'>
         <form onSubmit={handleSubmit}>
-          <p><strong>Username:</strong> {profileData.username}</p>
-          {isEmptyOrWhitespace(profileData.username) && (
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Username:</strong></p>
+          {isEmptyOrWhitespace(profileData.username) ? (
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' />
+          ) : (
+            <p>{profileData.username}</p>
           )}
 
-          <p><strong>Full Name:</strong> {profileData.fullName}</p>
-          {isEmptyOrWhitespace(profileData.fullName) && (
+          <p><strong>Full Name:</strong></p>
+          {isEmptyOrWhitespace(profileData.fullName) ? (
             <div>
               <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="First Name" />
               <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Last Name" />
             </div>
+          ) : (
+            <p>{profileData.fullName}</p>
           )}
 
-          <p><strong>Phone Number:</strong> {profileData.phoneNumber}</p>
-          {isEmptyOrWhitespace(profileData.phoneNumber) && (
-            <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+          <p><strong>Phone Number:</strong></p>
+          {isEmptyOrWhitespace(profileData.phoneNumber) ? (
+            <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="Phone Number"/>
+          ) : (
+            <p>{profileData.phoneNumber}</p>
           )}
-
-          <button type="submit">Submit</button>
+          <button className='profile-update-button' type="submit">Submit</button>
         </form>
       </div>
-      <div>
-      {profilePicture && <img src={profilePicture} alt="Profile" className="profile-picture" />}
-      <input type="file" onChange={handleFileChange} />
+      <div className='profile-picture-container'>
+        <p><strong>Profile Picture</strong></p>
+        {profilePicture ? (
+          <img src={profilePicture} alt="Profile" className="profile-picture" />
+        ) : (
+          <img src={`${process.env.PUBLIC_URL}/account.png`} alt="Profile" className="profile-picture" />
+        )}
+        <label className="file-input-label">
+          <input
+            id="file-input"
+            type="file"
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+          />
+          <button type="button" className="file-input-button" onClick={handleFileButtonClick}>
+            Upload File
+          </button>
+        </label>
       </div>
     </div>
   );

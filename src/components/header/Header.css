@@ -27,6 +27,7 @@
   margin: 0;
   padding-left: 20px;
   align-items: center;
+  height: 1.5dvw;
 }
 
 .nav-links.left {
@@ -108,52 +109,94 @@
   background-color: #ffdd57; /* Hover background color */
 }
 
-@media (min-width: 769px) {
-  .nav-links {
-    height: 3dvh;
+@media screen and (max-width: 1298px) {
+  nav {
+    padding: 10px 40px 10px 0px;
+  }
+
+  nav ul li.logo {
+    display: none;
+  }
+
+  nav ul div.items {
+    flex: 4;
   }
 }
 
-/* Responsive Navigation Menu (Mobile View) */
-@media (max-width: 768px) {
-  .nav-links {
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
+@media screen and (max-width: 800px) {
+  nav ul li.btn {
+    display: block;
   }
 
-  .menu-toggle {
-    display: inline-block;
+  nav {
+    z-index: 1;
+    padding: 9px 40px 9px 0;
   }
 
-  .nav-links.active {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #1DB954;
-    position: absolute;
-    top: 60px;
+  nav ul div.items {
+    z-index: -1;
+    position: fixed;
+    top: -220px;
     right: 0;
     width: 100%;
+    background: #222222;
+    display: inline-block;
+    transition: top 0.4s;
+  }
+
+  nav ul div.items.show {
+    top: 60px;
+  }
+
+  nav ul div.items li {
     text-align: center;
-    padding: 20px 0;
-    gap: 16px;
+    line-height: 30px;
+    margin: 30px 0;
   }
 
-  .nav-links a, .nav-links .button-link {
-    width: 100%;
-    padding: 12px 24px;
-  }
-
-  .nav-links .profile-icon img {
-    width: 50px;
-    height: 50px;
+  nav ul div.items li a {
+    font-size: 19px;
   }
 }
 
-.profile-picture {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
+@media screen and (max-width: 405px) {
+  nav ul {
+    flex-wrap: nowrap;
+  }
+
+  nav ul li.search {
+    width: 50vmin;
+  }
+
+  nav ul li input {
+    width: 40vmin;
+  }
+
+  nav ul li .search-icon {
+    width: 10vmin;
+  }
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  padding: 0 40px;
+  z-index: -2;
+}
+
+.content .text {
+  font-size: 40px;
+  font-weight: 800;
+  padding: 5px 0;
+  color: #202020;
+}
+
+.content .p {
+  font-size: 28px;
+  font-weight: 600;
+  color: #202020;
 }
