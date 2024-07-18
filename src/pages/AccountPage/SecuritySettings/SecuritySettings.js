@@ -56,10 +56,9 @@ const SecuritySettings = () => {
           </div>
         )}
 
-        {isThirdPartyAuth ? (
-          <p>Third-party authentication is enabled</p>
-        ) : (
+        {!isThirdPartyAuth && (
           <form onSubmit={handleChangePassword}>
+            <p><strong>Change Password:</strong></p>
             <label>
               <p><strong>Current Password:</strong></p>
               <input
@@ -81,7 +80,8 @@ const SecuritySettings = () => {
             <button type="submit">Change Password</button>
           </form>
         )}
-        {error && <p className="error-message">{error + user.email}</p>}
+
+        {error && <p className="error-message">{error}</p>}
       </div>
     </div>
   );
