@@ -12,13 +12,14 @@ import AboutPage from './pages/AboutPage/AboutPage';
 import AccountPage from './pages/AccountPage/AccountPage';
 import ProductListing from './pages/ProductListing/ProductListing';
 import UpdateStock from './components/UpdateStock';
-import UserListings from './pages/User Listings/UserListings'; // Corrected import statement
+import UserListings from './pages/User Listings/UserListings'; 
 import PaymentPortal from './pages/Payment/PaymentPortal';
 import ContactPage from './pages/ContactPage/ContactPage';
+import EditProductPage from './pages/EditProductPage/EditProductPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
 import { SavedToCartProvider } from './SavedToCartContext';
-import { AuthProvider } from './services/AuthServices/AuthContext'; // Import AuthProvider
+import { AuthProvider } from './services/AuthServices/AuthContext'; 
 import { ProfileProvider } from './services/UserServices/ProfilePictureContext';
 import { CartProvider } from './CartContext';
 import { ProfileVerificationProvider } from './services/AuthServices/ProfileVerificationContext';
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/update-stock" element={<UpdateStock />} />
                 <Route path="/payment-portal" element={<PaymentPortal />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/edit-product/:productId" element={<EditProductPage />} />
               </Routes>
             </SavedToCartProvider>
           </ProfileProvider>

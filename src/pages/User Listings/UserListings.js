@@ -31,6 +31,10 @@ const UserListings = () => {
     navigate(`/product/${productId}`);
   };
 
+  const handleEditProduct = (productId) => {
+    navigate(`/edit-product/${productId}`);
+  };
+
   if (!user) {
     return <div>Please log in to view your listings.</div>;
   }
@@ -45,6 +49,7 @@ const UserListings = () => {
             <p>{product.name}</p>
             <p>${product.price}</p>
             <button onClick={() => handleViewProduct(product.id)}>View Product</button>
+            <button onClick={() => handleEditProduct(product.id)}>Edit</button>
           </div>
         ))}
       </div>
