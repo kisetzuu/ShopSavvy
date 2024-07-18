@@ -5,7 +5,6 @@ import { CartContext } from '../../CartContext'; // Adjusted path based on your 
 import { auth, db, database } from '../../services/FirebaseConfig'; // Adjusted path based on your structure
 import { collection, getDocs } from 'firebase/firestore';
 import { ref, get, child, set } from 'firebase/database';
-import Modal from 'react-bootstrap/Modal';
 import Footer from '../../components/Footer'; // Import the new Footer component
 import PromotionalSlider from '../../components/PromotionalSlider'; // Import the new PromotionalSlider component
 import './ShopPage.css';
