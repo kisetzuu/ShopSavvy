@@ -25,6 +25,15 @@ const PromotionalSlider = () => {
         <div>
           <img src={`${process.env.PUBLIC_URL}/rog_banner.jpg`} alt="ROG Banner" />
         </div>
+        <div>
+          <img src={`${process.env.PUBLIC_URL}/steelseries_2.jpg`} alt="Steelseries Banner" />
+        </div>
+        <div>
+          <img src={`${process.env.PUBLIC_URL}/logitech_2.jpg`} alt="Logitech Banner" />
+        </div>
+        <div>
+          <img src={`${process.env.PUBLIC_URL}/predator_banner_1.jpg`} alt="Logitech Banner" />
+        </div>
       </Slider>
     </div>
   );
