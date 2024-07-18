@@ -1,4 +1,4 @@
-import { deleteUser, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendEmailVerification, getAdditionalUserInfo  } from 'firebase/auth';
+import { deleteUser, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendEmailVerification, getAdditionalUserInfo, EmailAuthProvider, reauthenticateWithCredential, updatePassword  } from 'firebase/auth';
 import { auth } from '../FirebaseConfig';
 import { accountCreation } from '../UserServices/UserServices';
 
@@ -87,4 +87,19 @@ export const checkEmailVerification = async (user) => {
 
   await user.reload();
   return user.emailVerified;
+};
+
+export const handleChangePassword = async (user, currentPassword, newPassword, setError, setCurrentPassword, setNewPassword) => {
+  try {
+    const credential = EmailAuthProvider.credential(user.email, currentPassword);
+    await reauthenticateWithCredential(user, credential);
+    await updatePassword(user, newPassword);
+
+    setCurrentPassword('');
+    setNewPassword('');
+    setError(null);
+  } catch (error) {
+    console.error('Error changing password:', error);
+    setError(error.message);
+  }
 };

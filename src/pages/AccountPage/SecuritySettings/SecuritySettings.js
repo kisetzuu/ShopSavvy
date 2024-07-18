@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../../services/AuthServices/AuthContext';
-import { isThirdPartyProvider } from '../../../services/AuthServices/AuthServices';
+import { isThirdPartyProvider, handleChangePassword } from '../../../services/AuthServices/AuthServices';
 import { ProfileVerificationContext } from '../../../services/AuthServices/ProfileVerificationContext';
-import { sendEmailVerification, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
+import { sendEmailVerification } from 'firebase/auth';
 import './SecuritySettings.css';
 
 const SecuritySettings = () => {
@@ -17,20 +17,9 @@ const SecuritySettings = () => {
     setIsThirdPartyAuth(isThirdPartyProvider(user));
   }, [user]);
 
-  const handleChangePassword = async (e) => {
+  const onChangePassword = (e) => {
     e.preventDefault();
-    try {
-      const credential = EmailAuthProvider.credential(user.email, currentPassword);
-      await reauthenticateWithCredential(user, credential);
-      await updatePassword(user, newPassword);
-
-      setCurrentPassword('');
-      setNewPassword('');
-      setError(null);
-    } catch (error) {
-      console.error('Error changing password:', error);
-      setError(error.message);
-    }
+    handleChangePassword(user, currentPassword, newPassword, setError, setCurrentPassword, setNewPassword);
   };
 
   const handleSendEmailVerification = async () => {
@@ -57,7 +46,7 @@ const SecuritySettings = () => {
         )}
 
         {!isThirdPartyAuth && (
-          <form onSubmit={handleChangePassword}>
+          <form onSubmit={onChangePassword}>
             <p><strong>Change Password:</strong></p>
             <label>
               <p><strong>Current Password:</strong></p>
