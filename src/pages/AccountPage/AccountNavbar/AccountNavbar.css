@@ -36,6 +36,7 @@
     width: 100%; /* Ensure the a tag takes full width */
   }
   
-  .navbar ul li a:hover {
-    background-color: #575757; /* Background color on hover */
+  .navbar ul li:hover {
+    background-color: #17a547; /* Background color on hover */
+    cursor: pointer;
   }

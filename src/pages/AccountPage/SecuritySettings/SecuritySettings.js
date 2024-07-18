@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../../services/AuthServices/AuthContext';
-import { auth } from '../../../services/FirebaseConfig';
-import { isThirdPartyProvider, checkEmailVerification } from '../../../services/AuthServices/AuthServices';
+import { isThirdPartyProvider } from '../../../services/AuthServices/AuthServices';
 import { ProfileVerificationContext } from '../../../services/AuthServices/ProfileVerificationContext';
+import { sendEmailVerification, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
+import './SecuritySettings.css';
 
 const SecuritySettings = () => {
   const { user } = useContext(AuthContext);
@@ -10,7 +11,7 @@ const SecuritySettings = () => {
   const [newPassword, setNewPassword] = useState('');
   const [error, setError] = useState(null);
   const [isThirdPartyAuth, setIsThirdPartyAuth] = useState(false);
-  const [isVerified, setIsVerified] = useState(ProfileVerificationContext);
+  const { isVerified } = useContext(ProfileVerificationContext);
 
   useEffect(() => {
     setIsThirdPartyAuth(isThirdPartyProvider(user));
@@ -19,14 +20,9 @@ const SecuritySettings = () => {
   const handleChangePassword = async (e) => {
     e.preventDefault();
     try {
-      const credential = auth.EmailAuthProvider.credential(user.email, currentPassword);
-      await auth.currentUser.reauthenticateWithCredential(credential);
-      await auth.currentUser.updatePassword(newPassword);
-      console.log('Password updated successfully!');
-
-      // Send confirmation email
-      await auth.currentUser.sendEmailVerification();
-      console.log('Confirmation email sent!');
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
+      await updatePassword(user, newPassword);
 
       setCurrentPassword('');
       setNewPassword('');
@@ -37,36 +33,56 @@ const SecuritySettings = () => {
     }
   };
 
+  const handleSendEmailVerification = async () => {
+    try {
+      await sendEmailVerification(user);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
-    <div>
+    <div className="security-container">
       <h2>Security Settings</h2>
-      
-      {isThirdPartyAuth ? (
-        <p></p>
-      ) : (
-        <form onSubmit={handleChangePassword}>
-          <label>
-            Current Password:
-            <input
-              type="password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            New Password:
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-            />
-          </label>
-          <button type="submit">Change Password</button>
-        </form>
-      )}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      <div className="security-container-info">
+        <p><strong>Email Verification State:</strong></p>
+        {isVerified ? (
+          <p>Email is verified</p>
+        ) : (
+          <div>
+            <p>Email is not verified</p>
+            <button onClick={handleSendEmailVerification}>Send Verification Email</button>
+          </div>
+        )}
+
+        {isThirdPartyAuth ? (
+          <p>Third-party authentication is enabled</p>
+        ) : (
+          <form onSubmit={handleChangePassword}>
+            <label>
+              <p><strong>Current Password:</strong></p>
+              <input
+                type="password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              <p><strong>New Password:</strong></p>
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
+            </label>
+            <button type="submit">Change Password</button>
+          </form>
+        )}
+        {error && <p className="error-message">{error + user.email}</p>}
+      </div>
     </div>
   );
 };

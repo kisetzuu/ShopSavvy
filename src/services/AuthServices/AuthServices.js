@@ -1,10 +1,6 @@
-import { deleteUser, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { createUserWithEmailAndPassword, signOut, signInWithPopup } from 'firebase/auth';
-import { sendEmailVerification } from 'firebase/auth';
-import { setDoc, doc, getDoc } from 'firebase/firestore';
-import { auth, db} from '../FirebaseConfig';
+import { deleteUser, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendEmailVerification, getAdditionalUserInfo  } from 'firebase/auth';
+import { auth } from '../FirebaseConfig';
 import { accountCreation } from '../UserServices/UserServices';
-import { getAdditionalUserInfo } from 'firebase/auth';
 
 export const handleLogin = async (e, auth, email, password, setError, setMessage, navigate) => {
   e.preventDefault();

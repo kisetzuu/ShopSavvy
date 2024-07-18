@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext} from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { checkEmailVerification } from './AuthServices';
 import { checkProfileCompletion } from '../UserServices/UserServices';
 import { AuthContext } from './AuthContext';
