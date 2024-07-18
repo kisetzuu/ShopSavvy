@@ -36,20 +36,9 @@ const PaymentPortal = () => {
 
   return (
     <div className="payment-portal">
-      <h1>Add Balance</h1>
-      <div className="balance-form">
-        <label htmlFor="amount">Amount:</label>
-        <input
-          type="number"
-          id="amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-        {error && <div className="error">{error}</div>}
-        <button onClick={handleAddBalance}>Add Balance</button>
-      </div>
-      <div className="payment-method-container">
-        <h2>Select Payment</h2>
+      <div className="payment-container">
+        <h1 className="shop-savvy-header"></h1>
+        <h2>Select Payment Option</h2>
         <div className="payment-method-list">
           {paymentMethods.map((method) => (
             <div
@@ -61,6 +50,17 @@ const PaymentPortal = () => {
               <p>{method.name}</p>
             </div>
           ))}
+        </div>
+        <div className="balance-form">
+          <label htmlFor="amount">Amount:</label>
+          <input
+            type="number"
+            id="amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          {error && <div className="error">{error}</div>}
+          <button onClick={handleAddBalance}>Add Balance</button>
         </div>
       </div>
     </div>

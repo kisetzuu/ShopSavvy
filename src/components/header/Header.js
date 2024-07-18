@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import './Header.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../services/FirebaseConfig';
@@ -9,7 +9,7 @@ import { ProfileContext } from '../../services/UserServices/ProfilePictureContex
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
   const { user } = useContext(AuthContext);
-  const { profilePicture } = useContext(ProfileContext)
+  const { profilePicture } = useContext(ProfileContext);
   const { balance } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -32,6 +32,9 @@ const Header = () => {
 
   return (
     <header className="header">
+      <div className="logo-container">
+        <img src={`${process.env.PUBLIC_URL}/ShopSavvy_Logo.png`} alt="ShopSavvy Logo" className="logo" />
+      </div>
       <nav className={`nav ${menuActive ? 'active' : ''}`}>
         <ul className={`nav-links left ${menuActive ? 'active' : ''}`}>
           <li><Link to="/">Home</Link></li>
