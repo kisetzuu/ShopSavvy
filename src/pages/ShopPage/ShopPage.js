@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import Footer from '../../components/Footer'; // Import the new Footer component
 import PromotionalSlider from '../../components/PromotionalSlider'; // Import the new PromotionalSlider component
 import './ShopPage.css';
+import ItemModal from './ItemModal/ItemModal';
 
 const ProductItem = ({ product, onClick, onDoubleClick, onView, isSelected, isDoubleSelected }) => (
   <div
@@ -372,25 +373,14 @@ const ShopPage = () => {
       </div>
 
       {/* Modal for Entering Quantity */}
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Enter Quantity</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>{modalProduct?.name}</p>
-          <input
-            type="number"
-            className="quantity-input"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            min="1"
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <button onClick={handleCloseModal}>Cancel</button>
-          <button onClick={handleConfirmQuantity}>Confirm Quantity</button>
-        </Modal.Footer>
-      </Modal>
+      <ItemModal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        modalProduct={modalProduct}
+        quantity={quantity}
+        setQuantity={setQuantity}
+        handleConfirmQuantity={handleConfirmQuantity}
+      />
 
       {/* Add Footer here */}
       <Footer />
