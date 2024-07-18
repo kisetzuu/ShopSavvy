@@ -1,7 +1,7 @@
 /* src/components/PromotionalSlider.css */
 .promotional-slider {
     width: 100%;
-    max-width: 1700px; /* Increased max-width for wider banner */
+    max-width: 1600px; /* Increased max-width for wider banner */
     margin: 20px auto;
     padding: 0 20px; /* Optional padding for better appearance */
   }
