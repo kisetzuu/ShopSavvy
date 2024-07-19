@@ -31,13 +31,13 @@ const RegistrationPage = () => {
     <div className='login-div'>
       <div className="login-container">
         <div className='logo-container'>
-          <img src={process.env.PUBLIC_URL + '/nxQ_LogoN.png'} alt="NxQ Logo" className='logo' />
+          <img src={process.env.PUBLIC_URL + '/nxQ_LogoN.png'} alt="NxQ Logo" className='auth-logo' />
         </div>
         <h2>Register</h2>
         {error && <p className="error">{error}</p>}
         {message && <p className="success">{message}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className="auth-input-group">
             <label htmlFor="email">Email:</label>
             <input
               type="text"
@@ -46,7 +46,7 @@ const RegistrationPage = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="input-group">
+          <div className="auth-input-group">
             <label htmlFor="password">Password:</label>
             <input
               type="password"
@@ -55,7 +55,7 @@ const RegistrationPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="input-group">
+          <div className="auth-input-group">
             <label htmlFor="confirmPassword">Confirm Password:</label>
             <input
               type="password"
