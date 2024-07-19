@@ -7,7 +7,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  padding: 0.2% 2%;
+  padding: 0.5% 1%; /* Increased padding for better spacing */
   box-sizing: border-box;
 }
 
@@ -17,9 +17,9 @@
 }
 
 .logo {
-  max-height: 50px; /* Adjust this value as needed */
-  margin-right: 20px; /* Space between logo and nav */
-  margin-top: 40px; /* Adjust this value to move the logo down */
+  max-height: 40px; /* Reduced the size of the logo */
+  margin-right: 10px; /* Reduced space between logo and nav */
+  transform: translateY(20px);
 }
 
 .nav {
@@ -34,9 +34,8 @@
   display: flex;
   gap: 16px;
   margin: 0;
-  padding-left: 20px;
+  padding-left: 10px; /* Adjusted padding for better alignment */
   align-items: center;
-  height: 1.5dvw;
 }
 
 .nav-links.left {
@@ -72,12 +71,11 @@
 }
 
 .nav-links .profile-icon img {
-  width: 40px;
-  height: 40px;
+  width: 35px; /* Reduced size of the profile picture */
+  height: 35px;
   border-radius: 50%;
   transition: transform 0.3s ease;
   object-fit: cover;
-  margin-top: 5px; /* Adjust this value to move the profile picture down */
 }
 
 .nav-links .profile-icon img:hover {
@@ -120,7 +118,7 @@
 
 @media screen and (max-width: 1298px) {
   nav {
-    padding: 10px 40px 10px 0px;
+    padding: 10px 20px 10px 0px; /* Adjusted padding */
   }
 
   nav ul li.logo {
@@ -139,7 +137,7 @@
 
   nav {
     z-index: 1;
-    padding: 9px 40px 9px 0;
+    padding: 9px 20px 9px 0; /* Adjusted padding */
   }
 
   nav ul div.items {
