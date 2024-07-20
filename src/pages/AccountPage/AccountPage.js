@@ -1,31 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import AccountNavbar from './AccountNavbar/AccountNavbar';
 import GeneralAccountSettings from './GeneralProfileSettings/GeneralAccountSettings';
 import SecuritySettings from './SecuritySettings/SecuritySettings';
 import './AccountPage.css';
 
 const AccountPage = () => {
-  const [activeComponent, setActiveComponent] = useState('general');
-
-  const renderComponent = () => {
-    switch (activeComponent) {
-      case 'general':
-        return <GeneralAccountSettings />;
-      case 'security':
-        return <SecuritySettings />;
-      default:
-        return <GeneralAccountSettings />;
-    }
-  };
-
   return (
     <div className='account-div'>
       <div className='account-div-container'>
         <div className='navbar'>
-          <AccountNavbar setActiveComponent={setActiveComponent} />
+          <AccountNavbar />
         </div>
         <div className='active-component'>
-          {renderComponent()}
+          <Routes>
+            <Route path="general" element={<GeneralAccountSettings />} />
+            <Route path="security" element={<SecuritySettings />} />
+            <Route path="/" element={<GeneralAccountSettings />} /> {/* Default route */}
+          </Routes>
         </div>
       </div>
     </div>

@@ -24,6 +24,8 @@ import { ProfileProvider } from './services/UserServices/ProfilePictureContext';
 import { CartProvider } from './CartContext';
 import { ProfileVerificationProvider } from './services/AuthServices/ProfileVerificationContext';
 
+import Navbar from './components/Navbar/Navbar';
+
 function App() {
   return (
     <Router>
@@ -33,7 +35,7 @@ function App() {
           <ProfileProvider>
           <SavedToCartProvider>
 
-            <Header />
+            <Header/>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<CartPage />} />
@@ -44,7 +46,7 @@ function App() {
                 <Route path="/product/:productId" element={<ProductDetailPage />} />
                 <Route path="/receipt" element={<ReceiptPage />} />
                 <Route path="/about" element={<AboutPage />} />
-                <Route path="/account" element={<AccountPage />} />
+                <Route path="account/*" element={<AccountPage />} />
                 <Route path="/product-listing" element={<ProductListing />} />
                 <Route path="/user-listings" element={<UserListings />} /> {/* Corrected route */}
                 <Route path="/update-stock" element={<UpdateStock />} />
