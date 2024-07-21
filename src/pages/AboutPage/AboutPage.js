@@ -71,7 +71,7 @@ const AboutPage = () => {
           />
           <h5>Keith Chadberc Villanueva</h5>
           <div className='spacing'>
-            Back-end Developer
+            Fullstack Developer
           </div>
         </div>
 
@@ -81,7 +81,7 @@ const AboutPage = () => {
           />
           <h5>Jeff Gabriel Leung</h5>
           <div className='spacing'>
-            Back-end Developer
+            Fullstack Developer
           </div>
         </div>
 

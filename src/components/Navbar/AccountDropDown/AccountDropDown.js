@@ -34,10 +34,8 @@ const AccountDropDown = () => {
           roundedCircle
           fluid
         /> {user.email} <strong>Balance:</strong> ${balance}
-        
       </Dropdown.ItemText>
-      <Dropdown.Item onClick={() => handleNavigation('/account/general')}>Profile</Dropdown.Item>
-      <Dropdown.Item onClick={() => handleNavigation('/account/security')}>Security</Dropdown.Item>
+      <Dropdown.Item onClick={() => handleNavigation('/account/general')}>Settings</Dropdown.Item>
       <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
     </Dropdown.Menu>
   );

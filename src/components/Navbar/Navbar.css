@@ -170,8 +170,31 @@
     margin-right: .25vw;
   }
 
+  .mobile-margin-custom {
+    margin-right: 5vw;
+  }
+
+  .drop-down-margin-desktop {
+    padding-left:  10vh;
+  }
+
+  .custom-hover {
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 10%;
+    font-weight: bold !important; /* Bold text */
+    padding-left: .5vw !important;
+    padding-right: .5vw !important;
+  }
+  
+  
+  .custom-hover:hover {
+    color: #ffdd57 !important; /* Hover text color */
+    background-color: #191414 !important; /* Hover background color */
+  }
+
   .background-transparent {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
   }
+
