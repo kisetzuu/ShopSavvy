@@ -169,7 +169,7 @@ const CartPage = () => {
   };
 
   return (
-    <div className="cart-container">
+    <div className="cartpage-container">
       <div className="cart-header">
       </div>
       <div className="cart-wishlist-container">

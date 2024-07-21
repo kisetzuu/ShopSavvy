@@ -35,7 +35,7 @@ function App() {
           <ProfileProvider>
           <SavedToCartProvider>
 
-            <Header/>
+            <Navbar/>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<CartPage />} />

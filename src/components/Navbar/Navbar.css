@@ -1,0 +1,177 @@
+/* Navbar Container */
+.navigation-main-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1DB954; /* Navbar background color */
+    padding: 8px 5vw; /* Adjust padding as needed */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure navbar is above other content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+    margin-bottom: 1vh;
+  }
+  
+  /* Logo */
+
+  .navigation-section-1 {
+    display: flex;
+    align-items: center; /* Center items vertically */
+  }
+  
+  .navigation-logo-container {
+    margin-right: 2vw; /* Push navigation links to the right */
+
+  }
+
+  .navigation-logo-container img {
+    width: 64px;
+  }
+  
+  .navigation-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .navigation-links li {
+    margin-right: 15px; /* Adjust spacing between links */
+    border: 50%;
+  }
+  
+  .navigation-links li a {
+    text-decoration: none;
+    color: #191414;; /* Link color */
+    font-weight: bold; /* Adjust font weight as needed */
+    padding: 0.5vw 1vh; /* Adjust padding as needed */
+    position: relative; /* Ensure relative positioning for pseudo-element */
+    z-index: 1; /* Ensure links are above pseudo-element */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Smooth color and background transition */
+    border-radius: 5px;
+  }
+  
+  .navigation-links li a:hover {
+    color: #ffdd57; /* Hover color */
+    background-color: #191414; /* Hover background color */
+  }
+  
+  /* Curved highlight effect */
+  .navigation-links li a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 221, 87, 0.3); /* Highlight color with transparency */
+    z-index: -1; /* Behind the link text */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+    
+  }
+  
+  .navigation-links li a:hover::before {
+    opacity: 1; /* Show curved highlight on hover */
+  }
+
+  .navigation-section-2  {
+    display: flex;
+  }
+
+  .navigation-section-2 li {
+    list-style-type: none; /* Remove the bullet point */
+  }
+
+  .navigation-section-2 img {
+    height: 64px;
+    width: 64px;
+    border-radius: 50%; /* Makes the image circular */
+  }
+
+  .navigation-section-user {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Align items vertically in the center */
+    position: relative; /* Make the div position relative to position pseudo-element */
+    padding-left: 20px; /* Adjust as needed for spacing from the line shape */
+    float: left;
+    overflow: hidden;
+  }
+  
+  .navigation-section-user:before {
+    content: ''; /* Required for pseudo-elements */
+    position: absolute; /* Position relative to the parent */
+    top: 0;
+    left: 0;
+    height: 100%; /* Full height of the parent */
+    width: 3px; /* Width of the line shape */
+    background-color: #00000070; /* Color of the line shape */
+  }
+  
+  .profile-email {
+    margin-right: 10px; /* Adjust as needed for spacing between email and profile picture */
+  }
+
+
+  
+  /* Show dropdown when hovering over profile */
+  .navigation-section-2 li:hover .profile-settings-dropdown {
+    display: flex;
+  }
+
+
+
+    /* Profile Dropdown */
+  .profile-settings-dropdown {
+    top: 100%;
+    right: 0;
+    background-color: #1DB954; /* Dropdown background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for dropdown */
+    display:flex;
+    flex-direction: column;
+    min-width: 120px; /* Adjust dropdown width as needed */
+    z-index: 1000; /* Ensure dropdown is above other content */
+  }
+  
+  .profile-settings-dropdown button {
+    background: none;
+    border: none;
+    color: #333333; /* Button text color */
+    padding: 10px 15px; /* Adjust padding as needed */
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+  }
+  
+  .profile-settings-dropdown button:hover {
+    background-color: #f0f0f0; /* Hover background color */
+  }
+  
+  /* Button Link Style */
+  .button-link {
+    text-decoration: none;
+    color: #007bff; /* Button link color */
+    font-weight: 500; /* Adjust font weight as needed */
+  }
+  
+  .button-link:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
+  
+  .margin-2vw {
+    margin-left: .25vw;
+    margin-right: 5vw;
+  }
+
+  .margin-p5vw {
+    margin-left: 5vw;
+    margin-right: .25vw;
+  }
+
+  .background-transparent {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
