@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
+import { CartContext } from '../../services/Contexts';
 import { auth, db, database } from '../../services/FirebaseConfig'; // Adjusted path based on your structure
-import { doc, getDoc, updateDoc, writeBatch } from 'firebase/firestore';
+import { doc, getDoc, writeBatch } from 'firebase/firestore';
 import { ref, get, child, set } from 'firebase/database';
 import './CartPage.css';
 

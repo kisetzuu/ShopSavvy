@@ -1,7 +1,7 @@
 // src/pages/ShopPage.js
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
+import { CartContext } from '../../services/Contexts';
 import { auth, db, database } from '../../services/FirebaseConfig'; // Adjusted path based on your structure
 import { collection, getDocs } from 'firebase/firestore';
 import { ref, get, child, set } from 'firebase/database';

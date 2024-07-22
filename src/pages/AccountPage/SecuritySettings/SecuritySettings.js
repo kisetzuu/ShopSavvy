@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { AuthContext } from '../../../services/AuthServices/AuthContext';
-import { isThirdPartyProvider, handleChangePassword } from '../../../services/AuthServices/AuthServices';
-import { ProfileVerificationContext } from '../../../services/AuthServices/ProfileVerificationContext';
+import { AuthContext } from '../../../services/Contexts';
+import { isThirdPartyProvider, handleChangePassword } from '../../../services/AuthServices';
+import { ProfileVerificationContext } from '../../../services/Contexts';
 import { sendEmailVerification } from 'firebase/auth';
 import './SecuritySettings.css';
 

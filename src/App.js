@@ -18,12 +18,7 @@ import ContactPage from './pages/ContactPage/ContactPage';
 import EditProductPage from './pages/EditProductPage/EditProductPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
-import { SavedToCartProvider } from './SavedToCartContext';
-import { AuthProvider } from './services/AuthServices/AuthContext'; 
-import { ProfileProvider } from './services/UserServices/ProfilePictureContext';
-import { CartProvider } from './CartContext';
-import { ProfileVerificationProvider } from './services/AuthServices/ProfileVerificationContext';
-
+import { AuthProvider, ProfileProvider, CartProvider, ProfileVerificationProvider } from './services/Contexts';
 import Navbar from './components/Navbar/Navbar';
 
 function App() {
@@ -33,8 +28,6 @@ function App() {
         <ProfileVerificationProvider>
         <CartProvider>
           <ProfileProvider>
-          <SavedToCartProvider>
-
             <Navbar/>
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -48,13 +41,12 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="account/*" element={<AccountPage />} />
                 <Route path="/product-listing" element={<ProductListing />} />
-                <Route path="/user-listings" element={<UserListings />} /> {/* Corrected route */}
+                <Route path="/user-listings" element={<UserListings />} /> 
                 <Route path="/update-stock" element={<UpdateStock />} />
                 <Route path="/payment-portal" element={<PaymentPortal />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/edit-product/:productId" element={<EditProductPage />} />
               </Routes>
-            </SavedToCartProvider>
           </ProfileProvider>
           </CartProvider>
         </ProfileVerificationProvider>

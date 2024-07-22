@@ -1,7 +1,7 @@
 // src/pages/Payment/PaymentPortal.js
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../../CartContext'; // Adjusted path based on your structure
+import { CartContext } from '../../services/Contexts';
 import './PaymentPortal.css';
 
 const paymentMethods = [

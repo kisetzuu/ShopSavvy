@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../services/FirebaseConfig';
 import { doc, getDoc, collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
-import { AuthContext } from '../../services/AuthServices/AuthContext'; // Adjusted path based on your structure
+import { AuthContext } from '../../services/Contexts';
 import StarRating from '../../components/StarRating'; // Corrected import path
 import './ProductDetailPage.css';
 

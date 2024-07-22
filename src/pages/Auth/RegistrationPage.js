@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { auth, db, fbAuth, googleAuth } from '../../services/FirebaseConfig';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { handleRegister, handleOtherAuth } from '../../services/AuthServices/AuthServices';
+import { handleRegister, handleOtherAuth } from '../../services/AuthServices';
 import './AuthPage.css'
 
 const RegistrationPage = () => {

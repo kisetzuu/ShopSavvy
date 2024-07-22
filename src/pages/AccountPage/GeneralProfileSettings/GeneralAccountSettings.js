@@ -2,11 +2,10 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import './GeneralAccountSettings.css'
-import { fetchProfileData, fetchProfilePicture, editProfilePicture, editProfileDetails } from '../../../services/UserServices/UserServices';
-import { checkEmailVerification } from '../../../services/AuthServices/AuthServices';
+import { checkEmailVerification } from '../../../services/AuthServices';
 import { isEmptyOrWhitespace } from '../../../services/GeneralHelpers';
-import { AuthContext } from '../../../services/AuthServices/AuthContext';
-import { ProfileContext } from '../../../services/UserServices/ProfilePictureContext';
+import { AuthContext, ProfileContext } from '../../../services/Contexts';
+import { fetchProfileData, editProfilePicture, editProfileDetails } from '../../../services/UserServices'
 
 const GeneralAccountSettings = () => {
   const { user } = useContext(AuthContext);

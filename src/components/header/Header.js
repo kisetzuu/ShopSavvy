@@ -2,9 +2,7 @@ import React, { useState, useContext } from 'react';
 import './Header.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../services/FirebaseConfig';
-import { CartContext } from '../../CartContext';
-import { AuthContext } from '../../services/AuthServices/AuthContext';
-import { ProfileContext } from '../../services/UserServices/ProfilePictureContext';
+import { AuthContext, ProfileContext, CartContext } from '../../services/Contexts';
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);

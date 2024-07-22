@@ -2,9 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dropdown, Image, Button } from 'react-bootstrap';
 import { auth } from '../../../services/FirebaseConfig';
-import { AuthContext } from '../../../services/AuthServices/AuthContext';
-import { ProfileContext } from '../../../services/UserServices/ProfilePictureContext';
-import { CartContext } from '../../../CartContext';
+import { AuthContext, ProfileContext, CartContext } from '../../../services/Contexts';
 
 const AccountDropDown = () => {
   const { user } = useContext(AuthContext);

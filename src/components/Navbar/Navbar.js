@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect} from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Navbar, Nav, Image, Dropdown, Container } from 'react-bootstrap';
-import { AuthContext } from '../../services/AuthServices/AuthContext';
-import { ProfileContext } from '../../services/UserServices/ProfilePictureContext';
+import { AuthContext, ProfileContext } from '../../services/Contexts';
 import './Navbar.css';
 import AccountDropDown from './AccountDropDown/AccountDropDown';
 import MobileNavigationBar from './MobileNavbar';
@@ -24,7 +23,6 @@ const NavigationBar = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Clean up the event listener on unmount
     return () => {
       window.removeEventListener('resize', handleResize);
     };

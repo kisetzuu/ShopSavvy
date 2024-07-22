@@ -1,8 +1,8 @@
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore"; 
-import { db, storage } from "../FirebaseConfig";
+import { db, storage } from "./FirebaseConfig";
 import { sendEmailVerification } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { isEmptyOrWhitespace } from "../GeneralHelpers";
+import { isEmptyOrWhitespace } from "./GeneralHelpers";
 
 //Account Creation
 export const accountCreation = async (user) => {

@@ -2,13 +2,13 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Image, Container } from 'react-bootstrap';
 import { auth } from '../../services/FirebaseConfig';
-import { AuthContext } from '../../services/AuthServices/AuthContext';
-import { ProfileContext } from '../../services/UserServices/ProfilePictureContext';
+import { AuthContext, CartContext, ProfileContext } from '../../services/Contexts';
 import './Navbar.css';
 
 const MobileNavigationBar = () => {
   const { user } = useContext(AuthContext);
   const { profilePicture } = useContext(ProfileContext);
+  const { balance } = useContext(CartContext);
   const navigate = useNavigate();
   const [showNavLinks, setShowNavLinks] = useState(false);
 
@@ -51,6 +51,7 @@ const MobileNavigationBar = () => {
                 />
                 <span className="mobile-margin-custom">{user.email}</span>
                 </Nav.Link>
+                <Nav.Link as={Link} to="/payment-portal" className="custom-hover rounded"><strong>Current Balance: </strong>${balance}</Nav.Link>
               </>
             ) : (
               <>

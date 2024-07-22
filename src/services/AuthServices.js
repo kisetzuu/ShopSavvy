@@ -1,6 +1,6 @@
 import { deleteUser, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendEmailVerification, getAdditionalUserInfo, EmailAuthProvider, reauthenticateWithCredential, updatePassword  } from 'firebase/auth';
-import { auth } from '../FirebaseConfig';
-import { accountCreation } from '../UserServices/UserServices';
+import { auth } from './FirebaseConfig';
+import { accountCreation } from './UserServices';
 
 export const handleLogin = async (e, auth, email, password, setError, setMessage, navigate) => {
   e.preventDefault();
