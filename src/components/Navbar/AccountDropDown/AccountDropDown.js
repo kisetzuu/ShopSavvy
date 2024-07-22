@@ -31,8 +31,9 @@ const AccountDropDown = () => {
           alt="Profile"
           roundedCircle
           fluid
-        /> {user.email} <strong>Balance:</strong> ${balance}
+        /> {user.email}
       </Dropdown.ItemText>
+      <Dropdown.Item onClick={() => handleNavigation('/payment-portal')}><strong>Current Balance: </strong>${balance}</Dropdown.Item>
       <Dropdown.Item onClick={() => handleNavigation('/account/general')}>Settings</Dropdown.Item>
       <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
     </Dropdown.Menu>
