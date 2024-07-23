@@ -1,48 +1,74 @@
-/* SupportPage.css */
+.support {
+  font-family: 'Roboto', sans-serif;
+  color: rgb(255, 255, 255);
+  animation: slideInFromBottom 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  text-align: center;
+}
 
-.support-container {
-    padding: 20px;
-    color: #e0e0e0;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .support-container h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .support-container p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-  }
-  
-  .support-container ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .support-container ul li {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-  }
-  
-  .faq-section {
-    margin-top: 20px;
-  }
-  
-  .faq-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #1DB954;
-  }
-  
-  .faq-section p {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    line-height: 1.6;
-  }
-  
+.support-title {
+  color: #1db954;
+  font-family: 'Roboto', sans-serif;
+  margin-top: 10%;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.support-details {
+  margin-top: 2%;
+  text-align: left;
+  margin-left: 10%;
+  margin-right: 10%;
+  line-height: 1.6;
+}
+
+.contact-methods {
+  margin-top: 2%;
+  padding: 20px;
+  border: 2px solid #1db954;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.faq-title {
+  color: #1db954;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.faq-section {
+  margin-top: 5%;
+  text-align: left;
+  margin-left: 10%;
+  margin-right: 10%;
+  line-height: 1.6;
+  padding: 20px;
+  border: 2px solid #1db954;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.faq-item {
+  margin-bottom: 20px;
+}
+
+.faq-question {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding-bottom: 10px;
+}
+
+.faq-answer {
+  margin-top: 10px;
+  padding: 10px;
+  border: 2px solid #222;
+  border-radius: 5px;
+  background-color: #222;
+  display: none; /* Initially hidden */
+}
+
+.faq-answer.open {
+  display: block; /* Show when open */
+}
