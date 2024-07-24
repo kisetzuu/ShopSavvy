@@ -1,0 +1,10 @@
+/* AccountDropDown.css */
+.user-listings-item {
+    color: #fff; /* Text color */
+    background-color: #1DB954; /* Green background */
+  }
+  
+  .user-listings-item:hover {
+    background-color: #148A33; /* Darker green on hover */
+  }
+  

@@ -14,7 +14,7 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await auth.signOut();
-      await navigate('/');
+      navigate('/');
     } catch (error) {
       console.error("Error logging out: ", error);
     }
@@ -42,7 +42,9 @@ const Header = () => {
           <li><Link to="/cart">Cart</Link></li>
           <li><Link to="/support">Support</Link></li>
           {user && (
-            <li><Link to="/user-listings">Listings</Link></li>
+            <>
+              <li><Link to="/user-listings">Listings</Link></li>
+            </>
           )}
         </ul>
         <ul className={`nav-links right ${menuActive ? 'active' : ''}`}>
@@ -65,12 +67,8 @@ const Header = () => {
             </>
           ) : (
             <>
-              <li>
-                <Link to="/login" className="button-link">Login</Link>
-              </li>
-              <li>
-                <Link to="/register" className="button-link">Signup</Link>
-              </li>
+              <li><Link to="/login" className="button-link">Login</Link></li>
+              <li><Link to="/register" className="button-link">Signup</Link></li>
             </>
           )}
         </ul>
