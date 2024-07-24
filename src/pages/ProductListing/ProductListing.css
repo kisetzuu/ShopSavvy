@@ -5,7 +5,7 @@
   background-color: #292929;
   color: #e0e0e0;
   max-width: 800px;
-  margin: 40px auto; /* Added top and bottom margin for spacing */
+  margin: 250px auto; /* Added top and bottom margin for spacing */
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;

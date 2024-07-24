@@ -16,6 +16,7 @@ const PaymentPortal = () => {
   const { balance, setBalance } = useContext(CartContext);
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState(''); // New state for success message
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const navigate = useNavigate();
 
@@ -23,15 +24,21 @@ const PaymentPortal = () => {
     const parsedAmount = parseFloat(amount);
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
       setError('Please enter a valid amount.');
+      setSuccessMessage(''); // Clear success message on error
       return;
     }
     if (!selectedPaymentMethod) {
       setError('Please select a payment method.');
+      setSuccessMessage(''); // Clear success message on error
       return;
     }
     setBalance(balance + parsedAmount);
     setError('');
-    navigate('/');
+    setSuccessMessage('Balance added successfully!'); // Set success message
+    setTimeout(() => {
+      setSuccessMessage(''); // Clear success message after 3 seconds
+      navigate('/');
+    }, 3000); // Wait for 3 seconds before redirecting
   };
 
   return (
@@ -60,6 +67,7 @@ const PaymentPortal = () => {
             onChange={(e) => setAmount(e.target.value)}
           />
           {error && <div className="error">{error}</div>}
+          {successMessage && <div className="success">{successMessage}</div>} {/* Success message */}
           <button onClick={handleAddBalance}>Add Balance</button>
         </div>
       </div>
