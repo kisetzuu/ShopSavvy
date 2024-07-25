@@ -9,7 +9,7 @@
   justify-content: center; /* Centers horizontally */
   align-items: flex-start; /* Aligns items to the top */
   height: 100vh; /* Full viewport height */
-  padding-top: 20px; /* Add some padding from the top if needed */
+  padding-top: 15vh; /* Add some padding from the top if needed */
 }
 
 /* Login container styling */
