@@ -9,6 +9,7 @@ const Home = () => {
     navigate('/shop');
   };
 
+  const logo = `${process.env.PUBLIC_URL}/nxq_LogoN.png`;
   const bannerImage = `${process.env.PUBLIC_URL}/Home_Banner_NxQ.jpg`;
 
   return (
@@ -18,7 +19,7 @@ const Home = () => {
       </section>
       <section className="home-hero">
         <div className="home-hero-content">
-          <img src={process.env.PUBLIC_URL + '/nxQ_LogoN.png'} alt="NxQ Logo" className="home-hero-logo" />
+          <img src={logo} alt="NxQ Logo" className="home-hero-logo" />
           <h1>Welcome to ShopSavvy</h1>
           <p>Your one-stop shop for the latest products</p>
           <button className="home-shop-now" onClick={onShopClicked}>Shop Now</button>
